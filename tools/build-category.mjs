@@ -403,11 +403,15 @@ for (const cat of cats) {
   const html = page(cat, items, picks, vparam);
   const dest = path.join(outDir, `${cat}.html`);
   const prev = fs.existsSync(dest) ? fs.readFileSync(dest, 'utf8') : null;
-  if (prev !== html) {
+  // このリポジトリは core.autocrlf が効いていて、チェックアウト後の作業コピーは CRLF になる。
+  // 改行の違いだけで「毎回書き換わった」と出ると再生成の要否が読めなくなるので、比較は正規化する。
+  const norm = (t) => t.replace(/\r\n/g, '\n');
+  const same = prev !== null && norm(prev) === norm(html);
+  if (!same) {
     fs.writeFileSync(dest, html);
     written++;
   }
-  console.log(`${prev === html ? '=' : '+'} /category/${cat}  ${items.length}件`);
+  console.log(`${same ? '=' : '+'} /category/${cat}  ${items.length}件`);
 }
 
 const added = updateSitemap(cats.filter((c) => picks.some((p) => p.cat === c)));

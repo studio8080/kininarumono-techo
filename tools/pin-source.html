@@ -82,9 +82,12 @@
     flex:none;
   }
 
+  /* 見出しはサイト本体の h1,h2 と同じ Zen Maru Gothic 900（var(--jp)）。
+     Dela Gothic One（var(--display)）はサイトでは .channel__name の21pxにしか
+     使っておらず、ピンで大書きするとサイトの印象から浮くため使わない。 */
   #pin h1{
-    margin:0;font-family:var(--display);font-weight:400;
-    font-size:78px;line-height:1.25;letter-spacing:.004em;
+    margin:0;font-family:var(--jp);font-weight:900;
+    font-size:82px;line-height:1.22;letter-spacing:0;
   }
   #pin h1 em{
     font-style:normal;

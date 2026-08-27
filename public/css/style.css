@@ -278,6 +278,27 @@ margin:44px 0 16px;padding-left:16px;border-left:7px solid var(--ink);
 .article__lead{padding:16px 17px}
 }
 
+/* ---------- ROUNDUP ARTICLE ---------- */
+/* /read/ のうち、商品カードを含む「まとめ」記事。生成は tools/build-roundup.mjs。
+   .article は max-width:760px なので、カードのグリッドはその幅で組み直す。 */
+.article--roundup{max-width:920px}
+.article--roundup .article__body h2{margin-top:clamp(40px,5vw,60px)}
+
+.grid--article{
+max-width:none;margin:22px 0 8px;grid-template-columns:1fr 1fr;gap:22px;
+}
+.roundup__item{display:flex;flex-direction:column;gap:12px;min-width:0}
+.roundup__item .card{height:auto}
+.roundup__note{
+margin:0;padding:13px 16px;font-size:14px;line-height:1.85;color:var(--ink-2);
+background:var(--paper);border:1.5px dashed var(--line);border-radius:12px;
+}
+.roundup__note strong{display:block;font-weight:900;color:var(--ink);font-size:12.5px;letter-spacing:.04em;margin-bottom:4px}
+
+@media(max-width:760px){
+.grid--article{grid-template-columns:1fr;gap:18px}
+}
+
 /* ---------- CATEGORY PAGE ---------- */
 /* /category/<cat> は tools/build-category.mjs が生成する静的ページ。
    商品カードはHTMLに焼き込むので .reveal は付けない（JSが落ちても本文が読める）。 */
@@ -459,6 +480,8 @@ transition:transform .18s var(--ease);
 .read-list{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
 .read-card{background:var(--paper-2);border:var(--bd);border-radius:var(--r-card);padding:28px;box-shadow:var(--pop);position:relative}
 .read-card--essay{background-image:linear-gradient(90deg,rgba(255,198,26,.22) 0 12px,transparent 12px),repeating-linear-gradient(0deg,transparent 0 31px,rgba(18,18,18,.07) 31px 32px);background-size:100% 100%,100% 32px}
+/* まとめ記事は商品カードを含むので、エッセイと見分けが付くように面を変える */
+.read-card--roundup{background-image:linear-gradient(90deg,rgba(16,182,168,.24) 0 12px,transparent 12px),repeating-linear-gradient(135deg,transparent 0 9px,rgba(18,18,18,.045) 9px 10px);background-size:100% 100%,14px 14px}
 .read-card__topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .tag{font-family:var(--round);font-weight:700;font-size:12px;color:#fff;background:var(--c);border:2px solid var(--ink);padding:3px 12px;border-radius:999px;display:inline-block}
 .read-card__date{font-family:var(--latin);font-weight:700;font-size:12px;color:var(--muted)}

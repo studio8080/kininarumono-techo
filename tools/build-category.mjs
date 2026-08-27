@@ -16,11 +16,10 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+// カード描画とPICKS読み取りは build-roundup.mjs と共有する。
+// ここに書き写すと必ず片方だけ古くなるため（data-* は main.js の計測が読む）。
+import { repoRoot, CAT, esc, readPicks, makeIsNew, cardHtml } from './lib/site.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, '..');
-const mainPath = path.join(repoRoot, 'public/js/main.js');
 const outDir = path.join(repoRoot, 'public/category');
 const sitemapPath = path.join(repoRoot, 'public/sitemap.xml');
 
@@ -33,17 +32,6 @@ const GA_ID = 'G-S4LRS2KCRZ';
 const TODAY = process.argv.includes('--date')
   ? process.argv[process.argv.indexOf('--date') + 1]
   : new Date().toISOString().slice(0, 10);
-
-// ---- カテゴリのメタ（main.js の CAT と対応させること） ----
-const CAT = {
-  gadget:   { label: 'ガジェット',     cvar: 'purple' },
-  interior: { label: 'インテリア',     cvar: 'teal' },
-  kitchen:  { label: '食器・キッチン', cvar: 'green' },
-  beauty:   { label: 'コスメ・ケア',   cvar: 'pink' },
-  daily:    { label: '日用品',         cvar: 'violet' },
-  goods:    { label: '文具・雑貨',     cvar: 'coral' },
-  fashion:  { label: 'ファッション',   cvar: 'amber' }
-};
 
 // ---- ページごとの本文。検索意図を拾う語を自然に含める（煽り・断定はしない） ----
 const COPY = {
@@ -141,53 +129,6 @@ const ARTICLE_TITLES = {
   'hitorigurashi-no-heyazukuri': '一人暮らしの部屋づくりで最初に決める3つのこと'
 };
 
-// ---- PICKS を main.js から読む ----
-function readPicks() {
-  const src = fs.readFileSync(mainPath, 'utf8');
-  const start = src.indexOf('const PICKS = [');
-  if (start < 0) throw new Error('main.js に const PICKS = [ が見つからない');
-  const end = src.indexOf('\n  ];', start);
-  if (end < 0) throw new Error('PICKS 配列の終端が見つからない');
-  const body = src.slice(start + 'const PICKS = ['.length, end);
-  // 中身はオブジェクトリテラルの羅列なので、そのまま式として評価する（外部入力ではない）
-  const picks = new Function(`"use strict"; return [${body}];`)();
-  if (!Array.isArray(picks) || picks.length === 0) throw new Error('PICKS のパースに失敗');
-
-  // tools/check-stock.mjs と tools/backfill-codes.mjs は `\{\s*cat:"..."\},` という
-  // 「末尾カンマ付きブロック」の正規表現でPICKSを数えている。配列の最後のエントリに
-  // 末尾カンマが無いと、その1件だけ在庫監査もitemCode付与も静かに素通りする（実際に起きていた）。
-  // ここで気づけるようにしておく。直し方: PICKS 最後のエントリの `}` を `},` にする。
-  const byRegex = (body.match(/\{\s*cat:"[\s\S]*?\},/g) || []).length;
-  if (byRegex !== picks.length) {
-    throw new Error(
-      `PICKSの件数が数え方で食い違う（式評価=${picks.length} / 正規表現=${byRegex}）。\n` +
-      '  配列の最後のエントリに末尾カンマが無いと思われる。`}` を `},` にすること。\n' +
-      '  そのままだと check-stock.mjs / backfill-codes.mjs が最後の1件を取りこぼす。'
-    );
-  }
-  return picks;
-}
-
-const esc = (s) => String(s ?? '')
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-// ---- カード1枚（main.js の描画と同じマークアップ・同じ data-* にする） ----
-// data-brand / data-name / data-cat は main.js の affiliate_click 計測が読むので必須。
-function cardHtml(p, isNew) {
-  const meta = CAT[p.cat];
-  const style = `--c:var(--${meta.cvar});--c-deep:var(--${meta.cvar}-deep);--c-soft:var(--${meta.cvar}-soft)`;
-  return `<article class="card" data-cat="${esc(p.cat)}" data-brand="${esc(p.brand)}" data-name="${esc(p.name)}" style="${style}">
-<div class="card__media"><img src="${esc(p.img)}" alt="${esc(p.brand)} ${esc(p.name)}" loading="lazy" /></div>
-<div class="card__body">
-<div class="card__meta"><span class="card__cat">${esc(meta.label)}</span>${isNew ? '<span class="card__new">NEW</span>' : ''}<span class="card__date">${esc(p.date)}</span></div>
-<span class="card__brand">${esc(p.brand)}</span>
-<h3 class="card__name">${esc(p.name)}</h3>
-<p class="card__blurb">${esc(p.blurb || '')}</p>
-<div class="card__foot"><a class="card__btn" href="${esc(p.url)}" target="_blank" rel="sponsored noopener nofollow">商品を見る</a></div>
-</div>
-</article>`;
-}
-
 function page(cat, picks, allPicks, vparam) {
   const meta = CAT[cat];
   const copy = COPY[cat];
@@ -195,9 +136,7 @@ function page(cat, picks, allPicks, vparam) {
   const fullTitle = `${copy.title}｜気になるモノ手帖`;
 
   // NEW の判定はトップ (main.js) と同じルールで揃える
-  const latestDate = allPicks.reduce((m, p) => (p.date > m ? p.date : m), '');
-  const latestCount = allPicks.filter((p) => p.date === latestDate).length;
-  const isNew = (p) => latestCount > 0 && latestCount < allPicks.length / 3 && p.date === latestDate;
+  const isNew = makeIsNew(allPicks);
 
   const cards = picks.map((p) => cardHtml(p, isNew(p))).join('\n');
 

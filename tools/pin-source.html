@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Pin source 1000x1500</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;500&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- サイト本体のトークン（色・フォント）をそのまま読む。build-ogp.mjs と同じ理由で、
+     デザインを変えたときにピン画像だけ旧デザインで取り残されないようにするため。
+     file:// で開けるように相対パスにしてある（サーバ不要）。 -->
+<link rel="stylesheet" href="../public/css/style.css" />
+<style>
+  html,body{margin:0;padding:0;background:#555}
+  /* 2:3。Pinterestの推奨比率 */
+  #pin{
+    position:relative;width:1000px;height:1500px;overflow:hidden;
+    background:var(--paper-2);isolation:isolate;
+    font-family:var(--jp);color:var(--ink);
+    font-feature-settings:"palt" 1;
+    border:10px solid var(--ink);box-sizing:border-box;
+  }
+  /* 罫線の紙。トップの背景と同じ考え方 */
+  #pin .paper{
+    position:absolute;inset:0;z-index:0;
+    background-image:repeating-linear-gradient(0deg,transparent 0 74px,rgba(18,18,18,.05) 74px 76px);
+  }
+  /* カテゴリ色の斜め面。見出しの背を受ける */
+  #pin .shape{
+    position:absolute;left:-60px;top:210px;width:760px;height:430px;z-index:1;
+    background:var(--c-soft);
+    clip-path:polygon(6% 0,100% 5%,92% 100%,0 92%);
+  }
+  #pin .dots{
+    position:absolute;right:-40px;top:-40px;width:340px;height:340px;z-index:1;
+    background-image:radial-gradient(var(--c) 2.6px,transparent 2.7px);
+    background-size:26px 26px;opacity:.5;transform:rotate(-8deg);
+  }
+  #pin .inner{
+    position:relative;z-index:2;height:100%;box-sizing:border-box;
+    padding:84px 76px 74px;display:flex;flex-direction:column;
+  }
+
+  #pin .brand{
+    font-family:var(--latin);font-weight:700;letter-spacing:.22em;font-size:22px;
+    display:inline-flex;align-items:center;gap:12px;align-self:flex-start;
+    border:3px solid var(--ink);border-radius:999px;padding:10px 26px;background:var(--paper-2);
+    box-shadow:6px 7px 0 var(--ink);
+  }
+
+  #pin .cat{
+    margin:74px 0 0;font-family:var(--jp);font-weight:900;font-size:40px;letter-spacing:.06em;
+    color:var(--c-deep);
+  }
+  #pin h1{
+    margin:16px 0 0;font-family:var(--display);font-weight:400;
+    font-size:78px;line-height:1.28;letter-spacing:.005em;
+  }
+  #pin h1 em{
+    font-style:normal;background:linear-gradient(transparent 64%,var(--yellow) 64%);
+  }
+
+  #pin .lead{
+    margin:40px 0 0;font-family:var(--jp-text);font-weight:700;
+    font-size:29px;line-height:1.95;color:var(--ink-2);
+  }
+
+  /* 余白は見出し下と図案下で分け合う。図案の帯が下に張りつかないようにするため */
+  #pin .sp-a{flex:1 1 0;min-height:20px}
+  #pin .sp-b{flex:1.15 1 0;min-height:20px}
+
+  #pin .count{
+    align-self:flex-start;font-family:var(--jp);font-weight:900;font-size:30px;
+    color:#fff;background:var(--c-deep);border:3px solid var(--ink);border-radius:999px;
+    padding:12px 32px;box-shadow:6px 7px 0 var(--ink);
+  }
+
+  #pin .motifs{
+    margin:34px 0 0;display:flex;gap:26px;
+    --mo-ink:#17130E;--mo-body:#FBF7EF;--mo-acc:#FFC61A;
+  }
+  #pin .motifs .m{
+    width:150px;height:150px;flex:none;
+    background:var(--c-soft);border:3px solid var(--ink);border-radius:22px;
+    box-shadow:6px 7px 0 var(--ink);
+    display:grid;place-items:center;
+  }
+  #pin .motifs svg{width:104px;height:104px;display:block}
+
+  #pin .foot{
+    margin:0;display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  }
+  #pin .url{font-family:var(--latin);font-weight:700;font-size:31px;letter-spacing:.03em}
+  #pin .note{font-family:var(--jp-text);font-weight:700;font-size:19px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="pin" style="--c:var(--__CVAR__);--c-deep:var(--__CVAR__-deep);--c-soft:var(--__CVAR__-soft)">
+  <div class="paper"></div>
+  <div class="shape"></div>
+  <div class="dots"></div>
+  <div class="inner">
+    <span class="brand">MONO NOTE</span>
+    <p class="cat">__LABEL__</p>
+    <h1>__HEADING__</h1>
+    <p class="lead">__LEAD__</p>
+    <div class="sp-a"></div>
+    <span class="count">__COUNT__点のピック</span>
+    <div class="motifs">__MOTIFS__</div>
+    <div class="sp-b"></div>
+    <div class="foot">
+      <span class="url">kininarumono.jp</span>
+      <span class="note">__NOTE__</span>
+    </div>
+  </div>
+</div>
+__SPRITE__
+</body>
+</html>

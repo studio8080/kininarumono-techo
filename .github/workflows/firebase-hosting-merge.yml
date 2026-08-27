@@ -24,12 +24,13 @@ jobs:
       # PICKS を足したのにカテゴリページを再生成し忘れると、/category/* が古いまま公開される。
       # 生成物はコミット済みなので、ここで作り直して差分が出たら止める（＝入れ忘れに気づける）。
       # 直し方: ローカルで node tools/build-category.mjs を実行してコミットする。
-      - name: Check generated category pages are up to date
+      - name: Check generated pages are up to date
         run: |
           node tools/build-category.mjs
-          if ! git diff --quiet -- public/category public/sitemap.xml; then
-            echo "::error::カテゴリページが古いです。ローカルで node tools/build-category.mjs を実行してコミットしてください。"
-            git --no-pager diff --stat -- public/category public/sitemap.xml
+          node tools/build-roundup.mjs
+          if ! git diff --quiet -- public/category public/read public/sitemap.xml; then
+            echo "::error::生成ページが古いです。ローカルで node tools/build-category.mjs と node tools/build-roundup.mjs を実行してコミットしてください。"
+            git --no-pager diff --stat -- public/category public/read public/sitemap.xml
             exit 1
           fi
       - name: Syntax check main.js

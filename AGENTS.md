@@ -131,6 +131,7 @@ OG画像だけ旧デザインで取り残されない。Pillowで直接描くと
 
 ```bash
 node tools/build-category.mjs
+node tools/build-roundup.mjs   # まとめ記事も PICKS を参照している（3-10）
 ```
 
 - **`public/category/*.html` を直接編集しない。** 次の再生成で消える。
@@ -153,6 +154,38 @@ node tools/build-category.mjs
 **`applyLimit()` の適用範囲**: `main.js` の「もっと見る」による件数制限は `#pickGrid` があるページ
 （＝トップ）に限定してある。ここを全ページ対象に戻すと、「もっと見る」ボタンが無いカテゴリページで
 7件目以降が `display:none` のまま二度と表示できなくなる。実際に作り込んで直した。
+
+### 3-10. まとめ記事（/read/ の生成ページ）を直接編集しない
+
+`/read/` には2種類ある。**混ぜないこと。**
+
+| 種類 | 例 | アフィリエイトリンク | 実体 |
+|---|---|---|---|
+| 選び方エッセイ | `zakka-no-mikata` など8本 | **含まない** | 手書きのHTML |
+| まとめ | `gift-3000en-ika` など3本 | **含む** | `tools/build-roundup.mjs` が生成 |
+
+```bash
+node tools/build-roundup.mjs
+```
+
+- **生成されたまとめ記事のHTMLを直接編集しない。** 次の再生成で消える。
+  文言も商品も `tools/build-roundup.mjs` の `ROUNDUPS` を編集して再生成する。
+- 商品は `[brand, name]` で PICKS を引いている。**PICKSから消えていると生成時にエラーで落ちる。**
+  週次の在庫監査（`check-stock.mjs --fix`）が販売終了品を消したときに、
+  記事側だけリンク切れで残るのを防ぐためにわざとそうしてある。落ちたら記事から外すか差し替える。
+- 見出しの「N選」は商品点数から自動で作る。手書きにすると増減でズレる（実際にズレた）。
+- 商品カードのマークアップは `tools/lib/site.mjs` の `cardHtml()` に集約してある。
+  `build-category.mjs` と共有していて、`data-brand` / `data-name` / `data-cat` は
+  `main.js` の `affiliate_click` 計測が読むので消さない。
+
+**開示の位置**: まとめ記事は商品リンクを含むので、3-6のとおり**最初の商品カードより前**に
+`.disclosure` を置いている（実測で197px上）。セクションを組み替えるときも順序を崩さないこと。
+トップの「読みもの」セクションの説明文も、エッセイとまとめの違いを書いてある。
+まとめ記事を増減させたらこの文言も実態に合っているか確認する。
+
+**記事を増やしたとき**: `tools/build-roundup.mjs` の `ROUNDUPS` に足すと
+`public/read/<slug>.html` と sitemap は自動で増えるが、**トップページの
+「読みもの」カードは手書き**なので `public/index.html` に自分で足すこと。
 
 ### 3-9. index.html の Pinterest 認証タグを消さない
 

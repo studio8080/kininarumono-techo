@@ -152,6 +152,19 @@ function readPicks() {
   // 中身はオブジェクトリテラルの羅列なので、そのまま式として評価する（外部入力ではない）
   const picks = new Function(`"use strict"; return [${body}];`)();
   if (!Array.isArray(picks) || picks.length === 0) throw new Error('PICKS のパースに失敗');
+
+  // tools/check-stock.mjs と tools/backfill-codes.mjs は `\{\s*cat:"..."\},` という
+  // 「末尾カンマ付きブロック」の正規表現でPICKSを数えている。配列の最後のエントリに
+  // 末尾カンマが無いと、その1件だけ在庫監査もitemCode付与も静かに素通りする（実際に起きていた）。
+  // ここで気づけるようにしておく。直し方: PICKS 最後のエントリの `}` を `},` にする。
+  const byRegex = (body.match(/\{\s*cat:"[\s\S]*?\},/g) || []).length;
+  if (byRegex !== picks.length) {
+    throw new Error(
+      `PICKSの件数が数え方で食い違う（式評価=${picks.length} / 正規表現=${byRegex}）。\n` +
+      '  配列の最後のエントリに末尾カンマが無いと思われる。`}` を `},` にすること。\n' +
+      '  そのままだと check-stock.mjs / backfill-codes.mjs が最後の1件を取りこぼす。'
+    );
+  }
   return picks;
 }
 

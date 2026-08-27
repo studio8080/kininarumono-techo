@@ -124,6 +124,36 @@ OG画像だけ旧デザインで取り残されない。Pillowで直接描くと
 見出しは `--display`（Dela Gothic One）ではなく **`--jp`（Zen Maru Gothic 900）**。
 サイトの `h1,h2` がそちらなので、間違えると別のサイトに見える。
 
+### 3-8. PICKS を触ったら カテゴリページを再生成する
+
+`/category/<cat>`（7本）は **`tools/build-category.mjs` が生成した静的HTML**で、
+商品カードがHTMLに焼き込まれている。生成物はリポジトリにコミットしてある。
+
+```bash
+node tools/build-category.mjs
+```
+
+- **`public/category/*.html` を直接編集しない。** 次の再生成で消える。
+  文言を直すなら `tools/build-category.mjs` の `COPY` を編集して再生成する。
+- PICKS に商品を足した／消した／画像やブラーブを直したら、必ず再生成してコミットする。
+- 忘れた場合は **デプロイのワークフローが差分を検出して落ちる**
+  （`.github/workflows/firebase-hosting-merge.yml` の「Check generated category pages are up to date」）。
+  落ちたらローカルで上のコマンドを実行してコミットし直す。
+- 何度実行しても同じ出力になる（冪等）。sitemap は未登録のカテゴリURLだけ追記し、
+  既存の `lastmod` は書き換えない（3-4b の「嘘の lastmod を作らない」に合わせている）。
+
+なぜ静的生成なのか: トップは商品をJSで描画し、初期表示6件以外は `display:none` にしている。
+この状態だと「iittala ティーマ マグカップ」のような指名検索の受け皿が1URLも無い。
+カテゴリページはJSが動かなくても本文として読める形にして、検索の入口を7本増やしている。
+
+**カード側の注意**: 生成するカードのマークアップは `main.js` の描画と揃えること。
+とくに `data-brand` / `data-name` / `data-cat` は `main.js` の `affiliate_click` 計測が読むので必須。
+`reveal` クラスは付けない（JSが落ちると `opacity:0` のまま本文が消えるため）。
+
+**`applyLimit()` の適用範囲**: `main.js` の「もっと見る」による件数制限は `#pickGrid` があるページ
+（＝トップ）に限定してある。ここを全ページ対象に戻すと、「もっと見る」ボタンが無いカテゴリページで
+7件目以降が `display:none` のまま二度と表示できなくなる。実際に作り込んで直した。
+
 ### 3-5. `prefers-reduced-motion` を尊重する
 
 演出を追加したら必ず `@media (prefers-reduced-motion: reduce)` にも対応を書く。

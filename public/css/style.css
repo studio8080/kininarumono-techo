@@ -278,6 +278,61 @@ margin:44px 0 16px;padding-left:16px;border-left:7px solid var(--ink);
 .article__lead{padding:16px 17px}
 }
 
+/* ---------- CATEGORY PAGE ---------- */
+/* /category/<cat> は tools/build-category.mjs が生成する静的ページ。
+   商品カードはHTMLに焼き込むので .reveal は付けない（JSが落ちても本文が読める）。 */
+.cat-page .section-head h1{font-size:clamp(23px,3.7vw,40px);line-height:1.35}
+.cat-page .eyebrow{color:var(--c,var(--ink));border-color:var(--c,var(--ink))}
+.cat-page h2{max-width:var(--maxw);margin:clamp(44px,6vw,72px) auto clamp(18px,2.5vw,26px);font-size:clamp(19px,2.6vw,26px)}
+.cat-page .cat-count{margin-top:0}
+
+.crumbs{
+max-width:var(--maxw);margin:0 auto 20px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+font-family:var(--jp-text);font-size:12.5px;font-weight:700;color:var(--muted);
+}
+.crumbs a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}
+.crumbs a:hover{color:var(--ink)}
+.crumbs span[aria-current]{color:var(--muted)}
+
+/* 導入文。記事の .article__body に寄せた組みだが、幅は grid と揃える */
+.cat-intro{max-width:var(--maxw);margin:0 auto clamp(26px,3.5vw,40px)}
+.cat-intro p{margin:0 0 16px;max-width:44em;font-size:15.5px;line-height:2.0;color:var(--ink-2)}
+.cat-intro p:last-child{margin-bottom:0}
+
+.catnav{max-width:var(--maxw);margin:0 auto;display:flex;flex-wrap:wrap;gap:10px}
+.catnav__link{
+font-family:var(--jp);font-weight:700;font-size:14px;padding:9px 18px;border-radius:999px;
+border:var(--bd);background:var(--paper-2);color:var(--c,var(--ink));
+box-shadow:2px 3px 0 var(--ink);transition:transform .16s var(--ease),box-shadow .16s var(--ease);
+}
+.catnav__link:hover{transform:translate(-2px,-2px);box-shadow:4px 5px 0 var(--ink)}
+/* トップのピック直下に置く、カテゴリ別ページへの導線。
+   すぐ上のチップ列と同じピル型にすると同じものが2列あるように見えるので、文字リンクで軽く出す。 */
+.catlinks{
+max-width:var(--maxw);margin:0 auto 26px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;
+font-family:var(--jp-text);font-size:13px;line-height:1.9;
+}
+.catlinks__label{font-weight:700;color:var(--muted)}
+.catlinks a{font-weight:700;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px}
+.catlinks a:hover{color:var(--ink);text-decoration-color:var(--yellow)}
+
+.cat-related{max-width:var(--maxw);margin:0 auto;padding:0;list-style:none;display:grid;gap:10px}
+.cat-related li{position:relative}
+.cat-related a{
+display:block;padding:14px 18px 14px 42px;font-size:15px;line-height:1.8;font-weight:700;color:var(--ink);
+background:var(--paper-2);border:1.5px solid var(--ink);border-radius:12px;
+transition:transform .16s var(--ease),box-shadow .16s var(--ease);
+}
+.cat-related a::before{content:"";position:absolute;left:16px;top:21px;width:12px;height:12px;border-radius:3px;background:var(--yellow);border:1.5px solid var(--ink);transform:rotate(-8deg)}
+.cat-related a:hover{transform:translate(-2px,-2px);box-shadow:4px 5px 0 var(--ink)}
+
+.cat-page .share{max-width:var(--maxw);margin-left:auto;margin-right:auto}
+
+@media(max-width:560px){
+.cat-intro p{font-size:15px;line-height:1.95}
+.cat-related a{padding:12px 15px 12px 38px}
+}
+
 /* 最新掲載分にだけ付く。全件が同じ日付のときは付かない（main.js の isNew 参照） */
 .card__new{
 font-family:var(--latin);font-weight:700;font-size:10.5px;letter-spacing:.08em;

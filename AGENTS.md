@@ -154,6 +154,22 @@ node tools/build-category.mjs
 （＝トップ）に限定してある。ここを全ページ対象に戻すと、「もっと見る」ボタンが無いカテゴリページで
 7件目以降が `display:none` のまま二度と表示できなくなる。実際に作り込んで直した。
 
+### 3-9. index.html の Pinterest 認証タグを消さない
+
+トップの head にこれがある。
+
+```html
+<meta name="p:domain_verify" content="2a135f6c43dd72d10c11a3ea13ade90d" />
+```
+
+kininarumono.jp の Pinterest サイト認証（claim）用で、2026-08-27に認証済み。
+**消すと認証が外れる**。外れると、サイトへリンクしているピンにアカウント名が出なくなり、
+サイト宛ピンのアナリティクスも取れなくなる。head を整理するときに巻き込みやすいので注意。
+Pinterestが見にくるのはトップだけなので、read/*.html や category/*.html には不要。
+
+（DNSのTXTレコードでも認証できるが、kininarumono.jp のDNSはXserverにあり
+Firebase Hosting向けのレコードと同居しているため、触らずに済むタグ方式を選んでいる。）
+
 ### 3-5. `prefers-reduced-motion` を尊重する
 
 演出を追加したら必ず `@media (prefers-reduced-motion: reduce)` にも対応を書く。

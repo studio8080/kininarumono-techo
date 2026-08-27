@@ -338,11 +338,15 @@
   let totalMatches = 0;
   const togglePicks = document.getElementById("togglePicks");
   const applyLimit = () => {
+    // カテゴリページ(/category/*)にも .card は並ぶが、あちらは全件表示が正なので触らない。
+    // #pickGrid があるページ（＝トップ）に限定しないと、「もっと見る」の無いページで
+    // 7件目以降が display:none のまま二度と出せなくなる。
+    if (!grid) return;
     const activeChip = document.querySelector(".chip.is-active");
     const cat = activeChip?.dataset.cat || "all";
     let visibleIndex = 0;
 
-    document.querySelectorAll(".card").forEach((card) => {
+    grid.querySelectorAll(".card").forEach((card) => {
       const matches = cat === "all" || card.dataset.cat === cat;
       if (!matches) {
         card.classList.add("is-hidden");
@@ -586,7 +590,9 @@
     });
     window.gtag("event", name, clean);
   };
-  const pageKind = location.pathname.startsWith("/read/") ? "article" : "top";
+  const pageKind = location.pathname.startsWith("/read/") ? "article"
+    : location.pathname.startsWith("/category/") ? "category"
+    : "top";
 
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a");

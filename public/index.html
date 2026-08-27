@@ -26,7 +26,7 @@
 <!-- 和文約物（「」・、。）の詰めを最適化 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css" />
 <!-- ?v= はキャッシュ破棄用。css/js を変更したら必ず数字を上げること（firebase.json で max-age=86400） -->
-<link rel="stylesheet" href="css/style.css?v=67" />
+<link rel="stylesheet" href="css/style.css?v=68" />
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kininarumono.jp/#organization","name":"気になるモノ手帖","url":"https://kininarumono.jp/","logo":{"@type":"ImageObject","url":"https://kininarumono.jp/images/favicon-512x512.png","width":512,"height":512},"sameAs":["https://room.rakuten.co.jp/totonou_note","https://www.instagram.com/kininarumonote/","https://pin.it/3uk3gKZUp","https://x.com/kininarumonote"]},{"@type":"WebSite","@id":"https://kininarumono.jp/#website","name":"気になるモノ手帖","alternateName":"MONO NOTE","url":"https://kininarumono.jp/","description":"定番からエッジのあるものまで。日常に馴染むデザインで、生活を少しアゲるアイテムキュレーション。","inLanguage":"ja-JP","publisher":{"@id":"https://kininarumono.jp/#organization"}}]}</script></head>
 <body>
 
@@ -356,6 +356,20 @@
     <button class="chip" data-cat="fashion" role="tab" aria-selected="false" style="--c:var(--amber-deep)">ファッション</button>
   </div>
 
+  <!-- 上のチップはJSの絞り込みでURLが変わらない。カテゴリ別ページへの実リンクをここに置いて,
+       クロール経路と共有できるURLを確保する（生成は tools/build-category.mjs）。
+       チップと同じ見た目のピルにすると2列に見えて紛らわしいので、こちらは文字リンクにする。 -->
+  <nav class="catlinks" aria-label="カテゴリ別ページ">
+    <span class="catlinks__label">カテゴリ別のページ</span>
+    <a href="/category/gadget">ガジェット</a>
+    <a href="/category/interior">インテリア</a>
+    <a href="/category/kitchen">食器・キッチン</a>
+    <a href="/category/beauty">コスメ・ケア</a>
+    <a href="/category/daily">日用品</a>
+    <a href="/category/goods">文具・雑貨</a>
+    <a href="/category/fashion">ファッション</a>
+  </nav>
+
   <div class="grid" id="pickGrid"><!-- cards injected by js --></div>
   <div class="more-row"><button class="more-btn" id="togglePicks" type="button" aria-expanded="false">もっと見る</button></div>
 </section>
@@ -570,6 +584,6 @@
 
 <button class="back-top" id="backTop" type="button" aria-label="ページトップへ戻る">↑</button>
 
-<script src="js/main.js?v=67" defer></script>
+<script src="js/main.js?v=68" defer></script>
 </body>
 </html>

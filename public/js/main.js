@@ -17,7 +17,7 @@
   // ---- picks (real affiliate links already live on ROOM/Pinterest) ----
   // price/在庫は変動するためカードには描画していない（表示すると価格改定で嘘になる）。
   const PICKS = [
-    // --- 2026.08.27 楽天ROOMから反映（29件） ---
+    // --- 2026.08.27 楽天ROOMから反映（28件） ---
     { cat:"fashion", date:"2026.08.27", motif:"m-watch", brand:"agete", name:"K10アメジスト×パール ピアスチャーム", price:"¥23,100", url:"https://hb.afl.rakuten.co.jp/hgc/56166504.3fb5399f.56166505.5b4d5fd4/_RTroom06836859_390566177_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstylife%2Fjg6089%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/stylife/cabinet/item/089/jg6089-01_1.jpg",
       blurb:"K10のチェーンに、アメジストとパールを一粒ずつ。揺れるたびに紫と白が入れ替わって見えるつくりが面白い。" },
     { cat:"fashion", date:"2026.08.27", motif:"m-polo-knit", brand:"TOMORROWLAND", name:"diotima メリノメッシュ ストライプ タートルネックニット", price:"¥76,560", url:"https://hb.afl.rakuten.co.jp/hgc/56166504.3fb5399f.56166505.5b4d5fd4/_RTroom06836859_390557925_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstylife%2Frx6654%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/stylife/cabinet/item/654/rx6654-02_1.jpg",
@@ -68,8 +68,6 @@
       blurb:"袖の付いたポンチョ型のレインウェア。自転車でも腕が泳がず、たたむと手のひらに乗る大きさになる。" },
     { cat:"kitchen", date:"2026.08.27", motif:"m-mug", brand:"BIRDS’ WORDS", name:"PATTERNED BOWL ペア2点セット（波佐見焼）", price:"¥22,000", url:"https://hb.afl.rakuten.co.jp/hgc/56c1e641.a53cc89f.56c1e642.0f9db6fc/_RTroom06836859_390015605_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ff423238-hasami%2Fcf023%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/f423238-hasami/cabinet/item/cf/cf023.jpg",
       blurb:"スコールグレーとイエローを組み合わせた波佐見焼のペアボウル。彫った模様が内側まで回り込んでいて、空のときの表情がいい（ふるさと納税の返礼品）。" },
-    { cat:"interior", date:"2026.08.27", motif:"m-chair", brand:"カグクロ", name:"ドロップ型デザインチェア（雫型）", price:"¥14,080", url:"https://hb.afl.rakuten.co.jp/hgc/56bc4b6f.f3088a16.56bc4b70.9851496b/_RTroom06836859_389941719_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkagukuro-office%2Fms-dchh001%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/kagukuro-office/cabinet/image/chair/personal/dchh001.jpg",
-      blurb:"背もたれが雫の形に抜けたチェア。パステル寄りの7色から選べて、脚まわりは細いまま。※法人宛のみ配送の商品。" },
     { cat:"kitchen", date:"2026.08.27", motif:"m-mug", brand:"古伊万里酒造", name:"NOMANNE 黄 180ml", price:"¥1,760", url:"https://hb.afl.rakuten.co.jp/hgc/56b3ffdb.c21127bf.56b3ffdc.b2471c84/_RTroom06836859_389786150_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fumeshu%2F1233-26-0180%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/umeshu/cabinet/t_rpg/1233/1233-26-0180.jpg",
       blurb:"器に酒を詰めた、飲み終えると焼きものが残るカップ酒。黄の地に散らした花柄は、そのまま湯呑みとして使える顔をしている。" },
     { cat:"goods", date:"2026.08.27", motif:"m-book", brand:"小学館", name:"永遠のソール・ライター", price:"¥2,750", url:"https://hb.afl.rakuten.co.jp/hgc/56170c50.4afdfd95.56170c51.f6a9976e/_RTroom06836859_389749539_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F16146246%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/book/cabinet/3255/9784096823255_1_3.jpg",

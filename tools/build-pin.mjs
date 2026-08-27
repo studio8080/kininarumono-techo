@@ -16,13 +16,16 @@
  *   楽天の商品画像を載せるとこの条件を満たせない。だから使わない。
  *
  *   また同ガイドラインは楽天提供画像への文字合成を禁じている（著作者人格権の保護）。
- *   このピンはサイト自身のデザイン資産（配色・書体・SVG図案）だけで作るので、
+ *   このピンはサイト自身のデザイン資産（配色・書体・自前の写真）だけで作るので、
  *   その禁止の対象外になり、Pinterestで効くテキストオーバーレイを堂々と使える。
  *
  *   リンク先について: 同ガイドラインが禁じているのは「認定SNS"以外"へ、
  *   アフィリエイトリンクが掲載されたメディアのURLを掲載すること」。
  *   Pinterestは認定SNSに含まれるため、アフィリエイトリンクを含む自サイトのURLを
  *   ピンのリンク先にすることは禁止されていない。
+ *
+ * 使う写真は public/images/ にあるサイト自前のムード写真・イラストのみ。
+ * SVGの線画アイコンは使わない（小さく並べると安っぽく見えるため DESIGN.md 5章で全面禁止）。
  *
  * 商品そのものを紹介する従来のピン（楽天の商品画像＋ a.r10.to 直リンク）は
  * これまでどおり。こちらはカテゴリページへの誘導という別枠。
@@ -39,7 +42,6 @@ import { tmpdir } from "node:os";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const TEMPLATE = join(ROOT, "tools", "pin-source.html");
-const INDEX = join(ROOT, "public", "index.html");
 const MAIN = join(ROOT, "public", "js", "main.js");
 const OUTDIR = join(ROOT, "tools", "pins");
 
@@ -49,43 +51,43 @@ const PINS = {
     cvar: "teal", label: "インテリア",
     heading: "北欧の定番から、<br /><em>灯りと小さな</em><br />オブジェまで",
     lead: "部屋の印象は、大きな家具より<br />灯りと小物の積み重ねで変わる。",
-    motifs: ["m-chair", "m-vase", "m-stand"]
+    photo: 'mood-room.webp', eyebrow: 'INTERIOR', tags: ['照明', '花瓶', 'チェア'], focal: 'center 46%'
   },
   kitchen: {
     cvar: "green", label: "食器・キッチン",
     heading: "毎日使うから、<br /><em>形と質感</em>で<br />選ぶ。",
     lead: "北欧食器の定番から波佐見焼、<br />燕三条のステンレス道具まで。",
-    motifs: ["m-mug", "m-wineglass", "m-scale"]
+    photo: 'mood-standard.webp', eyebrow: 'KITCHEN & TABLE', tags: ['北欧食器', 'グラス', 'キッチンツール'], focal: 'center 52%'
   },
   gadget: {
     cvar: "purple", label: "ガジェット",
     heading: "机に置いた<br>ときの<em>顔</em>で<br />選ぶ。",
     lead: "スピーカー、キーボード、<br />カメラまわりの小物まで。",
-    motifs: ["m-keyboard", "m-cable", "m-mixer"]
+    photo: 'mood-edge.webp', eyebrow: 'GADGET', tags: ['スピーカー', 'キーボード', 'イヤホン'], focal: 'center 54%'
   },
   fashion: {
     cvar: "amber", label: "ファッション",
     heading: "普段の服に、<br /><em>一点だけ</em><br />足して効くもの",
     lead: "バッグ、スニーカー、<br />アクセサリー、雨の日の一枚。",
-    motifs: ["m-sneaker", "m-tote", "m-polo"]
+    photo: 'hero-pop-props.webp', eyebrow: 'FASHION', tags: ['バッグ', 'スニーカー', '小物'], focal: 'center 58%'
   },
   goods: {
     cvar: "coral", label: "文具・雑貨",
     heading: "机の上と、<br />カバンの中の<br /><em>定位置</em>",
     lead: "ペン、手帳まわり、ポーチ、<br />財布、カードケース。",
-    motifs: ["m-book", "m-memo", "m-notebook"]
+    photo: 'slide-editors-filter.webp', eyebrow: 'STATIONERY', tags: ['文具', 'ポーチ', '財布'], focal: '62% 58%'
   },
   daily: {
     cvar: "violet", label: "日用品",
     heading: "生活感が<br />出やすいところ<br />ほど、<em>形を選ぶ</em>",
     lead: "収納ボックス、ティッシュまわり、<br />洗面所の小物。",
-    motifs: ["m-crate", "m-tissue", "m-diffuser"]
+    photo: 'slide-how-to-pick.webp', eyebrow: 'DAILY GOODS', tags: ['収納', '洗面まわり', 'ティッシュ'], focal: '58% 62%'
   },
   beauty: {
     cvar: "pink", label: "コスメ・ケア",
     heading: "出しっぱなし<br />でも<em>気持ちの<br />いいもの</em>",
     lead: "ソープ、バーム、ヘアケア。<br />パッケージまで含めて選ぶ。",
-    motifs: ["m-tube", "m-bottle", "m-pouch"]
+    photo: 'mood-luxury.webp', eyebrow: 'BEAUTY & CARE', tags: ['ソープ', 'バーム', 'ヘアケア'], focal: 'center 50%'
   }
 };
 
@@ -107,17 +109,6 @@ function countByCat() {
   return counts;
 }
 
-// ---- index.html にインラインしてあるSVG図案スプライトを取り出す ----
-// 図案はサイト自身の著作物。楽天の画像は一切使わない。
-function readSprite() {
-  const html = readFileSync(INDEX, "utf8");
-  const start = html.indexOf('<svg xmlns="http://www.w3.org/2000/svg" style="display:none"');
-  if (start < 0) throw new Error("index.html にSVGスプライトが見つからない");
-  const end = html.indexOf("</svg>", html.lastIndexOf("</symbol>", html.length));
-  if (end < 0) throw new Error("スプライトの終端が見つからない");
-  return html.slice(start, end + "</svg>".length);
-}
-
 const chrome = [
   process.env.CHROME_PATH,
   "C:/Program Files/Google/Chrome/Application/chrome.exe",
@@ -131,7 +122,6 @@ if (!chrome) {
 }
 
 const counts = countByCat();
-const sprite = readSprite();
 const template = readFileSync(TEMPLATE, "utf8");
 const work = join(tmpdir(), "kmn-pin");
 mkdirSync(work, { recursive: true });
@@ -143,19 +133,17 @@ for (const [cat, cfg] of Object.entries(PINS)) {
   const n = counts[cat];
   if (!n) { console.log(`skip ${cat}（PICKSに該当なし）`); continue; }
 
-  const motifs = cfg.motifs
-    .map((id) => `<span class="m"><svg viewBox="0 0 64 64"><use href="#${id}"/></svg></span>`)
-    .join("");
-
   const html = template
     .replaceAll("__CVAR__", cfg.cvar)
     .replace("__LABEL__", cfg.label)
     .replace("__HEADING__", cfg.heading)
     .replace("__LEAD__", cfg.lead)
     .replace("__COUNT__", String(n))
-    .replace("__MOTIFS__", motifs)
     .replace("__NOTE__", NOTE)
-    .replace("__SPRITE__", sprite);
+    .replace("__TAGS__", cfg.tags.map((t) => `<span>${t}</span>`).join(""))
+    .replace("__FOCAL__", cfg.focal)
+    .replace("__PHOTO__", cfg.photo)
+    .replace("__EYEBROW__", cfg.eyebrow);
 
   // テンプレートと同じ階層に置く（../public/css/style.css の相対パスを保つため）
   const tmpHtml = join(ROOT, "tools", `_pin-${cat}.html`);

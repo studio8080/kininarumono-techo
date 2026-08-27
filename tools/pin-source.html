@@ -6,115 +6,141 @@
 <meta name="robots" content="noindex, nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;500&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<!-- サイト本体のトークン（色・フォント）をそのまま読む。build-ogp.mjs と同じ理由で、
-     デザインを変えたときにピン画像だけ旧デザインで取り残されないようにするため。
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;500&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Outfit:wght@400;500;600;700" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css" />
+<!-- サイト本体のトークン（色・書体）をそのまま読む。build-ogp.mjs と同じ理由で、
+     デザインを変えたときにピンだけ旧デザインで取り残されないようにするため。
      file:// で開けるように相対パスにしてある（サーバ不要）。 -->
 <link rel="stylesheet" href="../public/css/style.css" />
 <style>
+  /* ===========================================================
+     Pinterestピン 1000x1500（2:3）
+     DESIGN.md に沿う: 紙色 + 墨の輪郭 + ぼかさないハード影のステッカー言語。
+     写真はサイト自身が持っている素材のみ（楽天の商品画像は使わない）。
+     図案SVGは使わない（DESIGN.md 5章）。
+     =========================================================== */
   html,body{margin:0;padding:0;background:#555}
-  /* 2:3。Pinterestの推奨比率 */
+
   #pin{
     position:relative;width:1000px;height:1500px;overflow:hidden;
     background:var(--paper-2);isolation:isolate;
     font-family:var(--jp);color:var(--ink);
     font-feature-settings:"palt" 1;
-    border:10px solid var(--ink);box-sizing:border-box;
-  }
-  /* 罫線の紙。トップの背景と同じ考え方 */
-  #pin .paper{
-    position:absolute;inset:0;z-index:0;
-    background-image:repeating-linear-gradient(0deg,transparent 0 74px,rgba(18,18,18,.05) 74px 76px);
-  }
-  /* カテゴリ色の斜め面。見出しの背を受ける */
-  #pin .shape{
-    position:absolute;left:-60px;top:210px;width:760px;height:430px;z-index:1;
-    background:var(--c-soft);
-    clip-path:polygon(6% 0,100% 5%,92% 100%,0 92%);
-  }
-  #pin .dots{
-    position:absolute;right:-40px;top:-40px;width:340px;height:340px;z-index:1;
-    background-image:radial-gradient(var(--c) 2.6px,transparent 2.7px);
-    background-size:26px 26px;opacity:.5;transform:rotate(-8deg);
-  }
-  #pin .inner{
-    position:relative;z-index:2;height:100%;box-sizing:border-box;
-    padding:84px 76px 74px;display:flex;flex-direction:column;
+    border:9px solid var(--ink);box-sizing:border-box;
   }
 
-  #pin .brand{
-    font-family:var(--latin);font-weight:700;letter-spacing:.22em;font-size:22px;
-    display:inline-flex;align-items:center;gap:12px;align-self:flex-start;
-    border:3px solid var(--ink);border-radius:999px;padding:10px 26px;background:var(--paper-2);
-    box-shadow:6px 7px 0 var(--ink);
+  /* ---- 上半分: 写真 ---- */
+  #pin .shot{position:absolute;inset:0 0 auto 0;height:660px;overflow:hidden;background:var(--ink)}
+  #pin .shot img{width:100%;height:100%;object-fit:cover;object-position:__FOCAL__;display:block}
+  /* 写真の上に方眼。単色ベタ塗りを避けるサイトの作法をそのまま持ってくる */
+  #pin .shot::after{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(0deg,rgba(18,18,18,.28),transparent 44%),
+      repeating-linear-gradient(90deg,rgba(255,255,255,.11) 0 1px,transparent 1px 58px),
+      repeating-linear-gradient(0deg,rgba(255,255,255,.11) 0 1px,transparent 1px 58px);
   }
 
-  #pin .cat{
-    margin:74px 0 0;font-family:var(--jp);font-weight:900;font-size:40px;letter-spacing:.06em;
-    color:var(--c-deep);
+  /* 件数は写真とパネルの境目に貼るシール。ステッカー言語（墨の輪郭＋ぼかさない影） */
+  #pin .sticker{
+    position:absolute;right:52px;top:520px;z-index:5;
+    font-family:var(--jp);font-weight:900;font-size:33px;letter-spacing:.02em;color:var(--ink);
+    background:var(--c);border:5px solid var(--ink);border-radius:999px;
+    padding:16px 34px;box-shadow:8px 9px 0 var(--ink);
+    transform:rotate(-3deg);
   }
+
+  /* ---- 上部のピル ---- */
+  #pin .pills{position:absolute;left:50px;top:46px;z-index:4;display:flex;gap:12px;align-items:center}
+  #pin .pill-mark{
+    font-family:var(--latin);font-weight:700;letter-spacing:.2em;font-size:21px;
+    background:var(--paper-2);border:4px solid var(--ink);border-radius:999px;padding:11px 26px;
+    box-shadow:7px 8px 0 var(--ink);
+  }
+  #pin .pill-cat{
+    font-family:var(--jp);font-weight:900;font-size:23px;letter-spacing:.06em;color:#fff;
+    background:var(--c-deep);border:4px solid var(--ink);border-radius:999px;padding:11px 26px;
+    box-shadow:7px 8px 0 var(--ink);
+  }
+
+  /* ---- 下: 紙のパネル（ステッカー） ---- */
+  #pin .panel{
+    position:absolute;left:0;right:0;top:596px;bottom:0;z-index:3;
+    background:var(--paper-2);
+    border-top:9px solid var(--ink);
+    border-radius:var(--r-arch) 0 0 0;
+    padding:58px 56px 0;box-sizing:border-box;
+    display:flex;flex-direction:column;
+    /* 紙のグレイン。ベタ塗りにしない（DESIGN.md 7章） */
+    background-image:repeating-linear-gradient(0deg,transparent 0 78px,rgba(18,18,18,.045) 78px 80px);
+  }
+
+  #pin .eyebrow-row{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+  #pin .rule{flex:1 1 auto;height:5px;background:var(--ink);border-radius:999px}
+  #pin .eyebrow{
+    font-family:var(--latin);font-weight:700;letter-spacing:.24em;font-size:19px;color:var(--c-deep);
+    flex:none;
+  }
+
   #pin h1{
-    margin:16px 0 0;font-family:var(--display);font-weight:400;
-    font-size:78px;line-height:1.28;letter-spacing:.005em;
+    margin:0;font-family:var(--display);font-weight:400;
+    font-size:78px;line-height:1.25;letter-spacing:.004em;
   }
   #pin h1 em{
-    font-style:normal;background:linear-gradient(transparent 64%,var(--yellow) 64%);
+    font-style:normal;
+    background:linear-gradient(transparent 62%,var(--yellow) 62%,var(--yellow) 96%,transparent 96%);
   }
 
   #pin .lead{
-    margin:40px 0 0;font-family:var(--jp-text);font-weight:700;
-    font-size:29px;line-height:1.95;color:var(--ink-2);
+    margin:32px 0 0;font-family:var(--jp-text);font-weight:700;
+    font-size:27px;line-height:1.9;color:var(--ink-2);
   }
 
-  /* 余白は見出し下と図案下で分け合う。図案の帯が下に張りつかないようにするため */
-  #pin .sp-a{flex:1 1 0;min-height:20px}
-  #pin .sp-b{flex:1.15 1 0;min-height:20px}
+  #pin .sp{flex:1 1 auto;min-height:14px}
 
-  #pin .count{
-    align-self:flex-start;font-family:var(--jp);font-weight:900;font-size:30px;
-    color:#fff;background:var(--c-deep);border:3px solid var(--ink);border-radius:999px;
-    padding:12px 32px;box-shadow:6px 7px 0 var(--ink);
+  /* 中身の見当をつけてもらうためのキーワード。サイトのタグと同じピル */
+  #pin .tags{display:flex;flex-wrap:wrap;gap:12px;margin:34px 0 0}
+  #pin .tags span{
+    font-family:var(--jp);font-weight:700;font-size:25px;color:var(--ink);
+    background:var(--c-soft);border:4px solid var(--ink);border-radius:999px;
+    padding:11px 24px;box-shadow:5px 6px 0 var(--ink);
   }
 
-  #pin .motifs{
-    margin:34px 0 0;display:flex;gap:26px;
-    --mo-ink:#17130E;--mo-body:#FBF7EF;--mo-acc:#FFC61A;
-  }
-  #pin .motifs .m{
-    width:150px;height:150px;flex:none;
-    background:var(--c-soft);border:3px solid var(--ink);border-radius:22px;
-    box-shadow:6px 7px 0 var(--ink);
-    display:grid;place-items:center;
-  }
-  #pin .motifs svg{width:104px;height:104px;display:block}
-
+  /* ---- 最下部の帯 ---- */
   #pin .foot{
-    margin:0;display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+    margin:32px -56px 0;padding:24px 56px;
+    border-top:5px solid var(--ink);background:var(--paper);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
   }
   #pin .url{font-family:var(--latin);font-weight:700;font-size:31px;letter-spacing:.03em}
-  #pin .note{font-family:var(--jp-text);font-weight:700;font-size:19px;color:var(--muted)}
+  #pin .note{font-family:var(--jp-text);font-weight:700;font-size:18px;color:var(--muted);text-align:right}
 </style>
 </head>
 <body>
 <div id="pin" style="--c:var(--__CVAR__);--c-deep:var(--__CVAR__-deep);--c-soft:var(--__CVAR__-soft)">
-  <div class="paper"></div>
-  <div class="shape"></div>
-  <div class="dots"></div>
-  <div class="inner">
-    <span class="brand">MONO NOTE</span>
-    <p class="cat">__LABEL__</p>
+  <div class="shot"><img src="../public/images/__PHOTO__" alt="" /></div>
+
+  <div class="pills">
+    <span class="pill-mark">MONO NOTE</span>
+    <span class="pill-cat">__LABEL__</span>
+  </div>
+
+  <span class="sticker">__COUNT__点</span>
+
+  <div class="panel">
+    <div class="eyebrow-row">
+      <span class="eyebrow">__EYEBROW__</span>
+      <span class="rule"></span>
+    </div>
     <h1>__HEADING__</h1>
     <p class="lead">__LEAD__</p>
-    <div class="sp-a"></div>
-    <span class="count">__COUNT__点のピック</span>
-    <div class="motifs">__MOTIFS__</div>
-    <div class="sp-b"></div>
+    <div class="tags">__TAGS__</div>
+    <div class="sp"></div>
     <div class="foot">
       <span class="url">kininarumono.jp</span>
       <span class="note">__NOTE__</span>
     </div>
   </div>
 </div>
-__SPRITE__
 </body>
 </html>

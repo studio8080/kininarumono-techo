@@ -12,12 +12,12 @@
 
 | 項目 | 値 |
 |---|---|
-| 公開URL | https://kininarumono-techo.web.app |
-| リポジトリ | https://github.com/mikan-koko/kininarumono-techo （public） |
+| 公開URL | https://kininarumono.jp （`kininarumono-techo.web.app` も同じサイトを指す） |
+| リポジトリ | https://github.com/studio8080/kininarumono-techo （public） |
 | ローカル | `H:\共有ドライブ\ここ企画\案件\気になるモノ手帖\kininarumono-site` |
 | ホスティング | Firebase Hosting（プロジェクトID `kininarumono-techo`、無料Sparkプラン） |
-| GitHubアカウント | `mikan-koko` |
-| Googleアカウント | `mikan@kokokikaku.com` |
+| GitHubアカウント | `studio8080`（2026-08-27に `mikan-koko` から譲渡） |
+| Googleアカウント | `studio@kokokikaku.com`（2026-08-27に `mikan@kokokikaku.com` から移譲。GCPプロジェクトIDは変えていない） |
 
 同じ親フォルダに `_zip展開直後の旧コピー_20260805/` がある。**これは配布zipの未編集コピーで、現行とは無関係。** 中身は本リポジトリに完全に取り込まれているので消してよい（判断は運営者に確認すること）。
 
@@ -316,6 +316,37 @@ firebase hosting:channel:delete design --force
 認証が切れていたら `firebase login --reauth`。**この再認証は対話的ターミナルでしか通らない**（AIエージェントの非対話シェルからは `Cannot run login in non-interactive mode` で失敗する）。運営者に実行してもらうこと。
 
 `firebase login:list` は失効していても「ログイン中」と表示するので信用しない。`firebase projects:list` を叩いて実際に通るか確認する。
+
+### 5-1. CIのデプロイ認証は Workload Identity Federation（鍵レス）
+
+`main` へのpushで `.github/workflows/firebase-hosting-merge.yml` が走り、
+`google-github-actions/auth@v2` が **Workload Identity Federation** でGCPに認証する。
+サービスアカウントの鍵JSONもFIREBASE_TOKENも使っていない（旧 `FIREBASE_TOKEN` Secretは
+残骸なので使わない・再登録しない）。
+
+リポジトリのVariablesに入っている2つで動く:
+
+| Variable | 値 |
+|---|---|
+| `WIF_PROVIDER` | `projects/810324229973/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider` |
+| `WIF_SERVICE_ACCOUNT` | `firebase-adminsdk-fbsvc@kininarumono-techo.iam.gserviceaccount.com` |
+
+**★この認証は「GitHubリポジトリのフルパス」に紐づいている。** サービスアカウントの
+IAMポリシーに、こういう形のプリンシパルが `roles/iam.workloadIdentityUser` で入っている:
+
+```
+principalSet://iam.googleapis.com/projects/810324229973/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository/studio8080/kininarumono-techo
+```
+
+つまり**リポジトリのオーナーや名前を変えると、この紐付けが一致しなくなりCIデプロイが必ず失敗する**。
+リポジトリを移す・リネームするときは、必ずGCP側の以下2か所も直すこと（Cloud Console）:
+
+1. サービスアカウント → 権限 → 上記プリンシパルの `attribute.repository/<owner>/<repo>` を新しい値に
+2. Workload Identity プール → プロバイダ → 属性条件に `assertion.repository_owner == '...'` が
+   あれば新しいオーナー名に
+
+Variables自体もリポジトリ譲渡では引き継がれないので、譲渡後に再登録が必要
+（値は上の表のとおり。秘密情報ではない）。
 
 ---
 

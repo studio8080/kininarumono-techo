@@ -22,15 +22,18 @@ import {
   cacheVersion, head, header, footer, disclosure, addToSitemap, writeIfChanged
 } from './lib/site.mjs';
 
-const TODAY = process.argv.includes('--date')
-  ? process.argv[process.argv.indexOf('--date') + 1]
-  : new Date().toISOString().slice(0, 10);
-const DISP = TODAY.replace(/-/g, '.');
+// 日付は ROUNDUPS の published/modified に固定で持たせる。
+// ここで new Date() を使うと、実行した日が datePublished に焼き込まれてしまい、
+// 「翌日に再生成すると必ず差分が出る」＝ CI の生成物チェック（.github/workflows）が
+// その日以降ずっと落ちる、という状態になる（実際に2026-08-30に踏んだ）。
+// 構造化データとしても、datePublished が再生成のたびに動くのは誤りなので固定する。
+const disp = (d) => d.replace(/-/g, '.');
 
 // 商品は [brand, name] で PICKS を引く。表記を1文字でも間違えたら生成時に落ちる。
 const ROUNDUPS = [
   {
     slug: 'gift-3000en-ika',
+    published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: 'ギフト', tagColor: 'violet-deep',
     titleBase: '3,000円以下で贈って外さない雑貨',
     desc: '予算3,000円以下で、プチギフトや手土産に贈って外さない雑貨をまとめました。文具、グラス、ソープまで、もらった人が毎日使えるものだけを選んでいます。',
@@ -73,6 +76,7 @@ const ROUNDUPS = [
 
   {
     slug: 'hitorigurashi-kaden-akari',
+    published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: '一人暮らし', tagColor: 'teal-deep',
     titleBase: '一人暮らしの部屋に置ける、小さな家電と灯り',
     desc: '一人暮らしのワンルームでも置ける、小さな家電と照明をまとめました。幅を取らないトースター、コードレスのテーブルランプ、1台で完結するスピーカーまで。',
@@ -114,6 +118,7 @@ const ROUNDUPS = [
 
   {
     slug: 'hokuo-design-teiban',
+    published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: '北欧', tagColor: 'green-deep',
     titleBase: '北欧デザインの定番、どれから買うか',
     desc: '北欧デザインの定番アイテムを、買う順番で整理しました。イッタラやHAYの食器から、アアルトベース、Yチェアやセブンチェアまで。価格帯ごとの入り口を紹介します。',
@@ -187,6 +192,11 @@ const find = (brand, name, slug) => {
 
 let written = 0;
 for (const r of ROUNDUPS) {
+  // published を書き忘れると undefined が datePublished に入って構造化データが壊れる。
+  // 静かに壊れるより落とす。
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(r.published || '')) {
+    throw new Error(`${r.slug}: published が YYYY-MM-DD で入っていない（値: ${r.published}）。ROUNDUPSに公開日を書くこと。`);
+  }
   const url = `${ORIGIN}/read/${r.slug}`;
   const all = r.sections.flatMap((s) => s.items.map(([b, n]) => find(b, n, r.slug)));
   // 見出しの「N選」は必ず実データから作る。手書きにすると商品の増減でズレる（実際にズレた）
@@ -214,8 +224,8 @@ ${s.items.map(([b, n, note]) => {
         headline: r.title,
         description: r.desc,
         image: OGP,
-        datePublished: TODAY,
-        dateModified: TODAY,
+        datePublished: r.published,
+        dateModified: r.modified || r.published,
         inLanguage: 'ja-JP',
         author: { '@id': `${ORIGIN}/#organization` },
         publisher: { '@id': `${ORIGIN}/#organization` },
@@ -268,7 +278,7 @@ ${header}
 <div class="article__topline">
 <span class="tag" style="--c:var(--${r.tagColor})">${esc(r.tag)}</span>
 <span class="tag" style="--c:var(--ink)">まとめ</span>
-<span class="article__date">${DISP}</span>
+<span class="article__date">${disp(r.modified || r.published)}</span>
 </div>
 
 <h1>${esc(r.title)}</h1>
@@ -323,5 +333,7 @@ ${footer(vparam)}
   console.log(`${changed ? '+' : '='} /read/${r.slug}  商品${all.length}点`);
 }
 
-const added = addToSitemap(ROUNDUPS.map((r) => `/read/${r.slug}`), TODAY, { priority: '0.8' });
+// lastmod もその記事自身の日付を使う（実行日を入れると新記事追加のたびに非決定になる）
+const added = ROUNDUPS.reduce((n, r) =>
+  n + addToSitemap([`/read/${r.slug}`], r.modified || r.published, { priority: '0.8' }), 0);
 console.log(`\n生成: ${ROUNDUPS.length}本 / 更新 ${written}件 / sitemapに追加 ${added}件 / ?v=${vparam}`);

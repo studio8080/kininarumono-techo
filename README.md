@@ -1,8 +1,8 @@
 # 気になるモノ手帖
 
-**公開URL: https://kininarumono-techo.web.app**
+**公開URL: https://kininarumono.jp**
 
-- リポジトリ: https://github.com/mikan-koko/kininarumono-techo
+- リポジトリ: https://github.com/studio8080/kininarumono-techo
 - Firebase コンソール: https://console.firebase.google.com/project/kininarumono-techo/overview
 
 デザインでアガる雑貨・インテリア・ガジェットのキュレーションサイト。

@@ -173,6 +173,11 @@ node tools/build-roundup.mjs
 - 商品は `[brand, name]` で PICKS を引いている。**PICKSから消えていると生成時にエラーで落ちる。**
   週次の在庫監査（`check-stock.mjs --fix`）が販売終了品を消したときに、
   記事側だけリンク切れで残るのを防ぐためにわざとそうしてある。落ちたら記事から外すか差し替える。
+- **日付は `ROUNDUPS` の `published` に固定で持たせる。実行日を使わない。**
+  以前は `new Date()` から `datePublished`／表示日付を作っていたため、公開した翌日以降に
+  再生成すると必ず差分が出て、CIの生成物チェックがその日からずっと落ちる状態だった
+  （2026-08-30に実際に踏んだ）。記事を追記・改稿して更新日を出したいときだけ
+  `modified: 'YYYY-MM-DD'` を足す。`published` が無い記事は生成時に落ちる。
 - 見出しの「N選」は商品点数から自動で作る。手書きにすると増減でズレる（実際にズレた）。
 - 商品カードのマークアップは `tools/lib/site.mjs` の `cardHtml()` に集約してある。
   `build-category.mjs` と共有していて、`data-brand` / `data-name` / `data-cat` は

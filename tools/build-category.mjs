@@ -242,7 +242,7 @@ function page(cat, picks, allPicks, vparam) {
 <nav class="site-nav" aria-label="メインナビ">
 <a href="/#about">ムード</a>
 <a href="/#select">ピック</a>
-<a href="/#read">読みもの</a>
+<a href="/read">読みもの</a>
 <a href="/#channels">チャンネル</a>
 </nav>
 <a class="pill pill--room" href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
@@ -251,7 +251,7 @@ function page(cat, picks, allPicks, vparam) {
 <div class="mobile-menu" id="mobileMenu" hidden>
 <a href="/#about">ムード</a>
 <a href="/#select">ピック</a>
-<a href="/#read">読みもの</a>
+<a href="/read">読みもの</a>
 <a href="/#channels">チャンネル</a>
 <a href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
 </div>

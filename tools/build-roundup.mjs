@@ -287,7 +287,7 @@ ${header}
 <main>
 <section>
 <article class="article article--roundup">
-<a class="article__crumb" href="/#read">← 読みものへ戻る</a>
+<a class="article__crumb" href="/read">← 読みものへ戻る</a>
 
 <div class="article__topline">
 <span class="tag" style="--c:var(--${r.tagColor})">${esc(r.tag)}</span>
@@ -330,7 +330,7 @@ ${related}
 
 ${catNavHtml(r.cats)}
 <div class="article__foot">
-<a class="article__crumb" href="/#read">← 読みものへ戻る</a>
+<a class="article__crumb" href="/read">← 読みものへ戻る</a>
 <a class="article__crumb" href="/#select">ピック一覧を見る →</a>
 </div>
 </article>

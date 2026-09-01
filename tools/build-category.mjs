@@ -18,7 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 // カード描画とPICKS読み取りは build-roundup.mjs と共有する。
 // ここに書き写すと必ず片方だけ古くなるため（data-* は main.js の計測が読む）。
-import { repoRoot, CAT, esc, readPicks, makeIsNew, cardHtml } from './lib/site.mjs';
+import { repoRoot, CAT, esc, readPicks, makeIsNew, cardHtml, footerCatlinks } from './lib/site.mjs';
 
 const outDir = path.join(repoRoot, 'public/category');
 const sitemapPath = path.join(repoRoot, 'public/sitemap.xml');
@@ -108,14 +108,22 @@ const COPY = {
 };
 
 // ---- 関連記事（内部リンク。カテゴリごとに相性のいいものを手で選ぶ） ----
+// まとめ記事（/read/*-ika 等）もここに含める。含めないと、トップの一覧からしか
+// 辿れないページになってしまう。fashion はまとめ3本のどれとも噛み合わないので足さない。
 const RELATED = {
-  interior: ['hitorigurashi-no-heyazukuri', 'kagu-brand-no-erabikata', 'burando-lineup-no-kijun'],
-  kitchen:  ['ii-mono-no-kijun', 'zakka-no-mikata', 'hitorigurashi-no-heyazukuri'],
-  gadget:   ['ii-mono-no-kijun', 'burando-lineup-no-kijun', 'zakka-no-mikata'],
+  interior: ['hitorigurashi-no-heyazukuri', 'kagu-brand-no-erabikata', 'burando-lineup-no-kijun',
+             'hokuo-design-teiban', 'hitorigurashi-kaden-akari'],
+  kitchen:  ['ii-mono-no-kijun', 'zakka-no-mikata', 'hitorigurashi-no-heyazukuri',
+             'hokuo-design-teiban', 'gift-3000en-ika'],
+  gadget:   ['ii-mono-no-kijun', 'burando-lineup-no-kijun', 'zakka-no-mikata',
+             'hitorigurashi-kaden-akari'],
   fashion:  ['trend-komono-rule', 'zakka-no-mikata', 'burando-lineup-no-kijun'],
-  goods:    ['zakka-no-asobigokoro', 'trend-komono-rule', 'gift-no-erabikata'],
-  daily:    ['hitorigurashi-no-heyazukuri', 'zakka-no-asobigokoro', 'ii-mono-no-kijun'],
-  beauty:   ['gift-no-erabikata', 'zakka-no-asobigokoro', 'ii-mono-no-kijun']
+  goods:    ['zakka-no-asobigokoro', 'trend-komono-rule', 'gift-no-erabikata',
+             'gift-3000en-ika'],
+  daily:    ['hitorigurashi-no-heyazukuri', 'zakka-no-asobigokoro', 'ii-mono-no-kijun',
+             'hitorigurashi-kaden-akari'],
+  beauty:   ['gift-no-erabikata', 'zakka-no-asobigokoro', 'ii-mono-no-kijun',
+             'gift-3000en-ika']
 };
 
 const ARTICLE_TITLES = {
@@ -126,7 +134,10 @@ const ARTICLE_TITLES = {
   'kagu-brand-no-erabikata': '家具ブランドは「どこに投資するか」で選ぶ',
   'burando-lineup-no-kijun': 'モノを選ぶときに見ている3つの視点',
   'gift-no-erabikata': 'プレゼント選びで見ている3つの基準',
-  'hitorigurashi-no-heyazukuri': '一人暮らしの部屋づくりで最初に決める3つのこと'
+  'hitorigurashi-no-heyazukuri': '一人暮らしの部屋づくりで最初に決める3つのこと',
+  'gift-3000en-ika': '3,000円以下で贈って外さない雑貨 8選',
+  'hitorigurashi-kaden-akari': '一人暮らしの部屋に置ける、小さな家電と灯り 7選',
+  'hokuo-design-teiban': '北欧デザインの定番、どれから買うか 9選'
 };
 
 function page(cat, picks, allPicks, vparam) {
@@ -307,6 +318,7 @@ ${related}
 </span>
 <p>デザインでアガる雑貨・インテリア・ガジェット。</p>
 </div>
+${footerCatlinks}
 <div class="footer__legal">
 <p><strong>アフィリエイトについて</strong><br />当サイトは、アフィリエイトプログラム（楽天アフィリエイト・A8.net）を利用しています。掲載リンクから商品を購入されると、運営者に報酬が支払われる場合があります。価格・在庫は掲載時点のもので変動します。購入前にリンク先でご確認ください。</p>
 <p class="footer__mini">運営者：気になるモノ手帖（お問い合わせは各SNSのDMまで）／掲載情報の正確性には努めますが内容を保証するものではありません。商品の購入・利用は各自のご判断でお願いします。</p>

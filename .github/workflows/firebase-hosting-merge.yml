@@ -28,8 +28,9 @@ jobs:
         run: |
           node tools/build-category.mjs
           node tools/build-roundup.mjs
+          node tools/build-read-hub.mjs
           if ! git diff --quiet -- public/category public/read public/sitemap.xml; then
-            echo "::error::生成ページが古いです。ローカルで node tools/build-category.mjs と node tools/build-roundup.mjs を実行してコミットしてください。"
+            echo "::error::生成ページが古いです。ローカルで node tools/build-category.mjs と node tools/build-roundup.mjs と node tools/build-read-hub.mjs を実行してコミットしてください。"
             git --no-pager diff --stat -- public/category public/read public/sitemap.xml
             exit 1
           fi

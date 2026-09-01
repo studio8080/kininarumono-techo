@@ -22,6 +22,17 @@ import {
   cacheVersion, head, header, footer, disclosure, addToSitemap, writeIfChanged
 } from './lib/site.mjs';
 
+// 記事からカテゴリページへ戻す導線。これが無いと、検索の入口になる記事から
+// 商品を並べたページへ流れず、リンクが片側にしか通らない。
+const CAT_LABEL = {
+  gadget: 'ガジェット', interior: 'インテリア', kitchen: '食器・キッチン',
+  beauty: 'コスメ・ケア', daily: '日用品', goods: '文具・雑貨', fashion: 'ファッション'
+};
+const catNavHtml = (cats) => `<h2>このテーマの商品を見る</h2>
+<nav class="catnav" aria-label="関連カテゴリ">
+${cats.map((c) => `<a class="catnav__link" href="/category/${c}" style="--c:var(--${CAT[c].cvar}-deep)">${esc(CAT_LABEL[c])}</a>`).join('\n')}
+</nav>`;
+
 // 日付は ROUNDUPS の published/modified に固定で持たせる。
 // ここで new Date() を使うと、実行した日が datePublished に焼き込まれてしまい、
 // 「翌日に再生成すると必ず差分が出る」＝ CI の生成物チェック（.github/workflows）が
@@ -33,6 +44,7 @@ const disp = (d) => d.replace(/-/g, '.');
 const ROUNDUPS = [
   {
     slug: 'gift-3000en-ika',
+    cats: ['goods', 'kitchen', 'beauty'],   // 記事末尾のカテゴリ導線
     published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: 'ギフト', tagColor: 'violet-deep',
     titleBase: '3,000円以下で贈って外さない雑貨',
@@ -76,6 +88,7 @@ const ROUNDUPS = [
 
   {
     slug: 'hitorigurashi-kaden-akari',
+    cats: ['gadget', 'interior', 'kitchen'],   // 記事末尾のカテゴリ導線
     published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: '一人暮らし', tagColor: 'teal-deep',
     titleBase: '一人暮らしの部屋に置ける、小さな家電と灯り',
@@ -118,6 +131,7 @@ const ROUNDUPS = [
 
   {
     slug: 'hokuo-design-teiban',
+    cats: ['kitchen', 'interior'],   // 記事末尾のカテゴリ導線
     published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: '北欧', tagColor: 'green-deep',
     titleBase: '北欧デザインの定番、どれから買うか',
@@ -314,6 +328,7 @@ ${sections}
 ${related}
 </ul>
 
+${catNavHtml(r.cats)}
 <div class="article__foot">
 <a class="article__crumb" href="/#read">← 読みものへ戻る</a>
 <a class="article__crumb" href="/#select">ピック一覧を見る →</a>

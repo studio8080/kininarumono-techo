@@ -138,6 +138,23 @@ export const header = `<header class="site-header" id="top">
 <a href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
 </div>`;
 
+/**
+ * 全ページのフッターに置くカテゴリ導線。カテゴリページは sitemap で priority 0.9 を
+ * 振っているのに、これが無いとトップの本文からしかクロール経路が無い。
+ * 手書きのページ（index.html / read/*.html）にも同じものを置いてある。
+ */
+export const footerCatlinks = `<nav class="catlinks catlinks--footer" aria-label="カテゴリ別ページ">
+<span class="catlinks__label">カテゴリ別のページ</span>
+<a href="/category/gadget">ガジェット</a>
+<a href="/category/interior">インテリア</a>
+<a href="/category/kitchen">食器・キッチン</a>
+<a href="/category/beauty">コスメ・ケア</a>
+<a href="/category/daily">日用品</a>
+<a href="/category/goods">文具・雑貨</a>
+<a href="/category/fashion">ファッション</a>
+<a href="/read">読みもの一覧</a>
+</nav>`;
+
 export function footer(vparam) {
   return `<footer class="site-footer" id="footer">
 <div class="footer__brand">
@@ -148,6 +165,7 @@ export function footer(vparam) {
 </span>
 <p>デザインでアガる雑貨・インテリア・ガジェット。</p>
 </div>
+${footerCatlinks}
 <div class="footer__legal">
 <p><strong>アフィリエイトについて</strong><br />当サイトは、アフィリエイトプログラム（楽天アフィリエイト・A8.net）を利用しています。掲載リンクから商品を購入されると、運営者に報酬が支払われる場合があります。価格・在庫は掲載時点のもので変動します。購入前にリンク先でご確認ください。</p>
 <p class="footer__mini">運営者：気になるモノ手帖（お問い合わせは各SNSのDMまで）／掲載情報の正確性には努めますが内容を保証するものではありません。商品の購入・利用は各自のご判断でお願いします。</p>

@@ -1,128 +1,90 @@
-/**
- * /read（読みもの一覧）のハブページを生成する。
- * カードのHTMLは index.html の .read-list をそのまま抜き出して使うので、
- * トップの一覧に記事を足せばここにも自動で載る（二重管理しない）。
- * 再生成: node tools/build-read-hub.mjs
- */
-import { readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+#!/usr/bin/env node
+// build-read-hub.mjs — /read（読みもの一覧）を public/read/index.html に生成する。
+//
+//   node tools/build-read-hub.mjs
+//
+// ★ index.html の読みものカードを増減したら再生成すること（CIが差分で落とす）
+//
+// なぜ生成するのか:
+//   記事カードのHTMLは index.html の .read-list をそのまま抜いて使う。
+//   一覧を2か所に書くと、記事を足したときに片方だけ古くなるため。
+//   トップに足す → ここを再生成、の順で運用する。
+//
+// 注意: 改行は LF のまま書く（他のジェネレータと同じ）。
+//   CRLF で書くと、Windows の autocrlf でコミットされた LF の blob と
+//   Linux の CI 上で全行差分になり、生成物チェックが必ず落ちる（2026-09-01に踏んだ）。
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const CRLF = (s) => s.replace(/\r\n/g, "\n").replace(/\n/g, "\r\n");
-const V = 70;
+import fs from 'node:fs';
+import path from 'node:path';
+import {
+  repoRoot, ORIGIN, cacheVersion, head, header, footer, writeIfChanged
+} from './lib/site.mjs';
 
-const index = readFileSync(join(ROOT, "public", "index.html"), "utf8");
-
-// --- .read-list をそのまま抜く（最後の </article> までを取り、div を閉じ直す） ---
-const start = index.indexOf('<div class="read-list">');
-if (start < 0) throw new Error("read-list not found in index.html");
-const secEnd = index.indexOf("</section>", start);
-const lastArticle = index.lastIndexOf("</article>", secEnd);
-if (lastArticle < 0) throw new Error("no article in read-list");
-let list = index.slice(start, lastArticle + "</article>".length) + "\r\n</div>";
-// トップでは初期表示を絞る演出クラスが付くことがあるので、一覧ページでは落とす
-list = list.replace(/ class="read-card ([^"]*?)\s*reveal"/g, ' class="read-card $1"');
-// index 側は2段インデント。ハブでは素で置く。
-list = list.replace(/^ {2}/gm, "");
-
-// --- 記事メタ（ItemList schema 用）を抽出 ---
-const items = [...index.matchAll(/<h3><a href="(\/read\/[^"]+)">([^<]+)<\/a><\/h3>/g)].map(
-  (m, i) => ({ pos: i + 1, url: "https://kininarumono.jp" + m[1], name: m[2] })
-);
-if (!items.length) throw new Error("no read links found");
-
-const TITLE = "読みもの — 買う前に整理するメモ｜気になるモノ手帖";
+const url = `${ORIGIN}/read`;
+const TITLE = '読みもの — 買う前に整理するメモ｜気になるモノ手帖';
 const DESC =
-  "モノを選ぶときの基準をまとめた編集メモと、テーマ別に商品を紹介するまとめ記事の一覧。雑貨・インテリア・ガジェット・ギフト・一人暮らしの部屋づくりまで、買う前に一度立ち止まって考えたいことを書いています。";
-const OG = "https://kininarumono.jp/images/ogp-2026-08.jpg";
+  'モノを選ぶときの基準をまとめた編集メモと、テーマ別に商品を紹介するまとめ記事の一覧。' +
+  '雑貨・インテリア・ガジェット・ギフト・一人暮らしの部屋づくりまで、買う前に一度立ち止まって考えたいことを書いています。';
 
-const schema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@graph": [
+const indexHtml = fs.readFileSync(path.join(repoRoot, 'public/index.html'), 'utf8');
+
+// ---- index.html の .read-list を抜く（最後の </article> までを取り、div を閉じ直す） ----
+const start = indexHtml.indexOf('<div class="read-list">');
+if (start < 0) throw new Error('index.html に .read-list が無い');
+const secEnd = indexHtml.indexOf('</section>', start);
+const lastArticle = indexHtml.lastIndexOf('</article>', secEnd);
+if (lastArticle < 0) throw new Error('.read-list に記事カードが無い');
+
+let list = indexHtml.slice(start, lastArticle + '</article>'.length) + '\n</div>';
+list = list
+  .replace(/\r\n/g, '\n')
+  // reveal はトップのスクロール演出用。一覧ページでは付けない
+  .replace(/ class="read-card ([^"]*?)\s*reveal"/g, ' class="read-card $1"')
+  // index 側は2段インデント。ここでは素で置く
+  .replace(/^ {2}/gm, '');
+
+const items = [...indexHtml.matchAll(/<h3><a href="(\/read\/[^"]+)">([^<]+)<\/a><\/h3>/g)]
+  .map((m, i) => ({ position: i + 1, name: m[2], url: ORIGIN + m[1] }));
+if (!items.length) throw new Error('index.html に読みもののリンクが無い');
+
+const vparam = cacheVersion();
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@graph': [
     {
-      "@type": "CollectionPage",
-      "@id": "https://kininarumono.jp/read#page",
-      url: "https://kininarumono.jp/read",
+      '@type': 'CollectionPage',
+      '@id': `${url}#page`,
+      url,
       name: TITLE,
       description: DESC,
-      inLanguage: "ja-JP",
-      isPartOf: { "@id": "https://kininarumono.jp/#website" },
+      inLanguage: 'ja-JP',
+      isPartOf: { '@id': `${ORIGIN}/#website` }
     },
     {
-      "@type": "BreadcrumbList",
-      "@id": "https://kininarumono.jp/read#breadcrumb",
+      '@type': 'BreadcrumbList',
+      '@id': `${url}#breadcrumb`,
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "気になるモノ手帖", item: "https://kininarumono.jp/" },
-        { "@type": "ListItem", position: 2, name: "読みもの", item: "https://kininarumono.jp/read" },
-      ],
+        { '@type': 'ListItem', position: 1, name: '気になるモノ手帖', item: `${ORIGIN}/` },
+        { '@type': 'ListItem', position: 2, name: '読みもの', item: url }
+      ]
     },
     {
-      "@type": "ItemList",
-      "@id": "https://kininarumono.jp/read#itemlist",
-      name: "読みもの一覧",
+      '@type': 'ItemList',
+      '@id': `${url}#itemlist`,
+      name: '読みもの一覧',
       numberOfItems: items.length,
-      itemListElement: items.map((it) => ({
-        "@type": "ListItem",
-        position: it.pos,
-        name: it.name,
-        url: it.url,
-      })),
-    },
-  ],
-});
+      itemListElement: items.map((it) => ({ '@type': 'ListItem', ...it }))
+    }
+  ]
+};
 
 const html = `<!DOCTYPE html>
 <html lang="ja">
-<head> <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-S4LRS2KCRZ"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-S4LRS2KCRZ'); </script>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${TITLE}</title>
-<meta name="description" content="${DESC}" />
-<meta property="og:title" content="${TITLE}" />
-<meta property="og:description" content="${DESC}" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://kininarumono.jp/read" />
-<link rel="canonical" href="https://kininarumono.jp/read" />
-<meta property="og:site_name" content="気になるモノ手帖" />
-<meta property="og:locale" content="ja_JP" />
-<meta property="og:image" content="${OG}" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="${TITLE}" /><meta name="twitter:description" content="${DESC}" /><meta name="twitter:image" content="${OG}" />
-<meta name="theme-color" content="#0A57FF" />
-<link rel="icon" href="/favicon.ico" sizes="32x32" /><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" /><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" /><link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png" /><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;500&family=Zen+Maru+Gothic:wght@400;500;700;900&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css" />
-<!-- ?v= はキャッシュ破棄用。css/js を変更したら全ページで数字を上げること -->
-<link rel="stylesheet" href="/css/style.css?v=${V}" />
-<script type="application/ld+json">${schema}</script></head>
+${head({ title: TITLE, desc: DESC, url, vparam, ld })}
 <body>
 
-<header class="site-header" id="top">
-<a href="/" class="wordmark" aria-label="気になるモノ手帖 トップへ">
-<img class="wordmark__mark" src="/images/logo-mark.webp" alt="" width="320" height="320" decoding="async" />
-<span class="wordmark__name">気になるモノ手帖</span>
-<span class="wordmark__sub">MONO NOTE</span>
-</a>
-<nav class="site-nav" aria-label="メインナビ">
-<a href="/#about">ムード</a>
-<a href="/#select">ピック</a>
-<a href="/read">読みもの</a>
-<a href="/#channels">チャンネル</a>
-</nav>
-<a class="pill pill--room" href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
-<button class="nav-toggle" aria-label="メニューを開閉" aria-expanded="false"><span></span><span></span><span></span></button>
-</header>
-<div class="mobile-menu" id="mobileMenu" hidden>
-<a href="/#about">ムード</a>
-<a href="/#select">ピック</a>
-<a href="/read">読みもの</a>
-<a href="/#channels">チャンネル</a>
-<a href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
-</div>
+${header}
 
 <main>
 <section class="read cat-page">
@@ -164,40 +126,11 @@ ${list}
 </section>
 </main>
 
-<footer class="site-footer" id="footer">
-<div class="footer__brand">
-<span class="wordmark wordmark--footer">
-<img class="wordmark__mark" src="/images/logo-mark.webp" alt="" width="320" height="320" loading="lazy" decoding="async" />
-<span class="wordmark__name">気になるモノ手帖</span>
-<span class="wordmark__sub">MONO NOTE</span>
-</span>
-<p>デザインでアガる雑貨・インテリア・ガジェット。</p>
-</div>
-<nav class="catlinks catlinks--footer" aria-label="カテゴリ別ページ">
-<span class="catlinks__label">カテゴリ別のページ</span>
-<a href="/category/gadget">ガジェット</a>
-<a href="/category/interior">インテリア</a>
-<a href="/category/kitchen">食器・キッチン</a>
-<a href="/category/beauty">コスメ・ケア</a>
-<a href="/category/daily">日用品</a>
-<a href="/category/goods">文具・雑貨</a>
-<a href="/category/fashion">ファッション</a>
-<a href="/read">読みもの一覧</a>
-</nav>
-<div class="footer__legal">
-<p><strong>アフィリエイトについて</strong><br />当サイトは、アフィリエイトプログラム（楽天アフィリエイト・A8.net）を利用しています。掲載リンクから商品を購入されると、運営者に報酬が支払われる場合があります。価格・在庫は掲載時点のもので変動します。購入前にリンク先でご確認ください。</p>
-<p class="footer__mini">運営者：気になるモノ手帖（お問い合わせは各SNSのDMまで）／掲載情報の正確性には努めますが内容を保証するものではありません。商品の購入・利用は各自のご判断でお願いします。</p>
-</div>
-<p class="footer__copy">© <span id="year"></span> 気になるモノ手帖</p>
-</footer>
-
-<button class="back-top" id="backTop" type="button" aria-label="ページトップへ戻る">↑</button>
-
-<script src="/js/main.js?v=${V}" defer></script>
+${footer(vparam)}
 </body>
 </html>
 `;
 
-const out = join(ROOT, "public", "read", "index.html");
-writeFileSync(out, CRLF(html));
-console.log(`wrote ${out} (${items.length} articles)`);
+const dest = path.join(repoRoot, 'public/read/index.html');
+const changed = writeIfChanged(dest, html);
+console.log(`${changed ? '+' : '='} /read  記事${items.length}本 / ?v=${vparam}`);

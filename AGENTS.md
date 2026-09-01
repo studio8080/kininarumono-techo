@@ -132,10 +132,17 @@ OG画像だけ旧デザインで取り残されない。Pillowで直接描くと
 ```bash
 node tools/build-category.mjs
 node tools/build-roundup.mjs   # まとめ記事も PICKS を参照している（3-10）
+node tools/build-read-hub.mjs  # /read の一覧は index.html の .read-list から作る
 ```
 
 - **`public/category/*.html` を直接編集しない。** 次の再生成で消える。
   文言を直すなら `tools/build-category.mjs` の `COPY` を編集して再生成する。
+- **同じ理由で `public/read/index.html`（読みもの一覧）も直接編集しない。**
+  カードは `index.html` の `.read-list` を抜いて使うので、記事を足すときは
+  トップの一覧に足してから `build-read-hub.mjs` を再実行する。
+- 全ページ共通のフッターに置くカテゴリ導線は `tools/lib/site.mjs` の
+  `footerCatlinks` にある。手書きページ（`index.html` / `read/*.html`）には
+  同じものを直接書いてあるので、変えるときは両方直す。
 - PICKS に商品を足した／消した／画像やブラーブを直したら、必ず再生成してコミットする。
 - 忘れた場合は **デプロイのワークフローが差分を検出して落ちる**
   （`.github/workflows/firebase-hosting-merge.yml` の「Check generated category pages are up to date」）。

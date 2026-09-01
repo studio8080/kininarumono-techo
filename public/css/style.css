@@ -266,6 +266,10 @@ font-family:var(--jp);font-weight:900;font-size:clamp(19px,2.4vw,25px);line-heig
 margin:44px 0 16px;padding-left:16px;border-left:7px solid var(--ink);
 }
 .article__body h2:first-child{margin-top:0}
+/* 本文の外に置く小見出し（「あわせて読む」「このテーマの商品を見る」）。
+   h1,h2 の共通指定が margin:0 なので、ここで余白を与えないと直後の
+   リストやナビに貼り付いて見える。 */
+.article>h2{margin:clamp(40px,5vw,60px) 0 clamp(16px,2vw,22px);font-size:clamp(19px,2.4vw,24px)}
 .article__body p{margin:0 0 18px;font-size:16px;line-height:2.05;color:var(--ink-2)}
 .article__body strong{font-weight:900;color:var(--ink);background:linear-gradient(transparent 62%,rgba(255,198,26,.72) 62%)}
 .article__body ul{margin:0 0 22px;padding:0;list-style:none;display:grid;gap:10px}
@@ -336,6 +340,9 @@ font-family:var(--jp-text);font-size:13px;line-height:1.9;
 .catlinks__label{font-weight:700;color:var(--muted)}
 .catlinks a{font-weight:700;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px}
 .catlinks a:hover{color:var(--ink);text-decoration-color:var(--yellow)}
+/* フッター版。全ページに置いてカテゴリページへのクロール経路を確保する。
+   フッターの他の子（footer__brand 等）と同じ幅で揃うが、罫線で本文と切る。 */
+.catlinks--footer{border-top:1.5px solid var(--line);padding-top:22px}
 
 .cat-related{max-width:var(--maxw);margin:0 auto;padding:0;list-style:none;display:grid;gap:10px}
 .cat-related li{position:relative}

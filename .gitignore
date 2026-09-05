@@ -6,3 +6,5 @@ node_modules/
 .cache/
 tools/.rakuten.json
 tools/pins/
+stock-report.json
+backfill-report.json

@@ -48,7 +48,7 @@ function itemCodeOf(block) {
 const nameOf = (b) => (b.match(/name:"([^"]*)"/) || [, ''])[1];
 
 async function check(itemCode) {
-  const u = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20220601?' + new URLSearchParams({
+  const u = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701?' + new URLSearchParams({
     applicationId: cfg.applicationId, accessKey: cfg.accessKey, affiliateId: cfg.affiliateId, format: 'json', hits: '1', itemCode
   });
   for (let attempt = 0; attempt < 4; attempt++) {
@@ -57,9 +57,16 @@ async function check(itemCode) {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36'
     }});
     if (r.status === 429) { await new Promise(x => setTimeout(x, 1500 * (attempt + 1))); continue; } // レート制限→待って再試行
-    const j = await r.json();
-    const it = j.Items && j.Items[0] && j.Items[0].Item;
-    if (!it) return 'DISCONTINUED';                 // 200かつ0件＝販売終了の可能性
+    let j; try { j = await r.json(); } catch { return 'API_ERROR'; }
+
+    // ★ エラー応答を「0件」と取り違えないこと（2026-08-31にこれで全30件を販売終了と誤判定した）。
+    //   APIのバージョン廃止・鍵の失効・Referer不足はいずれも Items を含まない応答を返す。
+    //   `!j.Items` を販売終了と見なすと、生きている商品をまとめて削除しにいく。
+    if (!r.ok || j.errors || j.error) return 'API_ERROR';
+    if (!Array.isArray(j.Items)) return 'API_ERROR'; // 想定外の形。判定不能として扱う
+
+    const it = j.Items[0] && j.Items[0].Item;
+    if (!it) return 'DISCONTINUED';                 // 200かつItemsが空配列＝販売終了の可能性
     return it.availability === 1 ? 'IN_STOCK' : 'OUT_OF_STOCK';
   }
   return 'RATE_LIMITED'; // 判定保留（販売終了扱いにしない）
@@ -76,8 +83,8 @@ for (const b of blocks) {
 
 const by = (s) => results.filter(r => r.state === s);
 console.log('=== 在庫監査 ===');
-console.log(`在庫あり:${by('IN_STOCK').length} 在庫切れ:${by('OUT_OF_STOCK').length} 販売終了の可能性:${by('DISCONTINUED').length} 判定保留(429):${by('RATE_LIMITED').length} 要バックフィル:${by('UNCHECKABLE').length}`);
-for (const s of ['OUT_OF_STOCK', 'DISCONTINUED', 'RATE_LIMITED', 'UNCHECKABLE']) {
+console.log(`在庫あり:${by('IN_STOCK').length} 在庫切れ:${by('OUT_OF_STOCK').length} 販売終了の可能性:${by('DISCONTINUED').length} 判定保留(429):${by('RATE_LIMITED').length} API異常:${by('API_ERROR').length} 要バックフィル:${by('UNCHECKABLE').length}`);
+for (const s of ['OUT_OF_STOCK', 'DISCONTINUED', 'RATE_LIMITED', 'API_ERROR', 'UNCHECKABLE']) {
   const g = by(s); if (g.length) { console.log(`\n[${s}]`); g.forEach(r => console.log(`  - ${r.name} (${r.code || '-'}) ${r.note || ''}`)); }
 }
 fs.writeFileSync(path.join(repoRoot, 'stock-report.json'),
@@ -86,7 +93,19 @@ fs.writeFileSync(path.join(repoRoot, 'stock-report.json'),
 // --fix: 「販売終了(該当なし)」のみ削除。在庫切れはキープ（再入荷し得るため）。
 if (FIX) {
   const remove = by('DISCONTINUED');
-  if (!remove.length) { console.log('\n[--fix] 削除対象（販売終了）はありません。'); }
+  const checked = results.filter((r) => r.state !== 'UNCHECKABLE').length;
+
+  // 削除は取り返しがつく操作ではない（PR経由でも、マージすれば収益リンクが消える）。
+  // 「判定できていないのに削除に進む」経路を2つ塞ぐ。
+  if (by('API_ERROR').length) {
+    console.error(`\n[--fix 中止] API異常が ${by('API_ERROR').length} 件あります。判定が信用できないので削除しません。`);
+    console.error('  エンドポイントのバージョン廃止・鍵の失効・Referer不足を先に確認してください。');
+    process.exitCode = 1;
+  } else if (checked > 0 && remove.length > Math.max(5, checked * 0.2)) {
+    console.error(`\n[--fix 中止] ${checked}件中 ${remove.length}件が販売終了判定。多すぎるので自動削除しません。`);
+    console.error('  一度に2割以上が消えるのは、商品側ではなくAPI側の異常を疑うべき状況です。');
+    process.exitCode = 1;
+  } else if (!remove.length) { console.log('\n[--fix] 削除対象（販売終了）はありません。'); }
   else {
     for (const r of remove) src = src.replace('\n    ' + r.block, '').replace(r.block, ''); // 前置改行込みで除去
     src = src.replace(/([?&]v=)(\d+)/g, (m, a, n) => a + (parseInt(n, 10) + 1)); // main.js内に?vは無いが安全側

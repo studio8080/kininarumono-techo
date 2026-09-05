@@ -18,7 +18,7 @@ if (!keyword && !itemCode) { console.error('--keyword か --itemcode が必要')
 const params = new URLSearchParams({ applicationId: cfg.applicationId, accessKey: cfg.accessKey, affiliateId: cfg.affiliateId, format: 'json', hits: '3' });
 if (itemCode) params.set('itemCode', itemCode);
 if (keyword) params.set('keyword', keyword);
-const endpoint = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20220601?' + params.toString();
+const endpoint = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701?' + params.toString();
 let out;
 try { out = execFileSync('curl.exe', ['-sS','-H','Referer: https://kininarumono.jp/','-H','Origin: https://kininarumono.jp','-H','User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', endpoint], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 }); }
 catch (e) { console.error('[curl実行エラー]', e.message); process.exit(1); }

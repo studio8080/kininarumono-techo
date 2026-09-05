@@ -52,7 +52,7 @@ async function resolveShopUrlcode(block) {
 async function searchCode(shop, urlcode, name) {
   for (const kw of [urlcode, name]) {
     if (!kw) continue;
-    const u = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20220601?' + new URLSearchParams({
+    const u = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701?' + new URLSearchParams({
       applicationId: cfg.applicationId, accessKey: cfg.accessKey, affiliateId: cfg.affiliateId, format: 'json', hits: '10', shopCode: shop, keyword: kw });
     for (let a = 0; a < 4; a++) {
       const r = await fetch(u, { headers: H });

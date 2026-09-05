@@ -50,7 +50,7 @@ if (src.includes(`code:"${itemCode}"`) || (shop && src.includes(`item.rakuten.co
 
 async function fetchItem(code) {
   const params = new URLSearchParams({ applicationId: cfg.applicationId, accessKey: cfg.accessKey, affiliateId: cfg.affiliateId, format: 'json', hits: '1', itemCode: code });
-  const url = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20220601?' + params.toString();
+  const url = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701?' + params.toString();
   const r = await fetch(url, { headers: { 'Referer': 'https://kininarumono.jp/', 'Origin': 'https://kininarumono.jp', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36' } });
   const j = await r.json();
   if (j.error) { console.error('[APIエラー]', j.error, j.error_description || ''); process.exit(1); }

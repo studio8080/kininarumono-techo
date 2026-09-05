@@ -18,8 +18,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  repoRoot, ORIGIN, OGP, CAT, esc, readPicks, makeIsNew, cardHtml,
-  cacheVersion, head, header, footer, disclosure, addToSitemap, writeIfChanged
+  repoRoot, ORIGIN, CAT, esc, readPicks, makeIsNew, cardHtml,
+  cacheVersion, head, header, footer, disclosure, addToSitemap, writeIfChanged, adSlot, AD_BY_PAGE
 } from './lib/site.mjs';
 
 // 記事からカテゴリページへ戻す導線。これが無いと、検索の入口になる記事から
@@ -44,12 +44,14 @@ const disp = (d) => d.replace(/-/g, '.');
 const ROUNDUPS = [
   {
     slug: 'gift-3000en-ika',
+    shareImage: 'article-share-gift.jpg',
     cats: ['goods', 'kitchen', 'beauty'],   // 記事末尾のカテゴリ導線
     published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: 'ギフト', tagColor: 'violet-deep',
     titleBase: '3,000円以下で贈って外さない雑貨',
     desc: '予算3,000円以下で、プチギフトや手土産に贈って外さない雑貨をまとめました。文具、グラス、ソープまで、もらった人が毎日使えるものだけを選んでいます。',
     lead: '3,000円という予算は、贈る側にとっては気を遣わせない額で、もらう側にとっては「自分では選ばないけど、あれば使う」がちょうど成立する帯です。プチギフトや手土産、ちょっとしたお礼に渡せるものを、実際にサイトに載せている中から集めました。',
+    intentGuide: '3,000円以下のプレゼント、プチギフト、手土産で外しにくい雑貨を探している人向け。価格より先に、毎日使えるか、置き場所を取らないか、好みを外しにくい形かを見ます。',
     intro: [
       'この価格帯で失敗するのは、たいてい「その場で気が利いて見えるもの」を選んだときです。もらった直後は盛り上がるけれど、翌週には引き出しの奥に入っている。逆に外さないのは、相手がすでに毎日使っている道具の、ちょっといい版です。',
       '選ぶ基準は3つだけにしています。毎日か毎週は手に取るものか、置き場所を新しく作らなくていいか、相手の好みが分からなくても成立する形か。以下はその3つを通ったものです。'
@@ -88,12 +90,14 @@ const ROUNDUPS = [
 
   {
     slug: 'hitorigurashi-kaden-akari',
+    shareImage: 'article-share-room.jpg',
     cats: ['gadget', 'interior', 'kitchen'],   // 記事末尾のカテゴリ導線
     published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: '一人暮らし', tagColor: 'teal-deep',
     titleBase: '一人暮らしの部屋に置ける、小さな家電と灯り',
     desc: '一人暮らしのワンルームでも置ける、小さな家電と照明をまとめました。幅を取らないトースター、コードレスのテーブルランプ、1台で完結するスピーカーまで。',
     lead: 'ワンルームで家電を増やすときに効くのは、性能の差より置き場所の差です。同じ機能でも、幅が5cm違うだけで置けるか置けないかが決まる。ここでは実際に幅と置き方から選んだものを並べました。',
+    intentGuide: '一人暮らしの小さい部屋で、家電・照明・スピーカーを置けるか迷っている人向け。幅、配線、光の高さから候補を絞ります。',
     intro: [
       '一人暮らしの部屋づくりで最初に効くのは、家具を入れ替えることではなく、光の高さを変えることだと思っています。天井の照明だけで済ませていた部屋に、低い位置の灯りを1つ足す。それだけで夜の見え方が変わるので、まずそこから試すのが一番失敗が少ないところです。',
       '家電は逆に、置き場所の寸法から逆算します。カウンターの奥行き、コンセントの位置、扉を開ける方向。これを先に測っておくと、候補は驚くほど絞れます。'
@@ -131,12 +135,14 @@ const ROUNDUPS = [
 
   {
     slug: 'hokuo-design-teiban',
+    shareImage: 'article-share-room.jpg',
     cats: ['kitchen', 'interior'],   // 記事末尾のカテゴリ導線
     published: '2026-08-27',   // 公開日。動かさない（modified を足せば更新日だけ変えられる）
     tag: '北欧', tagColor: 'green-deep',
     titleBase: '北欧デザインの定番、どれから買うか',
     desc: '北欧デザインの定番アイテムを、買う順番で整理しました。イッタラやHAYの食器から、アアルトベース、Yチェアやセブンチェアまで。価格帯ごとの入り口を紹介します。',
     lead: '北欧の定番と呼ばれるものは数が多く、しかも価格の幅が数千円から十数万円まであります。全部は無理でも、どれから手を付けると部屋が変わるのかには順番があると思っていて、それを価格帯ごとに整理しました。',
+    intentGuide: '北欧デザインの定番を、何から買うか迷っている人向け。食器、花瓶、灯り、椅子の順に、失敗しにくい入口を整理します。',
     intro: [
       '定番が定番であり続ける理由は、たいてい「他のものと並べても喧嘩しない」ことにあります。単体で見て一番かっこいいものが定番になるわけではなく、すでに部屋にあるものの隣に置いたときに成立するものが残っていく。だから買い足していく前提なら、結局そこに戻ってきます。',
       '順番としては、食器 → 花と灯り → 椅子の順で薦めています。前に行くほど安く、失敗しても取り返しがつき、しかも毎日手に取る回数が多いからです。'
@@ -216,6 +222,9 @@ for (const r of ROUNDUPS) {
   // 見出しの「N選」は必ず実データから作る。手書きにすると商品の増減でズレる（実際にズレた）
   r.title = r.titleBase + ' ' + all.length + '選';
   const fullTitle = `${r.title}｜気になるモノ手帖`;
+  const shareImage = r.shareImage || 'read-editorial-cover-v2.jpg';
+  const shareImageUrl = `${ORIGIN}/images/${shareImage}`;
+  const shareImageAlt = `${r.title}のイメージ写真`;
 
   const sections = r.sections.map((s) => `<h2>${esc(s.h2)}</h2>
 <p>${esc(s.body)}</p>
@@ -237,7 +246,7 @@ ${s.items.map(([b, n, note]) => {
         '@id': `${url}#article`,
         headline: r.title,
         description: r.desc,
-        image: OGP,
+        image: shareImageUrl,
         datePublished: r.published,
         dateModified: r.modified || r.published,
         inLanguage: 'ja-JP',
@@ -276,7 +285,7 @@ ${s.items.map(([b, n, note]) => {
 
   const html = `<!DOCTYPE html>
 <html lang="ja">
-${head({ title: fullTitle, desc: r.desc, url, ogType: 'article', vparam, ld })}
+${head({ title: fullTitle, desc: r.desc, url, ogType: 'article', vparam, ld, ogImage: shareImageUrl, ogImageAlt: shareImageAlt })}
 <body>
 
 <!-- このページは tools/build-roundup.mjs が生成しています。直接編集しないこと。
@@ -297,7 +306,11 @@ ${header}
 
 <h1>${esc(r.title)}</h1>
 
+<figure class="article__hero"><img src="/images/${shareImage}" alt="${esc(shareImageAlt)}" loading="eager" /><figcaption class="article__hero-caption">記事の内容をイメージした写真。SNSで共有するとこの画像が表示されます。</figcaption></figure>
+
 <p class="article__lead">${esc(r.lead)}</p>
+
+<aside class="article__guide" aria-label="この記事で整理すること"><b>この記事で整理すること</b><p>${esc(r.intentGuide)}</p></aside>
 
 <div class="article__body">
 ${r.intro.map((t) => `<p>${esc(t)}</p>`).join('\n')}
@@ -334,6 +347,7 @@ ${catNavHtml(r.cats)}
 <a class="article__crumb" href="/#select">ピック一覧を見る →</a>
 </div>
 </article>
+${adSlot(AD_BY_PAGE[r.slug], `article-${r.slug}`)}
 </section>
 </main>
 

@@ -17,6 +17,59 @@
   // ---- picks (real affiliate links already live on ROOM/Pinterest) ----
   // price/在庫は変動するためカードには描画していない（表示すると価格改定で嘘になる）。
   const PICKS = [
+    // --- 2026.09.05 楽天ROOMから反映（26件） ---
+    { cat:"gadget", date:"2026.09.05", motif:"m-mixer", brand:"±0", name:"スチーム式加湿器 H220", price:"¥24,200", code:"hotch-potch:10017675", url:"https://hb.afl.rakuten.co.jp/hgc/5656b4ef.86eb6137.5656b4f2.149257eb/_RTroom06836859_391572178_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhotch-potch%2F00014485-xqkh220%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/hotch-potch/cabinet/kago_img12/00014485_5.jpg",
+      blurb:"上から注ぐだけで給水できるスチーム式。フィルターが無いので洗うのはタンクとフタだけで、3Lの容量でも手入れの手数が増えない。" },
+    { cat:"kitchen", date:"2026.09.05", motif:"m-mug", brand:"yumiko iihoshi porcelain × 木村硝子店", name:"dishes 220 plate（moss gray matte）", price:"¥4,180", code:"prokitchen:10015600", url:"https://hb.afl.rakuten.co.jp/hgc/5695d10f.ebf4c29f.5695d111.c35e5d7b/_RTroom06836859_391571923_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fprokitchen%2Fki-dish220p-mgm%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/prokitchen/cabinet/kimuraglass/ki-dish220p-mgm_img1.jpg",
+      blurb:"直径22cmで、リムが深めに立ち上がったプレート。マットな釉薬のぶん、汁気のあるおかずを盛っても縁のラインが残る。" },
+    { cat:"fashion", date:"2026.09.05", motif:"m-tote", brand:"STANDARD SUPPLY", name:"SIMPLICITY 2ウェイ ドローストリングトート", price:"¥18,700", code:"standardsupply:10000109", url:"https://hb.afl.rakuten.co.jp/hgc/57204858.ac8a1b37.57204859.a6283d29/_RTroom06836859_391571429_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstandardsupply%2F4100615%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/standardsupply/cabinet/41001/10804505/4100615.jpg",
+      blurb:"口元を絞れる巾着仕様のナイロントート。ストラップを外すと手持ちに変わり、両サイドのボトルポケットで中身の定位置が決まる。" },
+    { cat:"interior", date:"2026.09.05", motif:"m-chair", brand:"中川政七商店", name:"招福 招き猫 みくじ（白・黒セット）", price:"¥1,188", code:"designers-and-labo:10005296", url:"https://hb.afl.rakuten.co.jp/hgc/571780a2.0cb41460.571780a3.c261aad2/_RTroom06836859_391448230_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdesigners-and-labo%2Fmikuji-manekineko-s%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/designers-and-labo/cabinet/nakagawa/mikuji-manekoneko-s.jpg",
+      blurb:"中におみくじが仕込まれた陶製の招き猫。引いたあとは置物として残る作りで、白と黒を並べると顔つきの差が出る。" },
+    { cat:"kitchen", date:"2026.09.05", motif:"m-mug", brand:"STANLEY", name:"カフェトゥーゴー トラベルマグ 0.23L", price:"¥3,300", code:"hotch-potch:10015578", url:"https://hb.afl.rakuten.co.jp/hgc/5656b4ef.86eb6137.5656b4f2.149257eb/_RTroom06836859_391448080_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhotch-potch%2F00010353_ms_mug023l%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/hotch-potch/cabinet/kago800_img1/00010353.jpg",
+      blurb:"上部に持ち手を付けた真空断熱のマグ。0.23Lの手のひらサイズで蓋は密閉式、バッグに立てずに入れられる形をしている。" },
+    { cat:"daily", date:"2026.09.05", motif:"m-crate", brand:"無印良品", name:"ポリプロピレン 収納ストッカー キャスター付2（幅18cm）", price:"¥4,990", code:"mujirushi-ryohin:10008404", url:"https://hb.afl.rakuten.co.jp/hgc/57177ea9.c2f1e728.57177eaa.e234453a/_RTroom06836859_391447850_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmujirushi-ryohin%2F4550583832131%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/mujirushi-ryohin/cabinet/item43/4550583832131.jpg",
+      blurb:"幅18cmの隙間に差し込めるキャスター付きのストッカー。引き出しの深さが段ごとに違うので、入れるものの高さで段を選べる。" },
+    { cat:"interior", date:"2026.09.05", motif:"m-stand", brand:"ARTWORKSTUDIO", name:"テーブルランプ Nocturne LED-table lamp", price:"¥40,700", code:"artworkstudio:10002329", url:"https://hb.afl.rakuten.co.jp/hgc/57177d7a.48810faa.57177d7b.98dccafc/_RTroom06836859_391447529_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fartworkstudio%2Faw-0686%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/artworkstudio/cabinet/desk_lamp/aw-0686/0686-image-1.jpg",
+      blurb:"真鍮のメッシュシェード越しに光が抜ける充電式のランプ。スタンドを外すと卓上サイズになるので、置き場所を後から決められる。" },
+    { cat:"fashion", date:"2026.09.05", motif:"m-sneaker", brand:"SUBU", name:"ウィンターサンダル（冬のサンダル）", price:"¥5,280", code:"geostyle:10010268", url:"https://hb.afl.rakuten.co.jp/hgc/570b4fa9.f89e5108.570b4faa.e1e6bce5/_RTroom06836859_391432274_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgeostyle%2F4977468%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/geostyle/cabinet/subu/subu23_d1.jpg",
+      blurb:"中綿を詰めたアッパーに起毛の内側を合わせた冬用のサンダル。撥水加工なので、玄関に置いたまま雨の日にも履いて出られる。" },
+    { cat:"goods", date:"2026.09.05", motif:"m-pouch", brand:"土屋鞄製造所", name:"ナチューラ ヌメ革Lファスナー", price:"¥11,000", code:"takuminowaza:10000589", url:"https://hb.afl.rakuten.co.jp/hgc/570b4e59.cc1d7e16.570b4e5a.d0762a1d/_RTroom06836859_391432087_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftakuminowaza%2Fna2401%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/takuminowaza/cabinet/sku/na/na3724-001.jpg",
+      blurb:"染料仕上げのヌメ革をL字ファスナーでまとめた財布。札とカードと小銭が入るのに、畳んでもポケットの厚みが出にくい。" },
+    { cat:"interior", date:"2026.09.05", motif:"m-polo-knit", brand:"LAPUAN KANKURIT × B:MING by BEAMS", name:"LAMMAS ブランケット（別注）", price:"¥9,900", code:"beams:10089988", url:"https://hb.afl.rakuten.co.jp/hgc/56b1b0bd.4089e12f.56b1b0be.806b9300/_RTroom06836859_391431996_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbeams%2Fef7198%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/beams/cabinet/item/198/ef7198-01_1.jpg",
+      blurb:"フィンランドの織元による羊柄のブランケット。コットンなので夏も出しておける厚みで、ソファに掛けたときの柄の出方がいい。" },
+    { cat:"daily", date:"2026.09.05", motif:"m-bottle", brand:"KINTO", name:"SCHALE ガラスケース 100×85mm（フロスト）", price:"¥2,660", code:"livingut:10187108", url:"https://hb.afl.rakuten.co.jp/hgc/56a0e0e6.306a1ea3.56a0e0eb.fdabbeb8/_RTroom06836859_391260931_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flivingut%2F421235%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/livingut/cabinet/maker_kinto8/421235.jpg",
+      blurb:"すりガラス調に曇らせた耐熱ガラスのケース。中身が輪郭でしか見えないので、綿棒でも入浴剤でも洗面台に出しておける。" },
+    { cat:"interior", date:"2026.09.05", motif:"m-chair", brand:"Bloomingville", name:"Cory クッション 50×50cm", price:"¥9,900", code:"chloros:10027417", url:"https://hb.afl.rakuten.co.jp/hgc/568f7c79.7d0e8053.568f7c7d.2410ab21/_RTroom06836859_391149490_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fchloros%2F260731002%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/chloros/cabinet/15x/15x82069372.jpg",
+      blurb:"緑の濃淡をタフティングで起こしたストライプのクッション。毛足に高低差があるぶん、光の角度で縞の見え方が変わる。" },
+    { cat:"fashion", date:"2026.09.05", motif:"m-watch", brand:"agete", name:"K10ダイヤモンドピアス", price:"¥27,720", code:"stylife:12644681", url:"https://hb.afl.rakuten.co.jp/hgc/56166504.3fb5399f.56166505.5b4d5fd4/_RTroom06836859_391145129_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstylife%2Fbb3662%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/stylife/cabinet/item/662/bb3662-01_1.jpg",
+      blurb:"透かし彫りのモチーフの真ん中に、ダイヤを一粒だけ留めたピアス。7mm角ほどの小ささなので、光る面積のわりに主張しない。" },
+    { cat:"interior", date:"2026.09.05", motif:"m-vase", brand:"Flying Tiger Copenhagen", name:"キャンドルホルダー（リス）", price:"¥495", code:"flyingtigercopenhagen:10009089", url:"https://hb.afl.rakuten.co.jp/hgc/57033ffe.87bbff5f.57033fff.82763b88/_RTroom06836859_391145027_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fflyingtigercopenhagen%2F3073321%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/flyingtigercopenhagen/cabinet/ai2026_1/3073321_01.jpg",
+      blurb:"どんぐりを抱えたリスの陶器で、頭のくぼみにティーライトを立てる作り。6.5×9.5cmと小さいので、棚の隅の余白に置ける。" },
+    { cat:"gadget", date:"2026.09.05", motif:"m-pouch", brand:"moshi", name:"Pluma Pouch", price:"¥2,970", code:"mjsoft:10006408", url:"https://hb.afl.rakuten.co.jp/hgc/57033f77.9bf72dc2.57033f78.0a5433ca/_RTroom06836859_391144894_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmjsoft%2F091506-op%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/mjsoft/cabinet/item-images30/091506-op-1.jpg",
+      blurb:"ヘリンボーンの織り地にマチを付けた箱型のポーチ。中で機材が泳がないので、充電器とケーブルをまとめたまま持ち出せる。" },
+    { cat:"kitchen", date:"2026.09.05", motif:"m-scale", brand:"家事問屋", name:"ディッシュスタンド 26", price:"¥3,630", code:"prokitchen:10019920", url:"https://hb.afl.rakuten.co.jp/hgc/5695d10f.ebf4c29f.5695d111.c35e5d7b/_RTroom06836859_391144561_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fprokitchen%2Fkd41645%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/prokitchen/cabinet/kd/kd41645_img1r.jpg",
+      blurb:"燕三条のステンレスで組んだ皿立て。仕切りは9枚分あって、平皿を立てたままシンク下の高さを縦に使える。" },
+    { cat:"fashion", date:"2026.09.05", motif:"m-tote", brand:"HIPPOPOTAMUS × TEMBEA", name:"バケットトート ミニ 15×25cm", price:"¥18,700", code:"hippopotamus:10001085", url:"https://hb.afl.rakuten.co.jp/hgc/56fc3991.aea1f7c8.56fc3992.d43e6e2e/_RTroom06836859_391021213_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhippopotamus%2Ftotb10%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/hippopotamus/cabinet/products/13127762/imgrc0147934786.jpg",
+      blurb:"オーガニックコットンとバンブーのパイル地で仕立てたタオル地のトート。15×25cmと小さく、ネイビーとローズの2色がある。" },
+    { cat:"daily", date:"2026.09.05", motif:"m-crate", brand:"MOHEIM", name:"SWING BIN", price:"¥8,030", code:"ko-jo:10001464", url:"https://hb.afl.rakuten.co.jp/hgc/56328232.eede3f62.56328233.565dd845/_RTroom06836859_391021151_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fko-jo%2Fmoheim_swingbin_s%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/ko-jo/cabinet/moheim/swing-bin/0.jpg",
+      blurb:"円筒のボディに木の蓋を載せたスイング式のダストボックス。中身も袋の口も隠れるので、リビングの見える場所に置ける。" },
+    { cat:"goods", date:"2026.09.05", motif:"m-notebook", brand:"LEUCHTTURM1917", name:"バウハウス エディション A5 ハードカバー", price:"¥5,500", code:"heiwado-online:10000032", url:"https://hb.afl.rakuten.co.jp/hgc/56fc385c.b2b7a841.56fc385d.b652276f/_RTroom06836859_391020976_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fheiwado-online%2Flt-bauhaus-a5-hc%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/heiwado-online/cabinet/leuchtturm/item-img/lt-bh_img.jpg",
+      blurb:"赤・レモン・ロイヤルブルー・黒の4色で出したドット方眼のノート。原色の表紙なので、机に積んでも下から探し当てられる。" },
+    { cat:"beauty", date:"2026.09.05", motif:"m-tube", brand:"SABON", name:"バターハンドクリーム 30ml", price:"¥1,980", code:"sabon:10000213", url:"https://hb.afl.rakuten.co.jp/hgc/56588ed0.34b0deb0.56588ed4.5e7e33c9/_RTroom06836859_391020489_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsabon%2Fs0179%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/sabon/cabinet/prd/s0179/s0179_1.jpg",
+      blurb:"ポーチに入る30mlのチューブ。香りが8種類あるので、季節や気分で選び直せる大きさに収めてある。" },
+    { cat:"daily", date:"2026.09.05", motif:"m-chair", brand:"BLUNT", name:"CLASSIC 長傘", price:"¥23,100", code:"caetla:10000401", url:"https://hb.afl.rakuten.co.jp/hgc/56f62108.47e19d9a.56f62109.f0772cfe/_RTroom06836859_390946606_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcaetla%2Fcoblunt_cla%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/caetla/cabinet/10827759/imgrc0111657172.jpg",
+      blurb:"骨の先端まで丸く収めた耐風設計の長傘。面のまま風を受ける構造で、メドウグリーンとオーシャンブルーは雨の日ほど色が立つ。" },
+    { cat:"fashion", date:"2026.09.05", motif:"m-watch", brand:"TIMEX", name:"ウィークエンダー 37mm", price:"¥16,500", code:"worldwidewatch:10001516", url:"https://hb.afl.rakuten.co.jp/hgc/56f6203d.cecc00ff.56f6203e.7b058626/_RTroom06836859_390946148_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fworldwidewatch%2Ftx-v-wk37%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/worldwidewatch/cabinet/item/tx02/tx-v-wk37-3.jpg",
+      blurb:"38mmから1mm、ラグ幅は2mm削った新しいウィークエンダー。ベルトが引き通しからNATOに変わり、文字盤には日付が増えた。" },
+    { cat:"kitchen", date:"2026.09.05", motif:"m-mug", brand:"HARIO", name:"V60ドリッパー NEO 01/02", price:"¥1,980", code:"hario-onlinestore:10001556", url:"https://hb.afl.rakuten.co.jp/hgc/56ed7ee4.0f796b40.56ed7ee5.6b6706ca/_RTroom06836859_390890349_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhario-onlinestore%2Fvdn-b%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/hario-onlinestore/cabinet/items/imgrc0112370792.jpg",
+      blurb:"スパイラルリブを立てた円錐ドリッパー。湯の抜けが速くなる構造で、1〜2杯用と1〜4杯用のサイズが選べる。" },
+    { cat:"fashion", date:"2026.09.05", motif:"m-sneaker-trail", brand:"HOKA", name:"CLIFTON 11 WIDE", price:"¥19,800", code:"alpen:10521399", url:"https://hb.afl.rakuten.co.jp/hgc/56e6d018.45e91554.56e6d019.0601aca4/_RTroom06836859_390719735_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Falpen%2F4304235716%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/alpen/cabinet/img/1010/4304235716_7.jpg",
+      blurb:"ソールまで黒で通したクリフトンのワイド。厚いミッドソールのわりに色が締まっているので、普段着に混ぜても運動靴に寄りにくい。" },
+    { cat:"daily", date:"2026.09.05", motif:"m-diffuser", brand:"APOTHEKE FRAGRANCE", name:"インセンス 25本入", price:"¥2,750", code:"diginc:10000357", url:"https://hb.afl.rakuten.co.jp/hgc/56e6d15b.b70d3ad5.56e6d15c.f86b47c7/_RTroom06836859_390682365_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdiginc%2Fapotheke-02%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/diginc/cabinet/apotheke/incense1-main.jpg",
+      blurb:"1本あたり約100分燃える日本製のお香が25本。クラフト紙のチューブに収めただけの素っ気ない見た目で、出しておいても浮かない。" },
+    { cat:"interior", date:"2026.09.05", motif:"m-stand", brand:"BRAUN", name:"アラームクロック BC02XW", price:"¥5,280", code:"nordicfeeling:10000094", url:"https://hb.afl.rakuten.co.jp/hgc/56e6d10f.62812c8a.56e6d110.d143554b/_RTroom06836859_390673021_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fnordicfeeling%2Fbc02xw%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/nordicfeeling/cabinet/image_thumb/braun/bc02xw_ic2.jpg",
+      blurb:"白い文字盤に、黄色の秒針とノブだけが差し色で入った置き時計。ディーター・ラムスの流れをくむ面の構成が5,000円台にある。" },
     // --- 2026.08.27 楽天ROOMから反映（28件） ---
     { cat:"fashion", date:"2026.08.27", motif:"m-watch", brand:"agete", name:"K10アメジスト×パール ピアスチャーム", price:"¥23,100", url:"https://hb.afl.rakuten.co.jp/hgc/56166504.3fb5399f.56166505.5b4d5fd4/_RTroom06836859_390566177_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstylife%2Fjg6089%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/stylife/cabinet/item/089/jg6089-01_1.jpg",
       blurb:"K10のチェーンに、アメジストとパールを一粒ずつ。揺れるたびに紫と白が入れ替わって見えるつくりが面白い。" },
@@ -286,7 +339,11 @@
 
   // ---- render cards ----
   const grid = document.getElementById("pickGrid");
+  const pickSearch = document.getElementById("pickSearch");
+  const pickCount = document.getElementById("pickCount");
+  const emptyState = document.getElementById("emptyState");
   const esc = (s) => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const normalize = (s) => String(s || "").toLowerCase().normalize("NFKC");
 
   const band = (price) => {
     if (!price) return "";
@@ -305,6 +362,7 @@
     el.dataset.cat = p.cat;
     el.dataset.brand = p.brand;
     el.dataset.name = p.name;
+    el.dataset.search = normalize([p.brand, p.name, p.blurb || p.desc || "", meta.label].join(" "));
     el.style.setProperty("--c", meta.cvar);
     el.style.setProperty("--c-deep", meta.deep);
     el.style.setProperty("--c-soft", meta.soft);
@@ -333,6 +391,13 @@
   // 読みもの等の商品グリッドが無いページでも同じmain.jsを読むため、存在確認する
   if (grid) grid.appendChild(frag);
 
+  const statPicks = document.querySelector("[data-stat-picks]");
+  const statReads = document.querySelector("[data-stat-reads]");
+  const statLatest = document.querySelector("[data-stat-latest]");
+  if (statPicks) statPicks.textContent = String(PICKS.length);
+  if (statReads) statReads.textContent = String(document.querySelectorAll(".read-card").length);
+  if (statLatest && latestDate) statLatest.textContent = latestDate.replace(/\./g, "/");
+
   let visibleCount = INITIAL_VISIBLE;
   const LOAD_STEP = 30;
   let totalMatches = 0;
@@ -344,10 +409,13 @@
     if (!grid) return;
     const activeChip = document.querySelector(".chip.is-active");
     const cat = activeChip?.dataset.cat || "all";
+    const q = normalize(pickSearch?.value);
     let visibleIndex = 0;
 
     grid.querySelectorAll(".card").forEach((card) => {
-      const matches = cat === "all" || card.dataset.cat === cat;
+      const matchesCat = cat === "all" || card.dataset.cat === cat;
+      const matchesQuery = !q || card.dataset.search.includes(q);
+      const matches = matchesCat && matchesQuery;
       if (!matches) {
         card.classList.add("is-hidden");
         return;
@@ -356,9 +424,15 @@
       card.classList.toggle("is-hidden", collapse);
       visibleIndex += 1;
     });
-      totalMatches = visibleIndex;
+    totalMatches = visibleIndex;
 
-    if (togglePicks) {
+    if (pickCount) {
+      const catLabel = cat === "all" ? "すべて" : (CAT[cat]?.label || "選択中");
+      pickCount.textContent = q ? `${catLabel} / ${totalMatches}件に絞り込み中` : `${catLabel} / ${totalMatches}件を表示`;
+    }
+    if (emptyState) emptyState.hidden = totalMatches !== 0;
+
+  if (togglePicks) {
       const hasMore = totalMatches > visibleCount;
       const isExpanded = visibleCount > INITIAL_VISIBLE;
       togglePicks.hidden = !(hasMore || isExpanded);
@@ -366,6 +440,13 @@
       togglePicks.setAttribute("aria-expanded", String(isExpanded));
     }
   };
+
+  if (pickSearch) {
+    pickSearch.addEventListener("input", () => {
+      visibleCount = INITIAL_VISIBLE;
+      applyLimit();
+    });
+  }
 
   if (togglePicks) {
     togglePicks.addEventListener("click", () => {
@@ -594,9 +675,135 @@
     : location.pathname.startsWith("/category/") ? "category"
     : "top";
 
+  // ---- A8.net 広告枠 ----
+  // a8mat / aid / mid は A8 が発行した値。書き換えると計測されないので触らないこと。
+  // wid=004 は「気になるモノ手帖」のサイト登録ID。他媒体（note/Pinterest/Instagram）の
+  // 値を貼ると成果がそちらに付く。
+  //
+  // 新しい広告素材を A8 で発行したら、ここに1件足して data-ad から参照するだけでよい。
+  // 例: 家具350 の 300x250 を発行したら kagu350_rect を足し、
+  //     data-ad="kagu350|lifepocket" を "kagu350|kagu350_rect" に変える。
+  const AD_TAGS = {
+    lifepocket: {
+      w: 300, h: 250,
+      alt: "LIFE POCKET｜なくさない財布のIoTレザーブランド",
+      href: "https://px.a8.net/svt/ejp?a8mat=4B9X1B+2V02QY+4Q2I+64C3L",
+      img: "https://www29.a8.net/svt/bgt?aid=260803199173&wid=004&eno=01&mid=s00000022041001028000&mc=1",
+      px: "https://www12.a8.net/0.gif?a8mat=4B9X1B+2V02QY+4Q2I+64C3L"
+    },
+    evering: {
+      w: 300, h: 250,
+      alt: "EVERING｜Visaのタッチ決済に対応したスマートリング",
+      href: "https://px.a8.net/svt/ejp?a8mat=4B9X1B+2QU1II+5C76+609HT",
+      img: "https://www28.a8.net/svt/bgt?aid=260803199166&wid=004&eno=01&mid=s00000024909001009000&mc=1",
+      px: "https://www13.a8.net/0.gif?a8mat=4B9X1B+2QU1II+5C76+609HT"
+    },
+    kagu350: {
+      w: 728, h: 90,
+      alt: "家具350｜おしゃれで機能的な家具通販",
+      href: "https://px.a8.net/svt/ejp?a8mat=4BA2HE+6QBIAY+20EY+BX3J5",
+      img: "https://www24.a8.net/svt/bgt?aid=260810258407&wid=004&eno=01&mid=s00000009385002002000&mc=1",
+      px: "https://www18.a8.net/0.gif?a8mat=4BA2HE+6QBIAY+20EY+BX3J5"
+    }
+  };
+
+  // 728x90 が余白込みで収まる下限。これ未満では data-ad の「|」の右側（モバイル用）を使う。
+  const AD_WIDE = "(min-width:820px)";
+
+  // バナーをHTMLに直書きせずJSで挿す理由が2つある。
+  //  (1) PC用とモバイル用を両方HTMLに置いてCSSで display:none すると、隠した側も
+  //      画像が読み込まれてインプレッションだけが二重に立つ。
+  //  (2) 枠が画面に近づいてから挿すことで、A8のインプレッション数が実際に見られた
+  //      回数に近くなる。以前は最下部の枠でも即時に計測が走り、誰も見ていないのに
+  //      インプレッションだけが積み上がっていた。
+  const fillAdSlot = (slot) => {
+    if (slot.dataset.adDone) return;
+    slot.dataset.adDone = "1";              // 二重挿入＝インプレッション二重計上を防ぐ
+    const spec = (slot.dataset.ad || "").split("|");
+    const wide = window.matchMedia(AD_WIDE).matches;
+    const key = wide ? spec[0] : (spec[1] !== undefined ? spec[1] : spec[0]);
+    const body = slot.querySelector(".ad-slot__body");
+    if (!key || !body) return;              // 空指定（その画面幅では出さない）
+
+    // "a+b" で1枠に2本並べられる（トップの中段がこれ）。
+    const tags = key.split("+").map((k) => AD_TAGS[k]).filter(Boolean);
+    if (!tags.length) return;
+
+    tags.forEach((tag) => {
+      const a = document.createElement("a");
+      a.href = tag.href;
+      a.rel = "nofollow sponsored noopener";
+      a.target = "_blank";
+      const img = document.createElement("img");
+      img.src = tag.img; img.alt = tag.alt;
+      img.width = tag.w; img.height = tag.h;
+      a.appendChild(img);
+
+      const px = document.createElement("img");
+      px.src = tag.px; px.alt = ""; px.width = 1; px.height = 1;
+      px.className = "ad-slot__px";
+
+      body.append(a, px);
+    });
+    slot.dataset.adKey = key;
+    // CSS はこの属性を見て枠の余白・区切り線・PRラベルを出す。
+    // hidden（display:none）で隠す方式にしないのは、JSが動かなかったときに
+    // 「PR」ラベルと区切り線だけが残るのを防ぎつつ、枠自体は常にDOMに置いておくため。
+    slot.dataset.filled = "1";
+  };
+
+  // 枠が画面の200px手前まで近づいたら挿す。IntersectionObserver を使わないのは、
+  // IOが動かない環境に当たると広告が一切出なくなるため。rect の判定なら依存が無い。
+  const pendingAds = Array.prototype.slice.call(document.querySelectorAll(".ad-slot[data-ad]"));
+  if (pendingAds.length) {
+    const MARGIN = 200;
+    const checkAds = () => {
+      for (let i = pendingAds.length - 1; i >= 0; i--) {
+        const slot = pendingAds[i];
+        const r = slot.getBoundingClientRect();
+        if (r.top < window.innerHeight + MARGIN && r.bottom > -MARGIN) {
+          pendingAds.splice(i, 1);
+          fillAdSlot(slot);
+        }
+      }
+      if (!pendingAds.length) {
+        window.removeEventListener("scroll", onAdScroll);
+        window.removeEventListener("resize", onAdScroll);
+      }
+    };
+    let adTick = false;
+    const onAdScroll = () => {
+      if (adTick) return;
+      adTick = true;
+      requestAnimationFrame(() => { adTick = false; checkAds(); });
+    };
+    window.addEventListener("scroll", onAdScroll, { passive: true });
+    window.addEventListener("resize", onAdScroll, { passive: true });
+    // ページ内に別のスクロール領域がある場合、scroll は window まで上がってこない。
+    // キャプチャ段階なら拾えるので保険で足す。
+    document.addEventListener("scroll", onAdScroll, true);
+    checkAds();
+    // 最後の保険。スクロールを検知できない環境に当たっても、広告が"一度も出ない"
+    // 状態にはしない。6秒滞在した時点で残っている枠は無条件に埋める。
+    setTimeout(() => { pendingAds.slice().forEach(fillAdSlot); pendingAds.length = 0; }, 6000);
+  }
+
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a");
     if (!a || !a.href) return;
+
+    // A8広告バナー。どの枠のどの素材が押されたかを見ないと、
+    // 配置を変えた効果が判断できない。
+    const adSlot = a.closest(".ad-slot");
+    if (adSlot) {
+      track("ad_click", {
+        ad_network: "a8",
+        ad_creative: adSlot.dataset.adKey,
+        ad_placement: adSlot.dataset.adPlacement,
+        page_kind: pageKind
+      });
+      return;
+    }
 
     // 商品リンク（アフィリエイト）
     const card = a.closest(".card");

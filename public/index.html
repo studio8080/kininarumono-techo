@@ -29,7 +29,7 @@
 <!-- 和文約物（「」・、。）の詰めを最適化 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css" />
 <!-- ?v= はキャッシュ破棄用。css/js を変更したら必ず数字を上げること（firebase.json で max-age=86400） -->
-<link rel="stylesheet" href="css/style.css?v=70" />
+<link rel="stylesheet" href="css/style.css?v=76" />
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kininarumono.jp/#organization","name":"気になるモノ手帖","url":"https://kininarumono.jp/","logo":{"@type":"ImageObject","url":"https://kininarumono.jp/images/favicon-512x512.png","width":512,"height":512},"sameAs":["https://room.rakuten.co.jp/totonou_note","https://www.instagram.com/kininarumonote/","https://pin.it/3uk3gKZUp","https://x.com/kininarumonote"]},{"@type":"WebSite","@id":"https://kininarumono.jp/#website","name":"気になるモノ手帖","alternateName":"MONO NOTE","url":"https://kininarumono.jp/","description":"定番からエッジのあるものまで。日常に馴染むデザインで、生活を少しアゲるアイテムキュレーション。","inLanguage":"ja-JP","publisher":{"@id":"https://kininarumono.jp/#organization"}}]}</script></head>
 <body>
 
@@ -76,6 +76,11 @@
         <a class="btn btn--primary" href="#select">ピックを見る</a>
         <a class="btn btn--ghost" href="#about">ムードで探す</a>
       </div>
+      <dl class="hero__stats" aria-label="サイトの掲載状況">
+        <div><dt data-stat-picks>120+</dt><dd>掲載アイテム</dd></div>
+        <div><dt data-stat-reads>12</dt><dd>読みもの</dd></div>
+        <div><dt data-stat-latest>更新中</dt><dd>最終更新</dd></div>
+      </dl>
       <div class="hero__tags" aria-label="扱うジャンル"><span>STANDARD</span><span>EDGE</span><span>LUXURY</span><span>ROOM</span><span>DAILY</span></div>
     </div>
   </div>
@@ -162,6 +167,14 @@
     <span>当サイトはアフィリエイト広告を利用しています。以下の商品リンクから購入されると、運営者に報酬が支払われます。</span>
   </p>
 
+  <div class="select-tools" aria-label="商品検索と掲載状況">
+    <label class="pick-search">
+      <span>キーワード検索</span>
+      <input id="pickSearch" type="search" inputmode="search" autocomplete="off" placeholder="ブランド・商品名・カテゴリで探す" />
+    </label>
+    <p class="pick-count" aria-live="polite"><span id="pickCount">掲載アイテムを表示中</span></p>
+  </div>
+
   <div class="filters" role="tablist" aria-label="カテゴリで絞り込み">
     <button class="chip is-active" data-cat="all" role="tab" aria-selected="true">すべて</button>
     <button class="chip" data-cat="gadget" role="tab" aria-selected="false" style="--c:var(--purple-deep)">ガジェット</button>
@@ -188,7 +201,20 @@
   </nav>
 
   <div class="grid" id="pickGrid"><!-- cards injected by js --></div>
+  <p class="empty-state" id="emptyState" hidden>該当するアイテムが見つかりませんでした。キーワードを短くするか、カテゴリを「すべて」に戻して探してみてください。</p>
   <div class="more-row"><button class="more-btn" id="togglePicks" type="button" aria-expanded="false">もっと見る</button></div>
+</section>
+
+<!-- A8.net 広告枠（LIFE POCKET / EVERING の300x250を2本）。
+     バナーの実体（a8mat・aid・mid）は public/js/main.js の AD_TAGS にある。ここは
+     data-ad でどの素材を出すか指すだけ。2か所に書くと差し替え時に片方を直し忘れる。
+     置き場所: 以前は読みものセクションの「後ろ」にあり、PCでページ全長の79%・
+     モバイルで83%の位置だった。ほぼ誰もそこまでスクロールしないので、
+     ピック一覧と読みものの境目に上げてある。ここより上には動かさないこと
+     （ファーストビュー直下に広告を置くと回遊が落ちる）。 -->
+<section class="ad-slot" aria-label="広告" data-ad="lifepocket+evering" data-ad-placement="top-mid">
+  <p class="ad-slot__label">PR</p>
+  <div class="ad-slot__body ad-slot__body--row"></div>
 </section>
 
 <!-- ============ READ ============ -->
@@ -196,8 +222,16 @@
   <div class="section-head">
     <span class="eyebrow">READ</span>
     <h2>読みもの</h2>
-    <p class="section-sub">買う前に少し立ち止まって、見た目・使い心地・置き場所を整理するメモ。「選び方」はアフィリエイトリンクなしの編集メモ、「まとめ」はテーマ別に商品を紹介する記事で、商品リンク（アフィリエイト）を含みます。</p>
+    <p class="section-sub">買う前に少し立ち止まって、見た目・使い心地・置き場所を整理するメモ。「選び方」は本文に商品リンクを置かない編集メモ（記事末尾にPR表記の広告枠あり）、「まとめ」はテーマ別に商品を紹介する記事で、商品リンク（アフィリエイト）を含みます。</p>
   </div>
+  <a class="read-feature reveal" href="/read/zakka-no-mikata">
+    <img src="/images/read-editorial-cover-v2.jpg" alt="ノート、色紙、カップ、灯りを並べた読みものの編集イメージ" loading="lazy" />
+    <span class="read-feature__body">
+      <span class="eyebrow">FEATURED READ</span>
+      <b>モノ選びの前に、置く場所と使う場面を一度見る。</b>
+      <span>読みものから入ると、欲しいものの輪郭が少しだけはっきりします。</span>
+    </span>
+  </a>
   <div class="read-list">
     <article class="read-card read-card--roundup reveal">
       <div class="read-card__topline">
@@ -355,23 +389,6 @@
     </article>
   </div>
 </section>
-
-<!-- A8.net 広告枠（LIFE POCKET / 素材ID 004 / 468x60）。
-     a8mat・aid・mid は A8 が発行した値。書き換えると計測されないので触らないこと。
-     wid=004 は「気になるモノ手帖」のサイト登録IDで、他サイト（note/Pinterest/Instagram）
-     の値を貼ると成果がそちらに付く。 -->
-<section class="pr-slot" aria-label="広告">
-  <p class="pr-slot__label">PR</p>
-  <div class="pr-slot__row">
-    <a href="https://px.a8.net/svt/ejp?a8mat=4B9X1B+2V02QY+4Q2I+64C3L" rel="nofollow noopener" target="_blank">
-      <img border="0" width="300" height="250" alt="LIFE POCKET｜なくさない財布のIoTレザーブランド" src="https://www29.a8.net/svt/bgt?aid=260803199173&wid=004&eno=01&mid=s00000022041001028000&mc=1" /></a>
-    <a href="https://px.a8.net/svt/ejp?a8mat=4B9X1B+2QU1II+5C76+609HT" rel="nofollow noopener" target="_blank">
-      <img border="0" width="300" height="250" alt="EVERING｜Visaのタッチ決済に対応したスマートリング" src="https://www28.a8.net/svt/bgt?aid=260803199166&wid=004&eno=01&mid=s00000024909001009000&mc=1" /></a>
-  </div>
-  <img border="0" width="1" height="1" src="https://www12.a8.net/0.gif?a8mat=4B9X1B+2V02QY+4Q2I+64C3L" alt="" style="position:absolute" />
-  <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B9X1B+2QU1II+5C76+609HT" alt="" style="position:absolute" />
-</section>
-
 <section aria-label="このサイトをシェア">
   <div style="max-width:var(--maxw);margin:0 auto">
     <div class="share" data-share>
@@ -427,13 +444,14 @@
     </span>
     <p>デザインでアガる雑貨・インテリア・ガジェット。</p>
   </div>
-  <div class="footer__ad">
-    <p class="footer__ad-label">PR</p>
-    <a href="https://px.a8.net/svt/ejp?a8mat=4BA2HE+6QBIAY+20EY+BX3J5" rel="nofollow noopener" target="_blank">
-      <img src="https://www24.a8.net/svt/bgt?aid=260810258407&wid=004&eno=01&mid=s00000009385002002000&mc=1" width="728" height="90" alt="家具350｜おしゃれで機能的な家具通販" style="max-width:100%;height:auto;display:block;margin:0 auto;" />
-    </a>
-    <img src="https://www18.a8.net/0.gif?a8mat=4BA2HE+6QBIAY+20EY+BX3J5" width="1" height="1" alt="" style="position:absolute;" />
-  </div>
+  <!-- 家具350（728x90）。バナーの実体は main.js の AD_TAGS にあり、data-ad で参照する。
+       728x90 はモバイル幅だと343x44まで縮んで文字が読めないので、820px未満では出さない
+       （data-ad の「|」の右が空 ＝ その幅では非表示）。トップのモバイルでは上の
+       300x250が2枚出るので、ここが空でも広告が無い状態にはならない。 -->
+  <aside class="ad-slot ad-slot--footer" aria-label="広告" data-ad="kagu350|" data-ad-placement="top-footer">
+    <p class="ad-slot__label">PR</p>
+    <div class="ad-slot__body"></div>
+  </aside>
   <nav class="catlinks catlinks--footer" aria-label="カテゴリ別ページ">
     <span class="catlinks__label">カテゴリ別のページ</span>
     <a href="/category/gadget">ガジェット</a>
@@ -444,6 +462,7 @@
     <a href="/category/goods">文具・雑貨</a>
     <a href="/category/fashion">ファッション</a>
     <a href="/read">読みもの一覧</a>
+<a href="/about">運営・編集方針</a>
   </nav>
   <div class="footer__legal">
     <p><strong>アフィリエイトについて</strong><br />当サイトは、アフィリエイトプログラム（楽天アフィリエイト・A8.net）を利用しています。掲載リンクから商品を購入されると、運営者に報酬が支払われる場合があります。価格・在庫は掲載時点のもので変動します。購入前にリンク先でご確認ください。</p>
@@ -454,6 +473,6 @@
 
 <button class="back-top" id="backTop" type="button" aria-label="ページトップへ戻る">↑</button>
 
-<script src="js/main.js?v=70" defer></script>
+<script src="js/main.js?v=76" defer></script>
 </body>
 </html>

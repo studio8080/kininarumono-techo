@@ -17,7 +17,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  repoRoot, ORIGIN, cacheVersion, head, header, footer, writeIfChanged
+  repoRoot, ORIGIN, cacheVersion, head, header, footer, writeIfChanged, adSlot, AD_BY_PAGE
 } from './lib/site.mjs';
 
 const url = `${ORIGIN}/read`;
@@ -81,7 +81,7 @@ const ld = {
 
 const html = `<!DOCTYPE html>
 <html lang="ja">
-${head({ title: TITLE, desc: DESC, url, vparam, ld })}
+${head({ title: TITLE, desc: DESC, url, vparam, ld, ogImage: `${ORIGIN}/images/read-editorial-cover-v2.jpg`, ogImageAlt: '読みもの一覧の編集イメージ写真' })}
 <body>
 
 ${header}
@@ -96,9 +96,17 @@ ${header}
 <div class="section-head">
 <span class="eyebrow">READ</span>
 <h1>読みもの — 買う前に整理するメモ</h1>
-<p class="section-sub">買う前に少し立ち止まって、見た目・使い心地・置き場所を整理するメモ。「選び方」はアフィリエイトリンクなしの編集メモ、「まとめ」はテーマ別に商品を紹介する記事で、商品リンク（アフィリエイト）を含みます。</p>
+<p class="section-sub">買う前に少し立ち止まって、見た目・使い心地・置き場所を整理するメモ。「選び方」は本文に商品リンクを置かない編集メモ（記事末尾にPR表記の広告枠あり）、「まとめ」はテーマ別に商品を紹介する記事で、商品リンク（アフィリエイト）を含みます。</p>
 </div>
 
+<a class="read-feature" href="/read/zakka-no-mikata">
+<img src="/images/read-editorial-cover-v2.jpg" alt="ノート、色紙、カップ、灯りを並べた読みものの編集イメージ" loading="eager" />
+<span class="read-feature__body">
+<span class="eyebrow">FEATURED READ</span>
+<b>モノ選びの前に、置く場所と使う場面を一度見る。</b>
+<span>読みものから入ると、欲しいものの輪郭が少しだけはっきりします。</span>
+</span>
+</a>
 ${list}
 
 <h2>カテゴリから商品を探す</h2>
@@ -124,6 +132,7 @@ ${list}
 </div>
 
 </section>
+${adSlot(AD_BY_PAGE['read-hub'], 'read-hub')}
 </main>
 
 ${footer(vparam)}

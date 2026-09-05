@@ -18,7 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 // カード描画とPICKS読み取りは build-roundup.mjs と共有する。
 // ここに書き写すと必ず片方だけ古くなるため（data-* は main.js の計測が読む）。
-import { repoRoot, CAT, esc, readPicks, makeIsNew, cardHtml, footerCatlinks } from './lib/site.mjs';
+import { repoRoot, CAT, esc, readPicks, makeIsNew, cardHtml, footerCatlinks, adSlot, AD_BY_PAGE } from './lib/site.mjs';
 
 const outDir = path.join(repoRoot, 'public/category');
 const sitemapPath = path.join(repoRoot, 'public/sitemap.xml');
@@ -307,6 +307,7 @@ ${related}
 </div>
 
 </section>
+${adSlot(AD_BY_PAGE[cat], `category-${cat}`)}
 </main>
 
 <footer class="site-footer" id="footer">

@@ -87,7 +87,7 @@ export function cacheVersion() {
 }
 
 /** <head> の共通部分。ページ固有のメタとJSON-LDだけ差し込む */
-export function head({ title, desc, url, ogType = 'website', vparam, ld }) {
+export function head({ title, desc, url, ogType = 'website', vparam, ld, ogImage = OGP, ogImageAlt = '気になるモノ手帖のイメージ写真' }) {
   return `<head> <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GA_ID}'); </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -100,10 +100,11 @@ export function head({ title, desc, url, ogType = 'website', vparam, ld }) {
 <link rel="canonical" href="${url}" />
 <meta property="og:site_name" content="気になるモノ手帖" />
 <meta property="og:locale" content="ja_JP" />
-<meta property="og:image" content="${OGP}" />
+<meta property="og:image" content="${ogImage}" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="${esc(title)}" /><meta name="twitter:description" content="${esc(desc)}" /><meta name="twitter:image" content="${OGP}" />
+<meta property="og:image:alt" content="${esc(ogImageAlt)}" />
+<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="${esc(title)}" /><meta name="twitter:description" content="${esc(desc)}" /><meta name="twitter:image" content="${ogImage}" />
 <meta name="theme-color" content="#0A57FF" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" /><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" /><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" /><link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png" /><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -153,6 +154,7 @@ export const footerCatlinks = `<nav class="catlinks catlinks--footer" aria-label
 <a href="/category/goods">文具・雑貨</a>
 <a href="/category/fashion">ファッション</a>
 <a href="/read">読みもの一覧</a>
+<a href="/about">運営・編集方針</a>
 </nav>`;
 
 export function footer(vparam) {
@@ -177,6 +179,48 @@ ${footerCatlinks}
 
 <script src="/js/main.js?v=${vparam}" defer></script>`;
 }
+
+/**
+ * A8.net の広告枠。バナーの実体（a8mat/aid/mid）は public/js/main.js の AD_TAGS にあり、
+ * ここでは「どの素材を出すか」のキーだけを data-ad で渡す。タグを1か所にまとめておかないと、
+ * 素材を差し替えるときに全ページを触ることになる。
+ *
+ * spec は "PC用|モバイル用"。820px未満では右側が使われる。右側が空ならその幅では出さない。
+ * 728x90 はモバイルだと343x44まで縮んで文字が読めないので、必ずモバイル用を別に指定するか
+ * 空にすること。300x250 は両方の幅で読めるので "lifepocket" のように片方だけでよい。
+ *
+ * placement は GA4 の ad_click イベントに乗る。どの位置の枠が効いたか後で見るために付ける。
+ */
+export function adSlot(spec, placement) {
+  return `<aside class="ad-slot ad-slot--tail" aria-label="広告" data-ad="${spec}" data-ad-placement="${placement}">
+<p class="ad-slot__label">PR</p>
+<div class="ad-slot__body"></div>
+</aside>`;
+}
+
+/**
+ * ページごとに出す広告素材。記事・カテゴリの内容と噛み合うものを割り当てる。
+ *
+ * 現在A8で発行済みの素材は3つだけで、家具350は728x90しか無い。そのため家具・インテリア系の
+ * ページはモバイルでLIFE POCKET（財布・革小物）に落としている。A8の管理画面で家具350の
+ * 300x250を発行したら、main.js の AD_TAGS に kagu350_rect を足して、ここの
+ * "kagu350|lifepocket" を "kagu350|kagu350_rect" に置き換えるだけでよい。
+ */
+export const AD_BY_PAGE = {
+  // カテゴリ
+  interior: 'kagu350|lifepocket',
+  kitchen:  'kagu350|lifepocket',
+  daily:    'kagu350|lifepocket',
+  gadget:   'evering',
+  goods:    'lifepocket',
+  fashion:  'lifepocket',
+  beauty:   'lifepocket',
+  // 読みもの
+  'read-hub':                  'kagu350|lifepocket',
+  'gift-3000en-ika':           'lifepocket',
+  'hitorigurashi-kaden-akari': 'kagu350|evering',
+  'hokuo-design-teiban':       'kagu350|lifepocket',
+};
 
 /**
  * ステマ規制（景表法）対応の開示。商品リンクより「前」に置くこと（AGENTS.md 3-6）。

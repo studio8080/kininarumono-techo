@@ -95,6 +95,38 @@ Googleは lastmod を再クロールの優先度判断に使うため、放置�
 
 の数字を**css/jsを変更したら必ず両方上げる**。上げ忘れると、再訪問者に最大24時間「新しいHTML × 古いCSS」が配信されて表示が壊れる。
 
+### 3-4e. 応答ヘッダー（`firebase.json` の `headers`）
+
+2026-09-05に整理した。現在の配信は次のとおり。
+
+| 対象 | Cache-Control | 理由 |
+|---|---|---|
+| HTML（`/`・`/about`・`/read/**`・`/category/**` ほか） | `public, max-age=0, must-revalidate` | 毎回サーバへ問い合わせる。以前はFirebase既定の `max-age=3600` で、**更新しても最大1時間は古いHTMLが配信されていた**（「直したのに反映されない」の正体） |
+| `css` / `js` | `public, max-age=86400` | `?v=` で破棄しているので据え置き（3-4参照） |
+| 画像 | `public, max-age=604800` | 据え置き。OG画像は同名上書きしない運用（3-4c） |
+
+セキュリティヘッダーは**全パス**に付けている。
+`X-Content-Type-Options: nosniff` / `Referrer-Policy: strict-origin-when-cross-origin` /
+`X-Frame-Options: SAMEORIGIN` / `Content-Security-Policy: frame-ancestors 'self'` /
+`Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()`。
+
+- **HSTS は書かない。** Firebase が既定で `Strict-Transport-Security: max-age=31556926` を付ける。
+- **CSPは `frame-ancestors` だけに絞ってある。** A8の広告タグ・GA4・Google Fonts・
+  楽天のCDN画像を読むので、`default-src` から書くと表示か計測のどちらかが必ず壊れる。
+  広げるなら `Content-Security-Policy-Report-Only` で様子を見てからにすること。
+
+> **★ `headers` の一致仕様（公式ドキュメントに記載が無いので実測した結果）**
+> 複数ブロックの `source` が同じパスに当たった場合、**マッチした全ブロックが適用され、
+> 同じキーは後ろのブロックが勝つ**（`redirects`/`rewrites` の「最初の1件だけ」とは違う）。
+> そのため `**` の総当たりブロックを**先頭**に置き、`css|js` や画像の個別ブロックを
+> 後ろに置いて上書きさせている。**順番を入れ替えるとアセットのキャッシュが消える。**
+> なお `source` は**リクエストURL**に対して照合されるため、`cleanUrls: true` の本サイトでは
+> `**/*.html` は1本も当たらない（`/category/interior` に `.html` は付かない）。HTMLを狙うなら
+> 拡張子ではなく総当たり＋上書きで表現すること。
+>
+> ホスティングエミュレータは `headers` を再現しない（カスタムヘッダーが1つも出ない）ので、
+> 確認は実際にデプロイして `curl -sI` で見るしかない。
+
 ### 3-4c. OG画像は「同名で上書き」しない
 
 `?v=` はcss/js用で、**OG画像には効かない**。X・Facebook/Threads・LINEはそれぞれ独自にOG画像を

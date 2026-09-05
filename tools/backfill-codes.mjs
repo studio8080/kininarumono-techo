@@ -59,8 +59,12 @@ async function searchCode(shop, urlcode, name) {
       if (r.status === 429) { await new Promise(x => setTimeout(x, 1500 * (a + 1))); continue; }
       const j = await r.json();
       const items = (j.Items || []).map(x => x.Item);
-      // itemUrl が /<shop>/<urlcode>/ に一致するものを最優先
-      const hit = items.find(it => (it.itemUrl || '').includes(`/${shop}/${urlcode}`)) ||
+      // itemUrl が /<shop>/<urlcode>/ に一致するものを最優先。
+      // ★ affiliateId を付けて呼ぶと itemUrl は hb.afl... のアフィリ経由URLになり、
+      //   店舗/商品コードは ?pc= の中に %2F 区切りで入る。デコードしないと必ず外れる
+      //   （これで91件中90件が「引当不可」になっていた）。
+      const urlOf = (it) => { try { return decodeURIComponent(it.itemUrl || ''); } catch { return it.itemUrl || ''; } };
+      const hit = items.find(it => urlOf(it).includes(`/${shop}/${urlcode}`)) ||
                   items.find(it => (it.itemCode || '').endsWith(`:${urlcode}`));
       if (hit) return hit.itemCode;
       break;

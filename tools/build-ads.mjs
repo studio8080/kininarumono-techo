@@ -35,6 +35,7 @@ const AD_BY_ARTICLE = {
   'zakka-no-asobigokoro':       'lifepocket',           // 雑貨の遊び心
   'trend-komono-rule':          'evering',              // トレンド小物（ガジェット寄り）
   'akibeya-no-totonoekata':     'kagu350|lifepocket',   // 秋の部屋を小物で整える
+  'heya-no-konomi-2jiku':       'kagu350|lifepocket',   // 部屋の好みを2軸で言葉にする
 };
 
 const START = '<!-- AD:A8 START -->';

@@ -653,8 +653,9 @@ SNSに表示され続けていた**（キャッチコピーが「デザインで
 | `share_click` | `share_to` |
 | `article_open` | `article_path` |
 
-`page_kind` は `/read/` 配下なら `article`、それ以外は `top`。
+`page_kind` は `/read/` 配下なら `article`、`/category/` 配下なら `category`、それ以外は `top`。
 GA4のパラメータ値は100文字上限なので `track()` 内で `slice(0,100)` している。
+上記に加えて、**全イベントに `utm_source` / `utm_campaign` が自動で乗る**（後述）。
 
 ### 登録済みのカスタムディメンション（すべて範囲=イベント）
 商品ブランド/`item_brand`、商品名/`item_name`、商品カテゴリ/`item_category`、
@@ -672,6 +673,34 @@ GA4のパラメータ値は100文字上限なので `track()` 内で `slice(0,10
 
 今後 `sns_click` や `share_click` もキーイベントにしたくなったら、同じ手順を踏む。
 新しいイベントを追加した当日には登録できないことを見込んでおくこと。
+
+### UTM：SNS投稿からサイトへのリンクに付ける（2026-09-16 追加）
+
+SNSのアプリ内ブラウザ（ROOM・Instagram・X・Pinterest）は**リファラーを送らない**ので、
+UTMを付けないとGA4では全部 `Direct` に潰れる。実際、年初来のセッションの98%が `Direct` で
+`Organic Search` は0件という状態だった。SNS投稿からサイトへ貼るURLには必ず付ける。
+
+```
+https://kininarumono.jp/<path>?utm_source=<x|threads|pin|room|ig>&utm_medium=social&utm_campaign=week<YYYYMMDD>
+```
+
+`utm_campaign` はその週の**土曜日の日付**（例 `week20260919`）。週次で揃えることで、
+「どの週の投稿がどれだけ効いたか」を横並びで比較できる。
+
+`main.js` は流入時の `utm_source` / `utm_campaign` を `sessionStorage`（キー `kmn_utm`）に
+保持し、以降の `affiliate_click` などのイベントにも同名パラメータとして載せる。
+GA4本体もセッション単位で流入元を持つが、それは集客レポート側の話なので、
+**「どの投稿から来た人が、どの商品を押したか」を1つの表で見るにはイベント側にも値が要る**。
+`utm_source` / `utm_campaign` をカスタムディメンション（範囲=イベント）に登録すること。
+
+> ★**楽天アフィリエイトのリンク（outbound）にUTMを付けない。**
+> UTMは「受け取る側」が読むパラメータなので、サイトから楽天へ出ていくリンクに付けても
+> 自分のGA4には何も返らない（すでに離脱している）。楽天の成果レポートもUTMではなく
+> `rafcid` で紐づくので見ない。`hb.afl.rakuten.co.jp` のリダイレクタに余計なクエリを
+> 足すとリンクが壊れるリスクだけが残る。outbound側は上記の `affiliate_click` で測る。
+
+> **bioリンク（各SNSのプロフィール欄）は変更しない**（2026-08-24 本人指定）。
+> UTMを付けるのは投稿本文・コメント側のリンクだけにする。
 
 ### 注意
 - 動作確認でアフィリエイトリンクを実際にクリックしない。楽天の自己クリックになる。

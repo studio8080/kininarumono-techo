@@ -29,9 +29,10 @@ jobs:
           node tools/build-category.mjs
           node tools/build-roundup.mjs
           node tools/build-read-hub.mjs
-          if ! git diff --quiet -- public/category public/read public/sitemap.xml; then
-            echo "::error::生成ページが古いです。ローカルで node tools/build-category.mjs と node tools/build-roundup.mjs と node tools/build-read-hub.mjs を実行してコミットしてください。"
-            git --no-pager diff --stat -- public/category public/read public/sitemap.xml
+          node tools/build-about.mjs
+          if ! git diff --quiet -- public/category public/read public/about.html public/sitemap.xml; then
+            echo "::error::生成ページが古いです。ローカルで node tools/build-category.mjs と node tools/build-roundup.mjs と node tools/build-read-hub.mjs と node tools/build-about.mjs を実行してコミットしてください。"
+            git --no-pager diff --stat -- public/category public/read public/about.html public/sitemap.xml
             exit 1
           fi
       - name: Syntax check main.js

@@ -7,7 +7,10 @@
 //
 // 判定:
 //   availability=1 → 在庫あり / 0 → 在庫切れ / (200かつ0件) → 販売終了の可能性 / 429連発 → RATE_LIMITED(判定保留)
+//   ただし「該当なし」でも商品ページが生きていれば MOVED（要確認）に落とし、削除対象から外す。
 // 重要: 429(レート制限)は「販売終了」と誤判定しないこと（v1のバグ修正点）。楽天APIは概ね1req/秒。
+// 重要: APIの「該当なし」だけで消さないこと。楽天ファッション（stylife等）の商品は
+//   brandavenue.rakuten.co.jp へ移されてItem Search APIから引けなくなるが、在庫ありのまま売られている。
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -47,6 +50,41 @@ function itemCodeOf(block) {
 }
 const nameOf = (b) => (b.match(/name:"([^"]*)"/) || [, ''])[1];
 
+/** アフィリリンクの pc= から遷移先の商品ページURLを取り出す。 */
+function destUrlOf(block) {
+  const urlM = block.match(/url:"([^"]*)"/);
+  if (!urlM) return null;
+  const m = decodeURIComponent(urlM[1]).match(/[?&]pc=([^&"]+)/);
+  return m ? decodeURIComponent(m[1]).split('?')[0] : null;
+}
+
+/**
+ * APIが「該当なし」でも、商品ページ自体が生きているかを確かめる。
+ *
+ * なぜ要るのか（2026-09-16に踏んだ）:
+ *   楽天ファッションの店舗（stylife 等）の商品は brandavenue.rakuten.co.jp へ移されており、
+ *   楽天市場の Item Search API からは引けなくなる。APIだけ見ると「販売終了」に見えるが、
+ *   実際には在庫ありで売られている。この判定で agete のピアス（在庫あり・23,100円）と
+ *   Kiyokyou のボトル（在庫あり）を削除するPRが自動生成された。
+ *   ページが生きているものは消さず、人が見る MOVED に落とす。
+ *
+ * ★ 叩くのは pc= の遷移先（item.rakuten.co.jp 等）だけにすること。
+ *   hb.afl.rakuten.co.jp を踏むと自分でアフィリエイトのクリックを打つことになる。
+ */
+async function pageAlive(url) {
+  if (!url || !/^https:\/\/[a-z0-9.-]*rakuten\.co\.jp\//i.test(url)) return null;
+  try {
+    const r = await fetch(url, { redirect: 'follow', headers: { 'User-Agent': UA } });
+    if (r.status === 404) return { alive: false, status: 404 };
+    if (!r.ok) return null;                       // 判定に使えない
+    const html = await r.text();
+    const av = (html.match(/schema\.org\/(InStock|OutOfStock|Discontinued|SoldOut)/) || [, ''])[1];
+    return { alive: true, status: r.status, finalUrl: r.url, availability: av || '不明' };
+  } catch { return null; }
+}
+
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
+
 async function check(itemCode) {
   const u = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701?' + new URLSearchParams({
     applicationId: cfg.applicationId, accessKey: cfg.accessKey, affiliateId: cfg.affiliateId, format: 'json', hits: '1', itemCode
@@ -54,7 +92,7 @@ async function check(itemCode) {
   for (let attempt = 0; attempt < 4; attempt++) {
     const r = await fetch(u, { headers: {
       'Referer': 'https://kininarumono.jp/', 'Origin': 'https://kininarumono.jp',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36'
+      'User-Agent': UA
     }});
     if (r.status === 429) { await new Promise(x => setTimeout(x, 1500 * (attempt + 1))); continue; } // レート制限→待って再試行
     let j; try { j = await r.json(); } catch { return 'API_ERROR'; }
@@ -76,15 +114,24 @@ const results = [];
 for (const b of blocks) {
   const name = nameOf(b), code = itemCodeOf(b);
   if (!code) { results.push({ name, code: null, state: 'UNCHECKABLE', note: 'itemCode未保存（要バックフィル）', block: b }); continue; }
-  const state = await check(code);
-  results.push({ name, code, state, block: b });
+  let state = await check(code);
+  let note;
+  // APIが「該当なし」でも、商品ページが生きていれば消さない（楽天ファッションへの移行を誤判定しないため）
+  if (state === 'DISCONTINUED') {
+    const live = await pageAlive(destUrlOf(b));
+    if (live && live.alive) {
+      state = 'MOVED';
+      note = `商品ページは生存(${live.availability}) → ${live.finalUrl}`;
+    }
+  }
+  results.push({ name, code, state, note, block: b });
   await new Promise(r => setTimeout(r, 1300)); // 楽天APIレート配慮（約1req/秒）
 }
 
 const by = (s) => results.filter(r => r.state === s);
 console.log('=== 在庫監査 ===');
-console.log(`在庫あり:${by('IN_STOCK').length} 在庫切れ:${by('OUT_OF_STOCK').length} 販売終了の可能性:${by('DISCONTINUED').length} 判定保留(429):${by('RATE_LIMITED').length} API異常:${by('API_ERROR').length} 要バックフィル:${by('UNCHECKABLE').length}`);
-for (const s of ['OUT_OF_STOCK', 'DISCONTINUED', 'RATE_LIMITED', 'API_ERROR', 'UNCHECKABLE']) {
+console.log(`在庫あり:${by('IN_STOCK').length} 在庫切れ:${by('OUT_OF_STOCK').length} 販売終了の可能性:${by('DISCONTINUED').length} 移転/要確認:${by('MOVED').length} 判定保留(429):${by('RATE_LIMITED').length} API異常:${by('API_ERROR').length} 要バックフィル:${by('UNCHECKABLE').length}`);
+for (const s of ['OUT_OF_STOCK', 'DISCONTINUED', 'MOVED', 'RATE_LIMITED', 'API_ERROR', 'UNCHECKABLE']) {
   const g = by(s); if (g.length) { console.log(`\n[${s}]`); g.forEach(r => console.log(`  - ${r.name} (${r.code || '-'}) ${r.note || ''}`)); }
 }
 fs.writeFileSync(path.join(repoRoot, 'stock-report.json'),

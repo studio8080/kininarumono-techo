@@ -283,14 +283,14 @@
     { cat:"fashion", date:"2026.08.11", motif:"m-polo", brand:"UNITED ARROWS green label relaxing", name:"＜To b. by agnes b.コラボ＞エンブロイダリー オーバーサイズシャツ", code:"stylife:15706877", price:"¥3,980", url:"https://a.r10.to/hg0t3a", img:"https://tshop.r10s.jp/stylife/cabinet/item/226/sb8226-01_1.jpg",
       blurb:"オーバーサイズでゆるっと羽織れる、agnes b.とのコラボエンブロイダリーシャツ。胸ポケットの刺繍がアクセント。" },
     { cat:"gadget", date:"2026.08.11", motif:"m-keyboard", brand:"ロジクール(Logicool)", name:"Alto Keys K98M ワイヤレスメカニカルキーボード", code:"logicool:10000799", price:"¥16,900", url:"https://a.r10.to/hkzoDq", img:"https://shop.r10s.jp/logicool/cabinet/prd/kb/k98mgr/k98mgr_n.jpg",
-      blurb:"半透明のガスケットボディ越しに内部構造が透けて見える、眺めて楽しいメカニカルキーボード。" },
+      blurb:"半透明のガスケットボディ越しに内部構造が透けて見える、眺めて楽しいメカニカルキーボード。" },
     { cat:"gadget", date:"2026.08.10", motif:"m-stand", brand:"Nothing", name:"Headphone(a)（ピンク）", code:"nothingagent:10000111", price:"¥27,800", url:"https://a.r10.to/hP7Rgi", img:"https://shop.r10s.jp/nothingagent/cabinet/13067532/headphonea_main.jpg",
       blurb:"半透明パーツとくすみピンクの配色が目を引く、ハイレゾ対応のワイヤレスヘッドホン。" },
     { cat:"gadget", date:"2026.08.10", motif:"m-watch", brand:"MOFT", name:"Apple Watch用 マグネット式シリコンバンド（バイカラー）", code:"moft:10000113", price:"¥5,880", url:"https://a.r10.to/h8akBP", img:"https://shop.r10s.jp/moft/cabinet/product/12469098/12469099/imgrc0116113922.jpg",
       blurb:"内側と外側で色が切り替わるバイカラーのApple Watchバンド。マグネット留め具でサイズ調整もスムーズ。" },
 
     { cat:"fashion", date:"2026.08.09", motif:"m-socks", brand:"STANCE", name:"クルーソックス「currents」", code:"candymitt:10000828", price:"¥2,750", url:"https://a.r10.to/hPxxXb", img:"https://image.rakuten.co.jp/candymitt/cabinet/stance/st308y-curren-st.jpg",
-      blurb:"足元にひとさじの色を。メキシカンブランケットみたいな多色ボーダーが主役級のクルーソックス。" },
+      blurb:"足元にひとさじの色を。メキシカンブランケットみたいな多色ボーダーが主役級のクルーソックス。" },
     { cat:"interior", date:"2026.08.09", motif:"m-chair", brand:"天童木工", name:"バタフライスツール（ローズウッド）", code:"auc-designshop:10001011", price:"¥82,500", url:"https://a.r10.to/hg9pVY", img:"https://image.rakuten.co.jp/auc-designshop/cabinet/2101/2101000001702_0.jpg",
       blurb:"柳宗理の名作。2枚の成形合板が蝶の羽のように交わる、憧れの一脚。" },
     { cat:"interior", date:"2026.08.09", motif:"m-chair", brand:"Vitra", name:"イームズエレファント（スモール）", code:"shinwashop:10005703", price:"¥15,400", url:"https://a.r10.to/hYTaAq", img:"https://image.rakuten.co.jp/shinwashop/cabinet/kes6/vitra-215112-main.jpg",
@@ -728,10 +728,28 @@
   // アフィリエイトリンクが押されているかを測れないと、どの商品が効いているか
   // 判断できないため、外部リンクのクリックをイベントとして送る。
   // 注意: パラメータはGA4の「カスタム定義」に登録しないとレポートに列として出ない。
+  // 流入時の utm_source / utm_campaign をセッションに覚えておき、以降のイベントに載せる。
+  // GA4自身もセッション単位で流入元を持つが、それは集客レポート側の話で、
+  // 「week20260919のPinterest投稿から来た人が、どの商品を押したか」を
+  // affiliate_click の行として並べるにはイベント側にも値が要る。
+  // SNSのアプリ内ブラウザはリファラーを落とすので、UTMが無いと全部Directに潰れる。
+  const utm = (() => {
+    const KEY = "kmn_utm";
+    const read = () => { try { return JSON.parse(sessionStorage.getItem(KEY)) || {}; } catch { return {}; } };
+    const q = new URLSearchParams(location.search);
+    const src = q.get("utm_source"), camp = q.get("utm_campaign");
+    if (src || camp) {
+      const v = { utm_source: src || "", utm_campaign: camp || "" };
+      try { sessionStorage.setItem(KEY, JSON.stringify(v)); } catch { /* プライベートモード等 */ }
+      return v;
+    }
+    return read();
+  })();
+
   const track = (name, params) => {
     if (typeof window.gtag !== "function") return;
     const clean = {};
-    Object.entries(params).forEach(([k, v]) => {
+    Object.entries({ ...params, ...utm }).forEach(([k, v]) => {
       if (v == null || v === "") return;
       clean[k] = String(v).slice(0, 100);   // GA4のパラメータ値は100文字まで
     });

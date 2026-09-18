@@ -786,6 +786,48 @@
       href: "https://px.a8.net/svt/ejp?a8mat=4BA2HE+6QBIAY+20EY+BX3J5",
       img: "https://www24.a8.net/svt/bgt?aid=260810258407&wid=004&eno=01&mid=s00000009385002002000&mc=1",
       px: "https://www18.a8.net/0.gif?a8mat=4BA2HE+6QBIAY+20EY+BX3J5"
+    },
+    kakko: {
+      w: 300, h: 250,
+      alt: "kakko｜北欧デザインの家具・インテリア",
+      href: "https://px.a8.net/svt/ejp?a8mat=4B9X1B+FHCTM+51NQ+BXYE9",
+      img: "https://www26.a8.net/svt/bgt?aid=260803199026&wid=004&eno=01&mid=s00000023543002006000&mc=1",
+      px: "https://www10.a8.net/0.gif?a8mat=4B9X1B+FHCTM+51NQ+BXYE9"
+    },
+    andplants: {
+      w: 300, h: 250,
+      alt: "AND PLANTS｜パーソナル診断で選ぶ観葉植物",
+      href: "https://px.a8.net/svt/ejp?a8mat=4B9X1B+2ZRJL6+4W8G+60OXD",
+      img: "https://www25.a8.net/svt/bgt?aid=260803199181&wid=004&eno=01&mid=s00000022840001011000&mc=1",
+      px: "https://www17.a8.net/0.gif?a8mat=4B9X1B+2ZRJL6+4W8G+60OXD"
+    },
+    pinkoi: {
+      w: 300, h: 250,
+      alt: "Pinkoi｜アジア最大級のデザイナーズ通販",
+      href: "https://px.a8.net/svt/ejp?a8mat=4B9X1B+2HWJFU+5BXG+5YZ75",
+      img: "https://www22.a8.net/svt/bgt?aid=260803199151&wid=004&eno=01&mid=s00000024874001003000&mc=1",
+      px: "https://www12.a8.net/0.gif?a8mat=4B9X1B+2HWJFU+5BXG+5YZ75"
+    },
+    generate: {
+      w: 300, h: 250,
+      alt: "Generate Design｜デザイン雑貨・インテリアのセレクトショップ",
+      href: "https://px.a8.net/svt/ejp?a8mat=4B9X1B+HV38Q+3BSS+61Z81",
+      img: "https://www28.a8.net/svt/bgt?aid=260803199030&wid=004&eno=01&mid=s00000015526001017000&mc=1",
+      px: "https://www13.a8.net/0.gif?a8mat=4B9X1B+HV38Q+3BSS+61Z81"
+    },
+    truetowel: {
+      w: 300, h: 250,
+      alt: "TRUE TOWEL｜今治産のタオル",
+      href: "https://px.a8.net/svt/ejp?a8mat=4B9X1B+Q75PM+4ESE+63H8H",
+      img: "https://www22.a8.net/svt/bgt?aid=260803199044&wid=004&eno=01&mid=s00000020579001024000&mc=1",
+      px: "https://www16.a8.net/0.gif?a8mat=4B9X1B+Q75PM+4ESE+63H8H"
+    },
+    officecom: {
+      w: 300, h: 250,
+      alt: "オフィスコム｜机や椅子などのオフィス家具通販",
+      href: "https://px.a8.net/svt/ejp?a8mat=4BC36L+FUYS8A+53JI+BXYE9",
+      img: "https://www29.a8.net/svt/bgt?aid=260904477959&wid=004&eno=01&mid=s00000023787002006000&mc=1",
+      px: "https://www12.a8.net/0.gif?a8mat=4BC36L+FUYS8A+53JI+BXYE9"
     }
   };
 

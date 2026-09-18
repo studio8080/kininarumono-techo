@@ -208,19 +208,22 @@ export function adSlot(spec, placement) {
  * "kagu350|lifepocket" を "kagu350|kagu350_rect" に置き換えるだけでよい。
  */
 export const AD_BY_PAGE = {
+  // "PC用|モバイル用"。PC用の "a+b" は300x250を2本横に並べる。
+  // 2026-09-18: 素材が3本しか無く、コスメもファッションも雑貨も「財布」の広告に落ちていたのを、
+  // ページの内容に合うものへ組み替えた。
   // カテゴリ
-  interior: 'kagu350|lifepocket',
-  kitchen:  'kagu350|lifepocket',
-  daily:    'kagu350|lifepocket',
-  gadget:   'evering',
-  goods:    'lifepocket',
-  fashion:  'lifepocket',
-  beauty:   'lifepocket',
+  interior: 'kakko+andplants|kakko',
+  kitchen:  'generate+andplants|generate',
+  daily:    'truetowel+andplants|truetowel',
+  gadget:   'officecom+evering|officecom',
+  goods:    'pinkoi+generate|pinkoi',
+  fashion:  'pinkoi+lifepocket|lifepocket',
+  beauty:   'truetowel',
   // 読みもの
-  'read-hub':                  'kagu350|lifepocket',
-  'gift-3000en-ika':           'lifepocket',
-  'hitorigurashi-kaden-akari': 'kagu350|evering',
-  'hokuo-design-teiban':       'kagu350|lifepocket',
+  'read-hub':                  'kakko+generate|generate',
+  'gift-3000en-ika':           'pinkoi+generate|pinkoi',
+  'hitorigurashi-kaden-akari': 'kakko+evering|kakko',
+  'hokuo-design-teiban':       'kakko+andplants|kakko',
 };
 
 /**

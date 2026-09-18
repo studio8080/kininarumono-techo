@@ -98,6 +98,7 @@ export function head({ title, desc, url, ogType = 'website', vparam, ld, ogImage
 <meta property="og:type" content="${ogType}" />
 <meta property="og:url" content="${url}" />
 <link rel="canonical" href="${url}" />
+<link rel="alternate" type="application/rss+xml" title="気になるモノ手帖 — 読みもの" href="/feed.xml" />
 <meta property="og:site_name" content="気になるモノ手帖" />
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:image" content="${ogImage}" />

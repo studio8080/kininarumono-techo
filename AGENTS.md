@@ -761,3 +761,50 @@ Search Consoleの権限はプロパティ単位で、この2種類は別物と�
 - 同じURLを何度リクエストしても順番は早まらない（Search Console自体がそう表示する）。1回でよい。
 - 新しいURLは検査結果の「参照元サイトマップ」が「検出されませんでした」になる。サイトマップの再読み込みが
   追いついていないだけで、`sitemap.xml` 側には登録済み。気になるなら「サイトマップ」から再送信する。
+
+---
+
+## 13. 2026-09-18 検索エンジン以外の「見つけられ方」（AIO）
+
+Googleの検索結果だけを見ていると取りこぼす入口があり、まとめて整備した。
+
+| ファイル | 役割 | 出どころ |
+|---|---|---|
+| `public/llms.txt` | AIアシスタント向けのサイト案内（llmstxt.org の書式） | `tools/build-discovery.mjs` が生成 |
+| `public/feed.xml` | 読みもののRSS 2.0 | 同上 |
+| `public/robots.txt` | AIクローラー（GPTBot / ClaudeBot / PerplexityBot 等）を明示的に許可 | 手書き |
+| `public/d2a2bd4f281ed57440b1fdda791a10d5.txt` | IndexNow の鍵（所有確認用。**秘密ではない。消すと通知が403になる**） | 手書き |
+
+```bash
+node tools/build-discovery.mjs   # llms.txt と feed.xml。build-category の後に実行（カテゴリの説明文を読むため）
+```
+
+- **llms.txt と feed.xml を直接編集しない。** 記事の一覧は index.html の `.read-list` が唯一の出どころで、
+  `/read` の一覧と同じ所から作っている。記事を足したらトップに足して再生成する。CIが差分で落とす。
+- 生成物に `new Date()` を入れないこと。feed の `lastBuildDate` は最新記事の日付にしてある
+  （実行日を入れると翌日から毎日CIが落ちる。build-roundup で一度踏んだ）。
+- RSSの自動検出リンク（`<link rel="alternate" type="application/rss+xml">`）は `lib/site.mjs` の
+  `head()` とトップに入れてある。カテゴリページと手書き記事には入れていない（トップと一覧にあれば足りる）。
+
+### IndexNow（Bing系への即時通知）
+
+ChatGPT検索と Copilot は **Bing のインデックス**を引く。Search Console に相当する通知を
+Bing側には何もしていなかったので、デプロイの最後に `tools/indexnow.mjs` が
+**直前のコミットで変わったページだけ**を通知する。アカウント登録は不要。
+
+```bash
+node tools/indexnow.mjs --dry    # 対象URLの確認だけ
+node tools/indexnow.mjs --all    # sitemap の全URL（大きな改修のあとだけ。毎回やらない）
+```
+
+- 通知の失敗でデプロイを止めない（`continue-on-error` ＋ スクリプトは常に exit 0）。
+- ワークフローの checkout は `fetch-depth: 2` が必要。1のままだと差分が取れず、何も送られない。
+- sitemap に無いURLは送らない。
+
+### やっていないこと（理由つき）
+
+- **FAQPage の構造化データ**: 記事の「どう選ぶか、3つの問い」はFAQではない。中身がFAQでないものに
+  マークアップだけ付けるのはガイドライン違反で、しかもGoogleは2023年以降FAQのリッチリザルトを
+  一般サイトに出していない。
+- **Google AdSense**: セッション数が少ない段階では収益がほぼ出ず、表示速度とデザインだけが犠牲になる。
+  A8と楽天の「内容に合った広告」を優先する。

@@ -25,17 +25,17 @@ import { repoRoot, adSlot } from './lib/site.mjs';
 // LIFE POCKET（財布・革小物）に落としている。A8で家具350の300x250を発行したら、
 // main.js の AD_TAGS に kagu350_rect を足して、ここを "kagu350|kagu350_rect" に変える。
 const AD_BY_ARTICLE = {
-  'kagu-brand-no-erabikata':    'kagu350|lifepocket',   // 家具ブランドの選び方
-  'hitorigurashi-no-heyazukuri':'kagu350|lifepocket',   // 一人暮らしの部屋づくり
+  'kagu-brand-no-erabikata':    'kakko+andplants|kakko',   // 家具ブランドの選び方
+  'hitorigurashi-no-heyazukuri':'kakko+andplants|kakko',   // 一人暮らしの部屋づくり
   'hokuo-design-teiban':        null,                   // build-roundup が生成するので対象外
-  'burando-lineup-no-kijun':    'lifepocket',           // ブランドのラインナップの見方
-  'ii-mono-no-kijun':           'lifepocket',           // いいモノの基準
-  'gift-no-erabikata':          'lifepocket',           // ギフトの選び方
-  'zakka-no-mikata':            'lifepocket',           // 雑貨の見方
-  'zakka-no-asobigokoro':       'lifepocket',           // 雑貨の遊び心
-  'trend-komono-rule':          'evering',              // トレンド小物（ガジェット寄り）
-  'akibeya-no-totonoekata':     'kagu350|lifepocket',   // 秋の部屋を小物で整える
-  'heya-no-konomi-2jiku':       'kagu350|lifepocket',   // 部屋の好みを2軸で言葉にする
+  'burando-lineup-no-kijun':    'generate+pinkoi|generate',           // ブランドのラインナップの見方
+  'ii-mono-no-kijun':           'generate+truetowel|truetowel',           // いいモノの基準
+  'gift-no-erabikata':          'pinkoi+generate|pinkoi',           // ギフトの選び方
+  'zakka-no-mikata':            'generate+pinkoi|generate',           // 雑貨の見方
+  'zakka-no-asobigokoro':       'pinkoi+generate|pinkoi',           // 雑貨の遊び心
+  'trend-komono-rule':          'officecom+evering|evering',              // トレンド小物（ガジェット寄り）
+  'akibeya-no-totonoekata':     'kakko+andplants|andplants',   // 秋の部屋を小物で整える
+  'heya-no-konomi-2jiku':       'kakko+andplants|kakko',   // 部屋の好みを2軸で言葉にする
 };
 
 const START = '<!-- AD:A8 START -->';

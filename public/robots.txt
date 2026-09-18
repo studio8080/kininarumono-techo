@@ -1,3 +1,22 @@
+# kininarumono.jp
+# 検索エンジンもAIアシスタントのクローラーも、全ページの取得を許可しています。
+# AI向けのサイト案内は /llms.txt 、読みものの更新は /feed.xml にあります。
+
 User-agent: *
 Allow: /
+
+# AI検索・AIアシスタント（明示的に許可。上の * と同じ扱いだが、意図を書き残しておく）
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: bingbot
+Allow: /
+
 Sitemap: https://kininarumono.jp/sitemap.xml

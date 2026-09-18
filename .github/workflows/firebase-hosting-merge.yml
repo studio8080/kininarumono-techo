@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # tools/indexnow.mjs が直前のコミットとの差分を見る
       - uses: google-github-actions/auth@v2
         with:
           project_id: kininarumono-techo
@@ -30,9 +32,10 @@ jobs:
           node tools/build-roundup.mjs
           node tools/build-read-hub.mjs
           node tools/build-about.mjs
-          if ! git diff --quiet -- public/category public/read public/about.html public/sitemap.xml; then
-            echo "::error::生成ページが古いです。ローカルで node tools/build-category.mjs と node tools/build-roundup.mjs と node tools/build-read-hub.mjs と node tools/build-about.mjs を実行してコミットしてください。"
-            git --no-pager diff --stat -- public/category public/read public/about.html public/sitemap.xml
+          node tools/build-discovery.mjs
+          if ! git diff --quiet -- public/category public/read public/about.html public/llms.txt public/feed.xml public/sitemap.xml; then
+            echo "::error::生成ページが古いです。ローカルで node tools/build-category.mjs と node tools/build-roundup.mjs と node tools/build-read-hub.mjs と node tools/build-about.mjs と node tools/build-discovery.mjs を実行してコミットしてください。"
+            git --no-pager diff --stat -- public/category public/read public/about.html public/llms.txt public/feed.xml public/sitemap.xml
             exit 1
           fi
       - name: Syntax check main.js
@@ -41,3 +44,8 @@ jobs:
         run: |
           npm install -g firebase-tools
           firebase deploy --only hosting --project kininarumono-techo
+      # Bing系（ChatGPT検索・Copilot が引くインデックス）へ、変わったページを通知する。
+      # 失敗してもサイトの公開には関係ないので、ジョブは落とさない。
+      - name: Notify IndexNow
+        continue-on-error: true
+        run: node tools/indexnow.mjs

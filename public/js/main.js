@@ -987,12 +987,16 @@
     if (!key || !body) return;              // 空指定（その画面幅では出さない）
 
     // "a+b" で1枠に2本並べられる（トップの中段がこれ）。
-    const tags = key.split("+").map((k) => AD_TAGS[k]).filter(Boolean);
+    const tags = key.split("+").map((k) => ({ key: k, ...AD_TAGS[k] })).filter((tag) => tag.href);
     if (!tags.length) return;
 
     tags.forEach((tag) => {
       const a = document.createElement("a");
       a.href = tag.href;
+      a.setAttribute("data-revenue", "affiliate");
+      a.setAttribute("data-revenue-id", tag.key);
+      a.setAttribute("data-revenue-provider", "a8");
+      a.setAttribute("data-revenue-placement", slot.dataset.adPlacement);
       a.rel = "nofollow sponsored noopener";
       a.target = "_blank";
       const img = document.createElement("img");
@@ -1030,6 +1034,7 @@
       if (!pendingAds.length) {
         window.removeEventListener("scroll", onAdScroll);
         window.removeEventListener("resize", onAdScroll);
+        document.removeEventListener("scroll", onAdScroll, true);
       }
     };
     let adTick = false;
@@ -1044,27 +1049,16 @@
     // キャプチャ段階なら拾えるので保険で足す。
     document.addEventListener("scroll", onAdScroll, true);
     checkAds();
-    // 最後の保険。スクロールを検知できない環境に当たっても、広告が"一度も出ない"
-    // 状態にはしない。6秒滞在した時点で残っている枠は無条件に埋める。
-    setTimeout(() => { pendingAds.slice().forEach(fillAdSlot); pendingAds.length = 0; }, 6000);
+    // 遅れてレイアウトが確定した場合も位置を再確認する。画面外の枠は読み込まない。
+    setTimeout(checkAds, 6000);
   }
 
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a");
     if (!a || !a.href) return;
 
-    // A8広告バナー。どの枠のどの素材が押されたかを見ないと、
-    // 配置を変えた効果が判断できない。
-    const adSlot = a.closest(".ad-slot");
-    if (adSlot) {
-      track("ad_click", {
-        ad_network: "a8",
-        ad_creative: adSlot.dataset.adKey,
-        ad_placement: adSlot.dataset.adPlacement,
-        page_kind: pageKind
-      });
-      return;
-    }
+    // 広告バナーの表示・クリックは revenue-metrics.js が素材ごとに計測する。
+    if (a.closest(".ad-slot")) return;
 
     // 商品リンク（アフィリエイト）
     const card = a.closest(".card");

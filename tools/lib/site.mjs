@@ -94,6 +94,7 @@ export function cacheVersion() {
 /** <head> の共通部分。ページ固有のメタとJSON-LDだけ差し込む */
 export function head({ title, desc, url, ogType = 'website', vparam, ld, ogImage = OGP, ogImageAlt = '気になるモノ手帖のイメージ写真' }) {
   return `<head> <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GA_ID}'); </script>
+<script src="/js/revenue-metrics.js?v=20261011" defer></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>${esc(title)}</title>

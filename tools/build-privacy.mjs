@@ -3,7 +3,7 @@
 import path from 'node:path';
 import { repoRoot, ORIGIN, CONTACT_URL, cacheVersion, head, header, footer, writeIfChanged, addToSitemap } from './lib/site.mjs';
 
-const updated = '2026-10-01';
+const updated = '2026-10-11';
 const vparam = cacheVersion();
 const url = `${ORIGIN}/privacy`;
 const title = 'プライバシーポリシー・Cookieと広告｜気になるモノ手帖';
@@ -25,6 +25,7 @@ ${header}
 <p>Googleフォームを利用するため、回答はGoogleのサービス上で処理・保存されます。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Googleのプライバシーポリシー</a>もご確認ください。回答は一般公開しません。パスワード、カード番号などの機密情報は入力しないでください。</p></section>
 <section class="policy-panel"><h2>アクセス解析とCookie</h2>
 <p>Googleアナリティクス4を利用し、閲覧ページ、参照元、閲覧日時、端末・ブラウザの種類、おおよその地域、Cookie等の識別子をGoogle LLCへ送信します。読まれている内容や導線を把握し、サイト改善に利用します。</p>
+<p>広告のリンクが半分以上表示された状態が1秒続いた回数、広告の掲載位置・広告主の識別名・クリックをGoogleアナリティクスへ送信し、掲載内容の改善に利用します。広告事業者の請求対象となる表示回数とは異なります。入力内容、ライセンスキー、広告リンクの追跡パラメータはこの計測に含めません。Do Not Track・Global Privacy Controlの意思表示がある場合、この追加の広告計測は行いません。</p>
 <p>Cookieはブラウザの設定で制限・削除できます。解析の停止には<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener">Googleアナリティクスのオプトアウトアドオン</a>をご利用いただけます。Googleの取扱いは<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Googleのパートナーサイト向け説明</a>をご確認ください。</p></section>
 <section class="policy-panel"><h2>広告・アフィリエイト</h2>
 <p>楽天アフィリエイトとA8.netを利用しています。商品リンクを含むページや広告枠にはPRと表示し、リンク経由の購入・申込みによって運営者が報酬を受け取る場合があります。商品の販売・決済はリンク先の事業者が行います。</p>

@@ -69,6 +69,37 @@ console.log(`[IndexNow] ${urls.length}件${DRY ? '（--dry: 送信しない）' 
 urls.forEach((u) => console.log('  ' + u));
 if (DRY) process.exit(0);
 
+// 配備直後に公開エッジへ鍵がまだ届いていない間は送信しない。
+// リダイレクト・大きすぎる応答・本文不一致も所有確認の成功とみなさない。
+async function keyIsPublic() {
+  const keyUrl = `${ORIGIN}/${KEY}.txt`;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const r = await fetch(keyUrl, { method: 'GET', redirect: 'error', signal: AbortSignal.timeout(10000) });
+      if (r.status === 200 && !r.redirected && r.url === keyUrl &&
+          r.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase() === 'text/plain' && r.body) {
+        const chunks = [];
+        let size = 0;
+        for await (const chunk of r.body) {
+          size += chunk.length;
+          if (size > 128) break;
+          chunks.push(chunk);
+        }
+        if (size <= 128 && Buffer.concat(chunks).toString('utf8') === KEY) return true;
+      }
+    } catch {
+      // ネットワーク・timeout・redirectの詳細にはURL等が含まれうるので記録しない。
+    }
+    if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+  }
+  return false;
+}
+
+if (!(await keyIsPublic())) {
+  console.log('::warning::[IndexNow] 公開鍵の送信前確認が通らないため通知しない（短時間の再確認後も不一致）');
+  process.exit(0);
+}
+
 try {
   const r = await fetch('https://api.indexnow.org/indexnow', {
     method: 'POST',

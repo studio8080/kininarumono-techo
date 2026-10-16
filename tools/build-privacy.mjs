@@ -3,7 +3,7 @@
 import path from 'node:path';
 import { repoRoot, ORIGIN, CONTACT_URL, cacheVersion, head, header, footer, writeIfChanged, addToSitemap } from './lib/site.mjs';
 
-const updated = '2026-10-11';
+const updated = '2026-10-16';
 const vparam = cacheVersion();
 const url = `${ORIGIN}/privacy`;
 const title = 'プライバシーポリシー・Cookieと広告｜気になるモノ手帖';
@@ -28,9 +28,9 @@ ${header}
 <p>広告のリンクが半分以上表示された状態が1秒続いた回数、広告の掲載位置・広告主の識別名・クリックをGoogleアナリティクスへ送信し、掲載内容の改善に利用します。広告事業者の請求対象となる表示回数とは異なります。入力内容、ライセンスキー、広告リンクの追跡パラメータはこの計測に含めません。Do Not Track・Global Privacy Controlの意思表示がある場合、この追加の広告計測は行いません。</p>
 <p>Cookieはブラウザの設定で制限・削除できます。解析の停止には<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener">Googleアナリティクスのオプトアウトアドオン</a>をご利用いただけます。Googleの取扱いは<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Googleのパートナーサイト向け説明</a>をご確認ください。</p></section>
 <section class="policy-panel"><h2>広告・アフィリエイト</h2>
-<p>楽天アフィリエイトとA8.netを利用しています。商品リンクを含むページや広告枠にはPRと表示し、リンク経由の購入・申込みによって運営者が報酬を受け取る場合があります。商品の販売・決済はリンク先の事業者が行います。</p>
+<p>楽天アフィリエイト、A8.net、もしもアフィリエイトを利用しています。商品リンクを含むページや広告枠にはPRと表示し、リンク経由の購入・申込みによって運営者が報酬を受け取る場合があります。商品の販売・決済はリンク先の事業者が行います。</p>
 <p>広告画像の表示時やリンクのクリック時に、IPアドレス、端末・ブラウザ情報、参照元ページ、表示・クリック情報、Cookie等の識別子が広告事業者に送信される場合があります。広告表示、成果計測、不正防止などに利用されます。</p>
-<p>送信先と取扱い：<a href="https://privacy.rakuten.co.jp/" target="_blank" rel="noopener">楽天グループの個人情報保護方針</a>、<a href="https://www.a8.net/privacy.html" target="_blank" rel="noopener">A8.net（株式会社ファンコミュニケーションズ）</a>。</p>
+<p>送信先と取扱い：<a href="https://privacy.rakuten.co.jp/" target="_blank" rel="noopener">楽天グループの個人情報保護方針</a>、<a href="https://www.a8.net/privacy.html" target="_blank" rel="noopener">A8.net（株式会社ファンコミュニケーションズ）</a>、<a href="https://moshimo.co.jp/privacy/" target="_blank" rel="noopener">もしもアフィリエイト（株式会社もしも）</a>。</p>
 <p>Google AdSenseは審査申請中で、現時点では広告配信を有効にしていません。配信を開始する場合は、その前に情報の送信先・目的と必要な同意手段を本ページで案内します。</p></section>
 <section class="policy-panel"><h2>表示に使う外部サービス</h2>
 <p>サイト配信にはGoogleのFirebase Hosting、書体にはGoogle FontsとjsDelivr上のYakuHanJP、商品画像にはリンク先ショップ等の画像配信サービスを利用しています。これらへの読込時に、IPアドレス、ブラウザ情報、参照元などが各サービスへ送信される場合があります。ページや画像・書体を表示し、配信を維持するための通信です。</p>

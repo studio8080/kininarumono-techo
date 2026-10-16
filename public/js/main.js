@@ -903,6 +903,14 @@
   // 例: 家具350 の 300x250 を発行したら kagu350_rect を足し、
   //     data-ad="kagu350|lifepocket" を "kagu350|kagu350_rect" に変える。
   const AD_TAGS = {
+    // もしもメディア「気になるモノ手帖」684301、提携中。正式バナー94963（2026-10-16取得）。
+    zackhaus: {
+      provider: "moshimo", w: 120, h: 60,
+      alt: "ZACK.HAUS｜インテリア・生活雑貨",
+      href: "https://af.moshimo.com/af/c/click?a_id=5744009&p_id=7518&pc_id=21716&pl_id=94963",
+      img: "https://image.moshimo.com/af-img/2730/000000094963.jpg",
+      px: "https://i.moshimo.com/af/i/impression?a_id=5744009&p_id=7518&pc_id=21716&pl_id=94963"
+    },
     lifepocket: {
       w: 300, h: 250,
       alt: "LIFE POCKET｜なくさない財布のIoTレザーブランド",
@@ -995,7 +1003,11 @@
       a.href = tag.href;
       a.setAttribute("data-revenue", "affiliate");
       a.setAttribute("data-revenue-id", tag.key);
-      a.setAttribute("data-revenue-provider", "a8");
+      a.setAttribute("data-revenue-provider", tag.provider || "a8");
+      if (tag.provider === "moshimo") {
+        a.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+        a.setAttribute("attributionsrc", "");
+      }
       a.setAttribute("data-revenue-placement", slot.dataset.adPlacement);
       a.rel = "nofollow sponsored noopener";
       a.target = "_blank";

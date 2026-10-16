@@ -178,7 +178,7 @@ export function footer(vparam) {
 </div>
 ${footerCatlinks}
 <div class="footer__legal">
-<p><strong>アフィリエイトについて</strong><br />当サイトは、アフィリエイトプログラム（楽天アフィリエイト・A8.net）を利用しています。掲載リンクから商品を購入されると、運営者に報酬が支払われる場合があります。価格・在庫は掲載時点のもので変動します。購入前にリンク先でご確認ください。</p>
+<p><strong>アフィリエイトについて</strong><br />当サイトは、アフィリエイトプログラム（楽天アフィリエイト・A8.net・もしもアフィリエイト）を利用しています。掲載リンクから商品を購入されると、運営者に報酬が支払われる場合があります。価格・在庫は掲載時点のもので変動します。購入前にリンク先でご確認ください。</p>
 <p class="footer__mini">運営：気になるモノ手帖（<a href="${CONTACT_URL}" target="_blank" rel="noopener">お問い合わせフォーム</a>）／掲載情報の正確性には努めますが内容を保証するものではありません。商品の購入・利用は各自のご判断でお願いします。</p>
 </div>
 <p class="footer__copy">© <span id="year"></span> 気になるモノ手帖</p>
@@ -223,7 +223,7 @@ export const AD_BY_PAGE = {
   // ページの内容に合うものへ組み替えた。
   // カテゴリ
   interior: 'kakko+andplants|kakko',
-  kitchen:  'generate+andplants|generate',
+  kitchen:  'generate+zackhaus|zackhaus',
   daily:    'truetowel+andplants|truetowel',
   gadget:   'officecom+evering|officecom',
   goods:    'pinkoi+generate|pinkoi',

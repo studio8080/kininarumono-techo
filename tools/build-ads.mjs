@@ -31,7 +31,7 @@ const AD_BY_ARTICLE = {
   'burando-lineup-no-kijun':    'generate+pinkoi|generate',           // ブランドのラインナップの見方
   'ii-mono-no-kijun':           'generate+truetowel|truetowel',           // いいモノの基準
   'gift-no-erabikata':          'pinkoi+generate|pinkoi',           // ギフトの選び方
-  'zakka-no-mikata':            'generate+pinkoi|generate',           // 雑貨の見方
+  'zakka-no-mikata':            'generate+zackhaus|zackhaus',          // 雑貨の見方
   'zakka-no-asobigokoro':       'pinkoi+generate|pinkoi',           // 雑貨の遊び心
   'trend-komono-rule':          'officecom+evering|evering',              // トレンド小物（ガジェット寄り）
   'akibeya-no-totonoekata':     'kakko+andplants|andplants',   // 秋の部屋を小物で整える

@@ -25,6 +25,7 @@ import { repoRoot, adSlot } from './lib/site.mjs';
 // LIFE POCKET（財布・革小物）に落としている。A8で家具350の300x250を発行したら、
 // main.js の AD_TAGS に kagu350_rect を足して、ここを "kagu350|kagu350_rect" に変える。
 const AD_BY_ARTICLE = {
+  'coat-to-bag-no-erabikata': 'pinkoi+lifepocket|lifepocket', // 冬のバッグ選び
   'kagu-brand-no-erabikata':    'kakko+andplants|kakko',   // 家具ブランドの選び方
   'hitorigurashi-no-heyazukuri':'kakko+andplants|kakko',   // 一人暮らしの部屋づくり
   'hokuo-design-teiban':        null,                   // build-roundup が生成するので対象外

@@ -17,6 +17,11 @@
   // ---- picks (real affiliate links already live on ROOM/Pinterest) ----
   // price/在庫は変動するためカードには描画していない（表示すると価格改定で嘘になる）。
   const PICKS = [
+    // --- 2026.10.17 楽天ROOMから反映（2件・10/11〜10/17分） ---
+    { cat:"fashion", date:"2026.10.16", motif:"", brand:"marjour", name:"COMPACT NYLON TOTE BAG", price:"¥5,900", code:"stylife:15787072", url:"https://hb.afl.rakuten.co.jp/hgc/56166504.3fb5399f.56166505.5b4d5fd4/_RTroom06836859_397165465_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstylife%2Fsm2334%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/stylife/cabinet/item/334/sm2334-02_1.jpg",
+      blurb:"15.5×18cmのマチがあるナイロンのトートバッグ。長めの持ち手と、畳んで旅先へ持ち出せる形を合わせて見たい。" },
+    { cat:"fashion", date:"2026.10.12", motif:"", brand:"El mar", name:"パーカーニットセットアップ", price:"¥15,950", code:"stylife:14885207", url:"https://hb.afl.rakuten.co.jp/hgc/56166504.3fb5399f.56166505.5b4d5fd4/_RTroom06836859_396635521_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstylife%2Fnj5339%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/stylife/cabinet/item/339/nj5339-01_1.jpg",
+      blurb:"ウール混のニットパーカーとパンツのセットアップ。立体的なフードとゆとりのあるパンツを、上下別々の組み合わせでも考えたい。" },
     // --- 2026.10.10 楽天ROOMから反映（16件・10/4〜10/10分） ---
     { cat:"kitchen", date:"2026.10.10", motif:"m-mug", brand:"Bialetti", name:"モカエキスプレス エクスクルーシブ", price:"¥9,900", code:"bialettishop:10000055", url:"https://hb.afl.rakuten.co.jp/hgc/585d507f.fae542ed.585d5080.c357ba61/_RTroom06836859_396396467_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbialettishop%2F0009055%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/bialettishop/cabinet/exclusive/item/excl_rosso.jpg",
       blurb:"1960年代のモカを思わせるダイヤ形のつまみに、光沢のある塗装を合わせた直火式のエスプレッソメーカー。レッドやブラックのほか、ミントやスカイブルーなどのパステルカラーも選べる。" },

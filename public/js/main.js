@@ -17,6 +17,19 @@
   // ---- picks (real affiliate links already live on ROOM/Pinterest) ----
   // price/在庫は変動するためカードには描画していない（表示すると価格改定で嘘になる）。
   const PICKS = [
+    // --- 2026.10.18 楽天ROOMから反映（6件・10/11〜10/17追加確認分） ---
+    { cat:"daily", date:"2026.10.17", motif:"m-bottle", brand:"fashy", name:"ポケット湯たんぽ 0.3L", price:"¥2,200", code:"sansyuonline:10000084", url:"https://hb.afl.rakuten.co.jp/hgc/588faa74.165fb73e.588faa75.e8771b19/_RTroom06836859_397286518_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsansyuonline%2Ffa6405%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/sansyuonline/cabinet/fashy/fa6405_3.jpg",
+      blurb:"手のひらサイズの0.3L湯たんぽ。ドイツ製の一体成形ボトルで、折り畳めるキャップまで含めて携帯のしやすさを見たい。" },
+    { cat:"daily", date:"2026.10.16", motif:"m-tissue", brand:"かまわぬ", name:"ひつじ雲 注染てぬぐい", price:"¥1,650", code:"mamegui:10002282", url:"https://hb.afl.rakuten.co.jp/hgc/5888f790.5546609b.5888f791.2e8f8cac/_RTroom06836859_397165471_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmamegui%2Ftenugui-a-063%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/mamegui/cabinet/tenugui/09093727/13753469/06161986-2-2.jpg",
+      blurb:"秋の空の雲に羊を忍ばせた注染てぬぐい。広げたときの柄と、包む・敷くなど日常での使い方を合わせて見たい。" },
+    { cat:"interior", date:"2026.10.16", motif:"m-diffuser", brand:"薫寿堂", name:"HA KO #02 6枚入", price:"¥3,410", code:"ansindo:10009344", url:"https://hb.afl.rakuten.co.jp/hgc/5888f73e.d8e36d45.5888f740.2fd19223/_RTroom06836859_397165459_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fansindo%2Fko-071521802%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/ansindo/cabinet/asobi/07544379/hakorenewal2023_18.jpg",
+      blurb:"葉の形をした6種の紙のお香。桐箱、香皿、不燃性フェルトが付く構成と、置いて香らせる・焚く使い方を比べたい。" },
+    { cat:"interior", date:"2026.10.15", motif:"m-vase", brand:"Robben", name:"溶けたりんご オブジェ", price:"¥2,200", code:"mag-online:10000322", url:"https://hb.afl.rakuten.co.jp/hgc/588149ba.35a70fb2.588149bb.8d439043/_RTroom06836859_397026018_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmag-online%2Frobben%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/mag-online/cabinet/11554582/robben_03.jpg",
+      blurb:"陶器のりんごが溶けたような形のオブジェ。棚置きと壁掛けに対応し、ヘタの穴にお香やドライフラワーを挿せる点まで見たい。" },
+    { cat:"fashion", date:"2026.10.13", motif:"m-polo-knit", brand:"etoll.", name:"カシミヤ混バレエネックリブニット", price:"¥6,380", code:"sarto:10015823", url:"https://hb.afl.rakuten.co.jp/hgc/5872bb6d.b4168c78.5872bb6e.67337af3/_RTroom06836859_396775998_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsarto%2Fet0420009060%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/sarto/cabinet/dp09/et0420009060_003.jpg",
+      blurb:"ゆるやかなバレエネックと裾のレースを合わせたリブニット。カシミヤ混の生地感と、コートの下からレースを見せる重ね方を考えたい。" },
+    { cat:"kitchen", date:"2026.10.11", motif:"m-mug", brand:"Le Creuset", name:"ミニ・ココット", price:"¥4,400", code:"lecreuset:10000633", url:"https://hb.afl.rakuten.co.jp/hgc/56f6219d.6cbcaa7f.56f6219e.86a06e40/_RTroom06836859_396511497_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flecreuset%2Flc00104%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/lecreuset/cabinet/commodity/91005000061090_11.jpg",
+      blurb:"蓋付きの小さなストーンウェア。オーブン・電子レンジ対応の使い方と、チェリーレッドやオレンジの色を見たい。" },
     // --- 2026.10.17 楽天ROOMから反映（2件・10/11〜10/17分） ---
     { cat:"fashion", date:"2026.10.16", motif:"", brand:"marjour", name:"COMPACT NYLON TOTE BAG", price:"¥5,900", code:"stylife:15787072", url:"https://hb.afl.rakuten.co.jp/hgc/56166504.3fb5399f.56166505.5b4d5fd4/_RTroom06836859_397165465_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstylife%2Fsm2334%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/stylife/cabinet/item/334/sm2334-02_1.jpg",
       blurb:"15.5×18cmのマチがあるナイロンのトートバッグ。長めの持ち手と、畳んで旅先へ持ち出せる形を合わせて見たい。" },

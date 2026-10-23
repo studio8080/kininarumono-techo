@@ -3,7 +3,7 @@
 import path from 'node:path';
 import { repoRoot, ORIGIN, CONTACT_URL, cacheVersion, head, header, footer, writeIfChanged, addToSitemap } from './lib/site.mjs';
 
-const updated = '2026-10-16';
+const updated = '2026-10-23';
 const vparam = cacheVersion();
 const url = `${ORIGIN}/privacy`;
 const title = 'プライバシーポリシー・Cookieと広告｜気になるモノ手帖';
@@ -31,7 +31,8 @@ ${header}
 <p>楽天アフィリエイト、A8.net、もしもアフィリエイトを利用しています。商品リンクを含むページや広告枠にはPRと表示し、リンク経由の購入・申込みによって運営者が報酬を受け取る場合があります。商品の販売・決済はリンク先の事業者が行います。</p>
 <p>広告画像の表示時やリンクのクリック時に、IPアドレス、端末・ブラウザ情報、参照元ページ、表示・クリック情報、Cookie等の識別子が広告事業者に送信される場合があります。広告表示、成果計測、不正防止などに利用されます。</p>
 <p>送信先と取扱い：<a href="https://privacy.rakuten.co.jp/" target="_blank" rel="noopener">楽天グループの個人情報保護方針</a>、<a href="https://www.a8.net/privacy.html" target="_blank" rel="noopener">A8.net（株式会社ファンコミュニケーションズ）</a>、<a href="https://moshimo.co.jp/privacy/" target="_blank" rel="noopener">もしもアフィリエイト（株式会社もしも）</a>。</p>
-<p>Google AdSenseは審査申請中で、現時点では広告配信を有効にしていません。配信を開始する場合は、その前に情報の送信先・目的と必要な同意手段を本ページで案内します。</p></section>
+<p>Google AdSenseの審査・承認と管理画面の設定に応じて、当サイトにGoogleの広告が配信される場合があります。Googleは広告の配信、表示回数の制御、測定、不正防止などのため、Cookie等の識別子、IPアドレス、端末・ブラウザ情報、おおよその地域、閲覧・広告に関する情報を取得・利用する場合があります。</p>
+<p>欧州経済領域、英国、スイスなど対象地域では、Googleの「プライバシーとメッセージ」による案内が表示される場合があります。利用者は表示内容に応じて広告に関する選択を行い、提供されるプライバシー設定から選択を変更できます。Googleによる情報の取扱いは、<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Googleのパートナーサイト向け説明</a>と<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Googleプライバシーポリシー</a>をご確認ください。</p></section>
 <section class="policy-panel"><h2>表示に使う外部サービス</h2>
 <p>サイト配信にはGoogleのFirebase Hosting、書体にはGoogle FontsとjsDelivr上のYakuHanJP、商品画像にはリンク先ショップ等の画像配信サービスを利用しています。これらへの読込時に、IPアドレス、ブラウザ情報、参照元などが各サービスへ送信される場合があります。ページや画像・書体を表示し、配信を維持するための通信です。</p>
 <p>SNSやショップへの外部リンクを開いた後は、リンク先のポリシーが適用されます。</p></section>

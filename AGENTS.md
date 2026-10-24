@@ -799,7 +799,7 @@ Googleの検索結果だけを見ていると取りこぼす入口があり、�
 | `public/llms.txt` | AIアシスタント向けのサイト案内（llmstxt.org の書式） | `tools/build-discovery.mjs` が生成 |
 | `public/feed.xml` | 読みもののRSS 2.0 | 同上 |
 | `public/robots.txt` | AIクローラー（GPTBot / ClaudeBot / PerplexityBot 等）を明示的に許可 | 手書き |
-| `public/d2a2bd4f281ed57440b1fdda791a10d5.txt` | IndexNow の鍵（所有確認用。**秘密ではない。消すと通知が403になる**） | 手書き |
+| `public/56d109359ce422676624e01ac4476068.txt` | IndexNow の鍵（所有確認用。**秘密ではない。消すと通知が403になる**） | 手書き |
 
 ```bash
 node tools/build-discovery.mjs   # llms.txt と feed.xml。build-category の後に実行（カテゴリの説明文を読むため）
@@ -826,6 +826,12 @@ node tools/indexnow.mjs --all    # sitemap の全URL（大きな改修のあと�
 - 通知の失敗でデプロイを止めない（`continue-on-error` ＋ スクリプトは常に exit 0）。
 - ワークフローの checkout は `fetch-depth: 2` が必要。1のままだと差分が取れず、何も送られない。
 - sitemap に無いURLは送らない。
+
+**2026-10-24 鍵を作り直した。** 旧鍵 `d2a2bd4f…` では、導入以来の通知がBing（api.indexnow.org 経由を含む）で毎回
+HTTP 403 `UserForbiddedToAccessSite` だった。鍵ファイルは200で正しく配信され、同じ鍵でYandexは202で受理し、
+Bing Webmaster Tools では `studio@kokokikaku.com` の下でサイトが所有確認済み・トップもインデックス済みだったので、
+Bing側に古い確認結果が残っていると見て鍵を新しくした。結果は下の「鍵の作り直しの結果」に書く。
+通知が止まっても、Bing Webmaster Tools の URL Submission（1日100件）で手動送信できる。
 
 ### やっていないこと（理由つき）
 

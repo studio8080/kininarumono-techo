@@ -830,7 +830,7 @@ node tools/indexnow.mjs --all    # sitemap の全URL（大きな改修のあと�
 **2026-10-24 鍵を作り直した。** 旧鍵 `d2a2bd4f…` では、導入以来の通知がBing（api.indexnow.org 経由を含む）で毎回
 HTTP 403 `UserForbiddedToAccessSite` だった。鍵ファイルは200で正しく配信され、同じ鍵でYandexは202で受理し、
 Bing Webmaster Tools では `studio@kokokikaku.com` の下でサイトが所有確認済み・トップもインデックス済みだったので、
-Bing側に古い確認結果が残っていると見て鍵を新しくした。結果は下の「鍵の作り直しの結果」に書く。
+Bing側に古い確認結果が残っていると見て鍵を新しくしたところ、Bingは初回202（鍵の確認待ち）、次の送信で200を返し、Bing Webmaster Tools の IndexNow 画面にも送信が記録された。
 通知が止まっても、Bing Webmaster Tools の URL Submission（1日100件）で手動送信できる。
 
 ### やっていないこと（理由つき）

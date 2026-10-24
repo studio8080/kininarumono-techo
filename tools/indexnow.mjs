@@ -23,7 +23,7 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { repoRoot, ORIGIN } from './lib/site.mjs';
 
-const KEY = 'd2a2bd4f281ed57440b1fdda791a10d5';
+const KEY = '56d109359ce422676624e01ac4476068';
 const HOST = new URL(ORIGIN).host;
 const ALL = process.argv.includes('--all');
 const DRY = process.argv.includes('--dry');

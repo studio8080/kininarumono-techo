@@ -236,6 +236,7 @@ export const AD_BY_PAGE = {
   'hokuo-design-teiban':       'kakko+andplants|kakko',
   'fuyujitaku-no-dougu':       'truetowel+andplants|truetowel',
   'gohan-no-dougu':            'generate+andplants|generate',
+  'fuyu-no-oto-no-dougu':      'officecom+evering|officecom',
 };
 
 /**

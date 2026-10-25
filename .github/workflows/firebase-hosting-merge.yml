@@ -41,6 +41,8 @@ jobs:
           fi
       - name: Syntax check main.js
         run: node --check public/js/main.js
+      - name: Check local notebook and existing behavior
+        run: node --test tools/notebook.test.mjs tools/ad-loading.test.cjs tools/adsense-readiness.test.cjs tools/revenue-metrics.test.cjs
       - name: Deploy to Firebase Hosting
         run: |
           npm install -g firebase-tools

@@ -610,6 +610,12 @@
   });
   // 読みもの等の商品グリッドが無いページでも同じmain.jsを読むため、存在確認する
   if (grid) grid.appendChild(frag);
+  import('./notebook.js?v=1').then(({ initNotebook }) => initNotebook(PICKS)).catch(() => {
+    // Catalog/search remain usable if the optional notebook module cannot load.
+    const message = document.createElement('p'); message.setAttribute('role', 'status');
+    message.textContent = '候補の手帖を読み込めませんでした。再読込してお試しください。';
+    (grid || document.querySelector('.card'))?.before(message);
+  });
 
   const statPicks = document.querySelector("[data-stat-picks]");
   const statReads = document.querySelector("[data-stat-reads]");

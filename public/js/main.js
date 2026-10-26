@@ -506,8 +506,6 @@
       blurb:"福岡・大川の職人がつくるオーク無垢の一脚。北欧テイストのグレー座面が心地いい。ふるさと納税の返礼品です。" },
 
     // --- goods ---
-    { cat:"daily", date:"2026.08.05", motif:"m-tissue", brand:"PUEBCO", name:"アルミ ティッシュケース（Matte）", code:"zen-you:10005545", price:"¥3,300", url:"https://a.r10.to/h8jSTI", img:"https://shop.r10s.jp/zen-you/cabinet/04497754/12174158/imgrc0127611390.jpg",
-      blurb:"生活感の出がちなティッシュを、無骨なアルミでそっけなく格上げ。" },
     { cat:"kitchen", date:"2026.08.05", motif:"m-scale", brand:"DULTON", name:"ダイエットスケール 100-126（赤）", code:"atease-br:10001619", price:"¥4,180", url:"https://a.r10.to/hYvA15", img:"https://shop.r10s.jp/atease-br/cabinet/00639267/05227710/100-126-00n.jpg",
       blurb:"レトロなアメリカン。赤の差し色でキッチンがぱっと華やぐ一台。" },
     { cat:"daily", date:"2026.08.05", motif:"m-diffuser", brand:"YCYK", name:"リードディフューザー 金木犀 120ml", code:"daily-store:10166645", price:"¥4,086", url:"https://hb.afl.rakuten.co.jp/hgc/564809b7.bb733817.564809b8.e99c3a77/_RTroom06836859_387853985_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdaily-store%2Fgr-e9r8gqj5sn%2F%3Fscid%3Droom_pc_id_reg", img:"https://shop.r10s.jp/daily-store/cabinet/g/36/e9r8gqj5sn-3.jpg",

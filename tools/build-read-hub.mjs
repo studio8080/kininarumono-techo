@@ -9,6 +9,7 @@
 //   記事カードのHTMLは index.html の .read-list をそのまま抜いて使う。
 //   一覧を2か所に書くと、記事を足したときに片方だけ古くなるため。
 //   トップに足す → ここを再生成、の順で運用する。
+//   トップの「読みもの」件数も同じ一覧から同期し、JS実行前の数を古く残さない。
 //
 // 注意: 改行は LF のまま書く（他のジェネレータと同じ）。
 //   CRLF で書くと、Windows の autocrlf でコミットされた LF の blob と
@@ -43,9 +44,18 @@ list = list
   // index 側は2段インデント。ここでは素で置く
   .replace(/^ {2}/gm, '');
 
-const items = [...indexHtml.matchAll(/<h3><a href="(\/read\/[^"]+)">([^<]+)<\/a><\/h3>/g)]
+const items = [...list.matchAll(/<h3><a href="(\/read\/[^"]+)">([^<]+)<\/a><\/h3>/g)]
   .map((m, i) => ({ position: i + 1, name: m[2], url: ORIGIN + m[1] }));
 if (!items.length) throw new Error('index.html に読みもののリンクが無い');
+
+// 表示後のmain.jsだけでなく、初期HTMLも /read のItemListと同じ件数にする。
+// 置き換え先の欠落・重複を黙って通さず、意図しない箇所を書き換えない。
+const countPattern = /(<dt data-stat-reads>)[^<]*(<\/dt>)/g;
+if ([...indexHtml.matchAll(countPattern)].length !== 1) {
+  throw new Error('index.html の data-stat-reads は1か所必要です。読みもの件数を更新できません。');
+}
+const updatedIndexHtml = indexHtml.replace(countPattern, (_, startTag, endTag) =>
+  `${startTag}${items.length}${endTag}`);
 
 const vparam = cacheVersion();
 
@@ -143,3 +153,5 @@ ${footer(vparam)}
 const dest = path.join(repoRoot, 'public/read/index.html');
 const changed = writeIfChanged(dest, html);
 console.log(`${changed ? '+' : '='} /read  記事${items.length}本 / ?v=${vparam}`);
+const countChanged = writeIfChanged(path.join(repoRoot, 'public/index.html'), updatedIndexHtml);
+console.log(`${countChanged ? '+' : '='} /  読みもの件数 ${items.length}本`);

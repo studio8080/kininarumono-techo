@@ -17,6 +17,15 @@
   // ---- picks (real affiliate links already live on ROOM/Pinterest) ----
   // price/在庫は変動するためカードには描画していない（表示すると価格改定で嘘になる）。
   const PICKS = [
+    // --- 2026.11.07 楽天ROOMから反映（4件・11/1〜11/6分） ---
+    { cat:"gadget", date:"2026.11.06", motif:"m-cable", brand:"ELECOM", name:"USB-C 2ポートAC充電器 MPA-ACCP9430WH", price:"¥2,288", code:"elecom:10065621", url:"https://hb.afl.rakuten.co.jp/hgc/5933755c.f64f3f77.5933755d.0a9bd1ab/_RTroom06836859_399972208_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Felecom%2F4549550333894%2F%3Fscid%3Droom_pc_id_reg", img:"https://image.rakuten.co.jp/elecom/cabinet/a200_30/mpa-accp9430wh_01.jpg",
+      blurb:"白い本体にUSB-Cポートを2つ備え、プラグを折りたためるAC充電器。持ち歩く端末の組み合わせと、同時充電時の出力配分を確認して選びたい形です。" },
+    { cat:"kitchen", date:"2026.11.04", motif:"m-cup", brand:"HARIO", name:"ドリップスタンドセット 麻の葉 DSS-ASN", price:"¥13,750", code:"hario-onlinestore:10001569", url:"https://hb.afl.rakuten.co.jp/hgc/56ed7ee4.0f796b40.56ed7ee5.6b6706ca/_RTroom06836859_399612607_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhario-onlinestore%2Fdss%2F%3Fscid%3Droom_pc_id_reg", img:"https://image.rakuten.co.jp/hario-onlinestore/cabinet/items/imgrc0109618145.jpg",
+      blurb:"麻の葉の透かし模様を入れた木のスタンドに、ガラスのドリッパーとサーバーを組み合わせたセット。器具を置く棚の幅だけでなく、お湯を注ぐ上の空間まで測って考えたい道具です。" },
+    { cat:"gadget", date:"2026.11.04", motif:"m-lamp", brand:"cado", name:"STEM 500H HM-C500H", price:"¥38,500", code:"hotch-potch:10017953", url:"https://hb.afl.rakuten.co.jp/hgc/5656b4ef.86eb6137.5656b4f2.149257eb/_RTroom06836859_399612595_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhotch-potch%2F00014915-cadostem350%2F%3Fscid%3Droom_pc_id_reg", img:"https://image.rakuten.co.jp/hotch-potch/cabinet/kago800_img1/00014915_2.jpg",
+      blurb:"円筒形の本体に透明なタンクを重ねた加湿器。上から水を入れる動作と電源コードの届く範囲を、置きたい場所で確かめて選びたい一台です。" },
+    { cat:"interior", date:"2026.11.01", motif:"m-shelf", brand:"Vitra", name:"Uten.Silo RE 壁面収納", price:"¥48,400", code:"vanilla1950:10000519", url:"https://hb.afl.rakuten.co.jp/hgc/5673ae60.d5f9561c.5673ae63.6292b60f/_RTroom06836859_399275551_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fvanilla1950%2Fgd7188%2F%3Fscid%3Droom_pc_id_reg", img:"https://image.rakuten.co.jp/vanilla1950/cabinet/product2/gd7188_1.jpg",
+      blurb:"形と深さの違うポケットとフックを一枚に並べた壁面収納。入れたい小物の大きさと、ネジ留めできる壁の条件からサイズを比べたいデザインです。" },
     // --- 2026.10.31 楽天ROOMから反映（12件・10/25〜10/31分） ---
     { cat:"interior", date:"2026.10.31", motif:"m-crate", brand:"HAY", name:"COLOUR CRATE M SQUARE", price:"¥3,630", code:"ko-jo:10002790", url:"https://hb.afl.rakuten.co.jp/hgc/56328232.eede3f62.56328233.565dd845/_RTroom06836859_399062125_pc?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fko-jo%2Fhay_colour_crate_m_square%2F%3Fscid%3Droom_pc_id_reg", img:"https://tshop.r10s.jp/ko-jo/cabinet/hay/colour-crate/m-square/1.jpg",
       blurb:"穴の開いた面を持つ、正方形の折りたたみ収納ボックス。棚の内寸と外寸を比べながら、置く段や入れるものを考えたい形です。" },

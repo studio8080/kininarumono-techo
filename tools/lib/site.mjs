@@ -237,6 +237,7 @@ export const AD_BY_PAGE = {
   'fuyujitaku-no-dougu':       'truetowel+andplants|truetowel',
   'gohan-no-dougu':            'generate+andplants|generate',
   'fuyu-no-oto-no-dougu':      'officecom+evering|officecom',
+  'fuyu-no-coffee-dougu':      'generate+zackhaus|zackhaus',
 };
 
 /**

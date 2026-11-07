@@ -24,11 +24,25 @@ test('policy and utility pages do not load scripts that require consent', () => 
 
 test('privacy disclosure describes AdSense data use and regional choices without assuming dashboard button configuration', () => {
   const html = read('public/privacy.html');
-  assert.match(html, /制定・改定 2026-10-23/);
+  assert.match(html, /制定・改定 2026-11-06/);
   assert.match(html, /Google AdSense/);
   assert.match(html, /Cookie等の識別子/);
   assert.match(html, /広告に関する選択/);
   assert.doesNotMatch(html, /同意しない・同意する・設定を管理する/);
   assert.match(html, /policies\.google\.com\/technologies\/partner-sites/);
   assert.match(html, /policies\.google\.com\/privacy/);
+});
+
+test('privacy disclosure explains browsing-based advertising and links to scoped opt-out choices', () => {
+  const html = read('public/privacy.html');
+  const advertising = html.match(/<h2>広告・アフィリエイト<\/h2>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(advertising, 'advertising disclosure must be readable in the policy HTML');
+  assert.match(advertising, /Google AdSenseの審査・承認と管理画面の設定に応じて/);
+  assert.match(advertising, /Googleやそのパートナー、第三者配信事業者・広告ネットワークが広告Cookieを使用/);
+  assert.match(advertising, /当サイトや他のウェブサイトへの過去のアクセス情報に基づく広告/);
+  assert.match(advertising, /href="https:\/\/www\.google\.com\/settings\/ads"[^>]*>Googleの広告設定<\/a>で無効にできます/);
+  assert.match(advertising, /href="https:\/\/www\.aboutads\.info\/choices\/"[^>]*>WebChoices（英語）<\/a>/);
+  assert.match(advertising, /参加事業者がこのブラウザで/);
+  assert.match(advertising, /広告をすべて非表示にするものではありません/);
+  assert.match(read('public/sitemap.xml'), /<loc>https:\/\/kininarumono\.jp\/privacy<\/loc><lastmod>2026-11-06<\/lastmod>/);
 });

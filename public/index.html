@@ -32,7 +32,7 @@
 <!-- 和文約物（「」・、。）の詰めを最適化 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@3.4.1/dist/css/yakuhanjp.min.css" />
 <!-- ?v= はキャッシュ破棄用。css/js を変更したら必ず数字を上げること（firebase.json で max-age=86400） -->
-<link rel="stylesheet" href="css/style.css?v=99" />
+<link rel="stylesheet" href="css/style.css?v=100" />
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kininarumono.jp/#organization","name":"気になるモノ手帖","parentOrganization":{"@type":"Organization","@id":"https://kokokikaku.com/#organization","name":"ここ企画","url":"https://kokokikaku.com/"},"url":"https://kininarumono.jp/","logo":{"@type":"ImageObject","url":"https://kininarumono.jp/images/favicon-512x512.png","width":512,"height":512},"sameAs":["https://room.rakuten.co.jp/totonou_note","https://www.instagram.com/kininarumonote/","https://pin.it/3uk3gKZUp","https://x.com/kininarumonote"]},{"@type":"WebSite","@id":"https://kininarumono.jp/#website","name":"気になるモノ手帖","alternateName":"MONO NOTE","url":"https://kininarumono.jp/","description":"北欧インテリア、デザイン雑貨、ガジェット、文具、キッチン道具まで。置いたときの景色と使い心地で選んだアイテムのキュレーションと、買う前に役立つ選び方の読みもの。","inLanguage":"ja-JP","publisher":{"@id":"https://kininarumono.jp/#organization"}}]}</script><script src="/js/revenue-metrics.js?v=20261011" defer></script>
 </head>
 <body>
@@ -552,12 +552,10 @@
     </span>
     <p>デザインでアガる雑貨・インテリア・ガジェット。</p>
   </div>
-  <!-- 家具350（728x90）。バナーの実体は main.js の AD_TAGS にあり、data-ad で参照する。
-       728x90 はモバイル幅だと343x44まで縮んで文字が読めないので、820px未満では出さない
-       （data-ad の「|」の右が空 ＝ その幅では非表示）。トップのモバイルでは上の
-       300x250が2枚出るので、ここが空でも広告が無い状態にはならない。 -->
-  <aside class="ad-slot ad-slot--footer" aria-label="広告" data-ad="kagu350|" data-ad-placement="top-footer">
+  <!-- 正式素材はmain.jsのAD_TAGS。PC・スマホともロスオフを遅延表示。 -->
+  <aside class="ad-slot ad-slot--footer" aria-label="広告" data-ad="lossoff" data-ad-placement="top-footer">
     <p class="ad-slot__label">PR</p>
+    <p>買い物の選択肢に、在庫ロスの商品も。<br>ロスオフでは食品や生活雑貨などを紹介しています。数量・送料・賞味期限や商品の状態を確かめて、使い切れるものを選んでみてください。</p>
     <div class="ad-slot__body"></div>
   </aside>
   <nav class="catlinks catlinks--footer" aria-label="カテゴリ別ページ">
@@ -583,7 +581,7 @@
 
 <button class="back-top" id="backTop" type="button" aria-label="ページトップへ戻る">↑</button>
 
-<script src="js/main.js?v=99" defer></script>
+<script src="js/main.js?v=100" defer></script>
 <!-- koko-ask-chatgpt -->
 <script src="/ask-chatgpt.js?v=2" data-product="kininarumono" defer></script>
 </body>

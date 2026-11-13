@@ -956,6 +956,14 @@
   // 例: 家具350 の 300x250 を発行したら kagu350_rect を足し、
   //     data-ad="kagu350|lifepocket" を "kagu350|kagu350_rect" に変える。
   const AD_TAGS = {
+    // 2026-11-13 もしも684301で提携中、公式素材47023。
+    lossoff: {
+      provider: "moshimo", w: 300, h: 300,
+      alt: "ロスオフ｜在庫ロスの商品をつなぐマーケット",
+      href: "https://af.moshimo.com/af/c/click?a_id=5896156&p_id=3282&pc_id=7756&pl_id=47023",
+      img: "https://image.moshimo.com/af-img/2559/000000047023.png",
+      px: "https://i.moshimo.com/af/i/impression?a_id=5896156&p_id=3282&pc_id=7756&pl_id=47023"
+    },
     // もしもメディア「気になるモノ手帖」684301、提携中。正式バナー94963（2026-10-16取得）。
     zackhaus: {
       provider: "moshimo", w: 120, h: 60,

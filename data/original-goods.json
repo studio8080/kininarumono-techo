@@ -1,0 +1,157 @@
+{
+  "updatedOn": "2026-11-24",
+  "products": [
+    {
+      "id": "cream-soda",
+      "workId": "185809552",
+      "name": "クリームソーダ",
+      "englishName": "Cream Soda",
+      "description": "喫茶店のひと休みを、明るいグリーンと小さなさくらんぼで。",
+      "englishDescription": "A little kissaten break in bright green.",
+      "placement": "胸元のワンポイント",
+      "group": "japan",
+      "image": "/images/original-goods/cream-soda-v1.webp",
+      "width": 900,
+      "height": 900,
+      "workUrl": "https://www.redbubble.com/shop/ap/185809552",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%A0%E3%82%BD%E3%83%BC%E3%83%80-Cream-Soda-by-KokoKikaku/185809552/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%A0%E3%82%BD%E3%83%BC%E3%83%80-Cream-Soda-by-KokoKikaku/185809552/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    },
+    {
+      "id": "oden",
+      "workId": "185810457",
+      "name": "おでん",
+      "englishName": "Oden",
+      "description": "だいこん、たまご、こんにゃく。あたたかい一皿を、小さく。",
+      "englishDescription": "A warm bowl of Japanese comfort food.",
+      "placement": "胸元のワンポイント",
+      "group": "japan",
+      "image": "/images/original-goods/oden-v1.webp",
+      "width": 900,
+      "height": 900,
+      "workUrl": "https://www.redbubble.com/shop/ap/185810457",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/%E3%81%8A%E3%81%A7%E3%82%93-Oden-by-KokoKikaku/185810457/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/%E3%81%8A%E3%81%A7%E3%82%93-Oden-by-KokoKikaku/185810457/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    },
+    {
+      "id": "curry-rice",
+      "workId": "185810631",
+      "name": "カレーライス",
+      "englishName": "Curry Rice",
+      "description": "いつものカレーを、丸いひと皿とやわらかな文字に。",
+      "englishDescription": "An everyday favorite, drawn on a little plate.",
+      "placement": "胸元のワンポイント",
+      "group": "japan",
+      "image": "/images/original-goods/curry-rice-v1.webp",
+      "width": 900,
+      "height": 900,
+      "workUrl": "https://www.redbubble.com/shop/ap/185810631",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/%E3%82%AB%E3%83%AC%E3%83%BC%E3%83%A9%E3%82%A4%E3%82%B9-Curry-Rice-by-KokoKikaku/185810631/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/%E3%82%AB%E3%83%AC%E3%83%BC%E3%83%A9%E3%82%A4%E3%82%B9-Curry-Rice-by-KokoKikaku/185810631/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    },
+    {
+      "id": "ocha",
+      "workId": "185810742",
+      "name": "おちゃ",
+      "englishName": "Ocha / Green Tea",
+      "description": "湯気がのぼるお茶の時間を、赤いカップと緑の文字で。",
+      "englishDescription": "A quiet tea break with a playful red cup.",
+      "placement": "胸元のワンポイント",
+      "group": "japan",
+      "image": "/images/original-goods/ocha-v1.webp",
+      "width": 900,
+      "height": 900,
+      "workUrl": "https://www.redbubble.com/shop/ap/185810742",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/%E3%81%8A%E3%81%A1%E3%82%83-Ocha-Green-Tea-by-KokoKikaku/185810742/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/%E3%81%8A%E3%81%A1%E3%82%83-Ocha-Green-Tea-by-KokoKikaku/185810742/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    },
+    {
+      "id": "purin",
+      "workId": "185810943",
+      "name": "プリン",
+      "englishName": "Purin / Custard Pudding",
+      "description": "カラメルとさくらんぼ。喫茶店のプリンを、ひとつ。",
+      "englishDescription": "Classic kissaten pudding with a cherry on top.",
+      "placement": "胸元のワンポイント",
+      "group": "japan",
+      "image": "/images/original-goods/purin-v1.webp",
+      "width": 900,
+      "height": 900,
+      "workUrl": "https://www.redbubble.com/shop/ap/185810943",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/%E3%83%97%E3%83%AA%E3%83%B3-Purin-Custard-Pudding-by-KokoKikaku/185810943/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/%E3%83%97%E3%83%AA%E3%83%B3-Purin-Custard-Pudding-by-KokoKikaku/185810943/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    },
+    {
+      "id": "xiao-long-bao",
+      "workId": "185873426",
+      "name": "小籠包",
+      "englishName": "Xiao Long Bao",
+      "description": "せいろの小籠包に、流れるようなクリーム色の文字。",
+      "englishDescription": "Soup dumplings and sweeping cream lettering.",
+      "placement": "前面中央",
+      "group": "asia",
+      "image": "/images/original-goods/xiao-long-bao-v1.webp",
+      "width": 900,
+      "height": 900,
+      "workUrl": "https://www.redbubble.com/shop/ap/185873426",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/Xiao-Long-Bao-Steamer-and-Swooping-Type-by-KokoKikaku/185873426/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/Xiao-Long-Bao-Steamer-and-Swooping-Type-by-KokoKikaku/185873426/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    },
+    {
+      "id": "pho",
+      "workId": "185951640",
+      "name": "フォー",
+      "englishName": "Pho",
+      "description": "麺、ハーブ、立ちのぼる湯気。緑の枠でまとめたメニューポスター。",
+      "englishDescription": "Noodles, herbs and steam in a green-framed panel.",
+      "placement": "背面の縦長デザイン",
+      "group": "asia",
+      "image": "/images/original-goods/pho-v1.webp",
+      "width": 600,
+      "height": 900,
+      "workUrl": "https://www.redbubble.com/shop/ap/185951640",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/Pho-Noodles-and-Steam-Menu-Poster-by-KokoKikaku/185951640/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/Pho-Noodles-and-Steam-Menu-Poster-by-KokoKikaku/185951640/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    },
+    {
+      "id": "tteokbokki",
+      "workId": "185978460",
+      "name": "トッポッキ",
+      "englishName": "Tteokbokki",
+      "description": "赤いソースと紺の文字。屋台の看板を思わせる横長の一枚。",
+      "englishDescription": "Red sauce and navy type on a street-food sign.",
+      "placement": "前面中央の横長デザイン",
+      "group": "asia",
+      "image": "/images/original-goods/tteokbokki-v1.webp",
+      "width": 900,
+      "height": 600,
+      "workUrl": "https://www.redbubble.com/shop/ap/185978460",
+      "links": {
+        "tshirt": "https://www.redbubble.com/i/t-shirt/Tteokbokki-Street-Food-Menu-Sign-by-KokoKikaku/185978460/z5wf",
+        "sticker": "https://www.redbubble.com/i/sticker/Tteokbokki-Street-Food-Menu-Sign-by-KokoKikaku/185978460/7sgk"
+      },
+      "verifiedOn": "2026-11-24"
+    }
+  ]
+}

@@ -840,3 +840,6 @@ Bing側に古い確認結果が残っていると見て鍵を新しくしたと�
   一般サイトに出していない。
 - **Google AdSense**: セッション数が少ない段階では収益がほぼ出ず、表示速度とデザインだけが犠牲になる。
   A8と楽天の「内容に合った広告」を優先する。
+# 2026-11-24 オリジナルグッズ掲載
+
+`/original-goods` はここ企画のRedbubble公開商品を紹介する専用ページ。正本は `data/original-goods.json`、生成は `node tools/build-original-goods.mjs`。トップの同名コメント範囲・sitemapも同時更新する。共有ナビは `tools/lib/site.mjs`。掲載画像は原画の表示用コピーで、商品写真や印刷品質の証拠とは扱わない。実公開商品URLを確認してから追加し、仮URL・推測価格・未公開アートを載せない。自社商品・生成AI活用の説明を購入リンク前に残す。自社購入導線は `original_goods_open` / `redbubble_click` でアフィリエイトと分け、DNT/GPC/ローカルopt-outを尊重する。`node --test tools/*.test.cjs` と実画面の小幅/大幅・見切れ・リンクを検証。`--og-preview` は共有画像制作専用の一時HTMLを出すので、本番へ含めず削除する。

@@ -133,7 +133,7 @@ export const header = `<header class="site-header" id="top">
 <a href="/#about">ムード</a>
 <a href="/#select">ピック</a>
 <a href="/read">読みもの</a>
-<a href="/#channels">チャンネル</a>
+<a href="/original-goods">オリジナル</a>
 </nav>
 <a class="pill pill--room" href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
 <button class="nav-toggle" aria-label="メニューを開閉" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -142,7 +142,7 @@ export const header = `<header class="site-header" id="top">
 <a href="/#about">ムード</a>
 <a href="/#select">ピック</a>
 <a href="/read">読みもの</a>
-<a href="/#channels">チャンネル</a>
+<a href="/original-goods">オリジナル</a>
 <a href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
 </div>`;
 
@@ -161,6 +161,7 @@ export const footerCatlinks = `<nav class="catlinks catlinks--footer" aria-label
 <a href="/category/goods">文具・雑貨</a>
 <a href="/category/fashion">ファッション</a>
 <a href="/read">読みもの一覧</a>
+<a href="/original-goods">オリジナルグッズ</a>
 <a href="/about">運営・編集方針</a>
 <a href="/privacy">プライバシーポリシー</a>
 <a href="${CONTACT_URL}" target="_blank" rel="noopener">お問い合わせ</a>

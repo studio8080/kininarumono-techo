@@ -34,7 +34,7 @@
 <!-- ?v= はキャッシュ破棄用。css/js を変更したら必ず数字を上げること（firebase.json で max-age=86400） -->
 <link rel="stylesheet" href="css/style.css?v=101" />
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kininarumono.jp/#organization","name":"気になるモノ手帖","parentOrganization":{"@type":"Organization","@id":"https://kokokikaku.com/#organization","name":"ここ企画","url":"https://kokokikaku.com/"},"url":"https://kininarumono.jp/","logo":{"@type":"ImageObject","url":"https://kininarumono.jp/images/favicon-512x512.png","width":512,"height":512},"sameAs":["https://room.rakuten.co.jp/totonou_note","https://www.instagram.com/kininarumonote/","https://pin.it/3uk3gKZUp","https://x.com/kininarumonote"]},{"@type":"WebSite","@id":"https://kininarumono.jp/#website","name":"気になるモノ手帖","alternateName":"MONO NOTE","url":"https://kininarumono.jp/","description":"北欧インテリア、デザイン雑貨、ガジェット、文具、キッチン道具まで。置いたときの景色と使い心地で選んだアイテムのキュレーションと、買う前に役立つ選び方の読みもの。","inLanguage":"ja-JP","publisher":{"@id":"https://kininarumono.jp/#organization"}}]}</script><script src="/js/revenue-metrics.js?v=20261011" defer></script>
-</head>
+<link rel="stylesheet" href="/css/original-goods.css?v=20261124"><script src="/js/original-goods.js?v=20261124" defer></script></head>
 <body>
 
 <!-- 図案SVGスプライト（29種）は 2026-08-27 に削除した。
@@ -52,7 +52,7 @@
     <a href="#about">ムード</a>
     <a href="#select">ピック</a>
     <a href="/read">読みもの</a>
-    <a href="#channels">チャンネル</a>
+    <a href="/original-goods">オリジナル</a>
   </nav>
   <a class="pill pill--room" href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
   <button class="nav-toggle" aria-label="メニューを開閉" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -61,7 +61,7 @@
   <a href="#about">ムード</a>
   <a href="#select">ピック</a>
   <a href="/read">読みもの</a>
-  <a href="#channels">チャンネル</a>
+  <a href="/original-goods">オリジナル</a>
   <a href="https://room.rakuten.co.jp/totonou_note" target="_blank" rel="noopener">楽天ROOM →</a>
 </div>
 
@@ -89,6 +89,10 @@
     </div>
   </div>
 </section>
+
+<!-- ORIGINAL GOODS START -->
+<section class="goods-teaser" aria-label="ここ企画のオリジナルグッズ"><div><span class="goods-teaser__label">自社商品 / KOKOKIKAKU ORIGINALS</span><h2>好きな一皿を、<br>毎日のそばに。</h2><p>喫茶店のおやつからアジアのひと皿まで。ここ企画のオリジナルデザインを、Tシャツとステッカーで。</p><a class="goods-teaser__link" href="/original-goods" data-goods-open>オリジナルグッズを見る →</a></div><div class="goods-teaser__art"><img src="/images/original-goods/cream-soda-v1.webp" alt="クリームソーダのデザイン原画" width="900" height="900" loading="lazy" decoding="async"><img src="/images/original-goods/purin-v1.webp" alt="プリンのデザイン原画" width="900" height="900" loading="lazy" decoding="async"><img src="/images/original-goods/tteokbokki-v1.webp" alt="トッポッキのデザイン原画" width="900" height="600" loading="lazy" decoding="async"></div></section>
+<!-- ORIGINAL GOODS END -->
 
 <!-- ============ MOOD / DISCOVER ============ -->
 <section class="about mood" id="about">
@@ -574,6 +578,7 @@
     <a href="/category/goods">文具・雑貨</a>
     <a href="/category/fashion">ファッション</a>
     <a href="/read">読みもの一覧</a>
+<a href="/original-goods">オリジナルグッズ</a>
 <a href="/about">運営・編集方針</a>
 <a href="/privacy">プライバシーポリシー</a>
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeqM293xJzyK9ft7QF4lvvim8A679jueHyFA1YDXeUypalYwA/viewform" target="_blank" rel="noopener">お問い合わせ</a>
